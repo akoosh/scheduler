@@ -1,7 +1,9 @@
-// Stuff
 Template.home_page.events( {
-	"keydown #query":function(){
-		var results = Scheduler.QueryMapper.parse( $("#query").val() );
+	"keyup #query":function(){
+
+		var input = $("#query").val();
+		var results = Scheduler.QueryMapper.filterTokenize( input ) ;
+
 
 		if( !( results instanceof Array ) || results.length <= 0 )
 		{
@@ -10,17 +12,15 @@ Template.home_page.events( {
 
 		$("#results").empty();
 
-		console.log( results );
-
 		for( var result in results )
 		{
-			var text = "Category: " + results[result].cat + ", Match: " + results[result].match + ", Value: " + results[result].value;
+			var text = "Type: " + results[result].type + ", Value: " + results[result].value;
 			var rsl = $("<div>",{
 				"text":text,
 			});
 
 			$("#results").append( rsl );
 		}
-		
+
 	},
 });

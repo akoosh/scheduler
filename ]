@@ -1,0 +1,143 @@
+// Query Mapper source file
+// 02/28/2014
+// ZT & AW
+
+course_title = {
+	'intro to computer science':true,
+	'intro biology':true,
+	'data structures':true,
+	'weight lifting':true,
+};
+
+subjects = {
+	'cs':true,
+	'bio':true,
+	'math':true,
+	'pols':true,
+};
+
+professor_name = {
+	'billy bob':true,
+	'john doe':true,
+	'frank manning':true,
+};
+
+Scheduler.QueryMapper = {
+	
+	// Filter object for the filets
+	Filter : function( category, regex ){
+		this.category = category;
+		this.regex = regex;
+		this.parse = function( input )
+		{
+			var results = input.match( regex );
+			if( results instanceof Array && results.length > 0 )
+			{
+				
+				return { "cat": this.category, "match": results[0], "value" : results[1]  };
+			}
+
+			return null;
+		}
+
+	},
+	
+	// Filters that are loaded at runtime
+	filters : [],
+
+	// Returns an array of matches for a given collection of filters
+	parse : function( input ){
+		/*
+		var matches = [];
+		for( filter in Scheduler.QueryMapper.filters )
+		{
+				var result = Scheduler.QueryMapper.filters[filter].parse( input );
+
+			if( result )
+			{
+				 matches.push( result );
+			}
+		}
+
+		return matches;
+		*/
+
+		var tokens = Scheduler.QueryMapper.tokenize( input );
+		var filterGroups = [];
+		var minFilter = 0;
+
+		while( tokens.length )
+		{
+			// Get the leading token
+			var tkn = tokens.shift();
+			var lastMatches = [];
+			var matches = [];
+
+			var filters = Scheduler.QueryMapper.filters;
+			while( matches.length != 0 )
+			{
+				for( var f = 0; f < filters.length; f++ )
+				{
+					var match = filters[f].parse( tkn );
+
+					if( match != null )
+					{
+					}
+
+				}
+
+				// check if matches is zero
+				// if not copy matches into lastMatches
+
+
+		}
+
+		// have array of filters that matches 1 or more tokens
+
+		console.log( tokens );
+
+		return filterGroups;
+
+	},
+	
+	// Will return an array of tokens
+	tokenize : function( val )
+	{
+
+		var result = [];
+
+		if( typeof val === 'string' )
+		{
+			val = val
+					// Replace multiple commas with single commas
+					.replace( /,{2,}/g , "," )			
+					// Put spaces around commas to tokenize
+					.replace( /,/g, " , " )
+					// Remove duplicate spaces
+					.replace( /\s{2,}/g , " " )
+					.trim()
+					// Remove leading and tailing commas
+					.replace( /^,\s?|\s?,$/g , "" );
+
+			if( val.length > 0 )
+			{
+				result = val.split( ' ' );
+			}
+		}
+
+		return result;
+	},
+
+	// Inits the query mapper
+	init : function()
+	{
+		Scheduler.QueryMapper.filters.push( new Scheduler.QueryMapper.Filter( "units" ,/\b([1-6])\s?units?\b/ ) );
+//		Scheduler.QueryMapper.filters.push( new Scheduler.QueryMapper.Filter( "time" ,/\b[1-6]\s?units?\b/ ) );
+		Scheduler.QueryMapper.filters.push( new Scheduler.QueryMapper.Filter( "ge code" ,/\b(?:ge)?\s?([a-e][1-5]?)\s?(?:ge)?\b/ ) );
+		Scheduler.QueryMapper.filters.push( new Scheduler.QueryMapper.Filter( "subject_with_number",/\b((?:[a-z]{2,4})?\s?\d{3})\b/ ) );
+	}
+
+};
+
+Scheduler.QueryMapper.init();
+
