@@ -103,6 +103,7 @@ Scheduler.QueryMapper = {
 			{
 				matches = [];
 
+				// For each of the filters check if they match against the current token
 				for( var f = 0; f < filters.length; f++ )
 				{
 					var match = filters[f].parse( tkn );
@@ -114,7 +115,7 @@ Scheduler.QueryMapper = {
 				}
 
 
-				console.log( "Matches with token " + tkn + ": " + matches.length );
+				//console.log( "Matches with token " + tkn + ": " + matches.length );
 				// check if matches is zero
 				if( matches.length > 0 )
 				{
@@ -128,12 +129,12 @@ Scheduler.QueryMapper = {
 
 					// get next token and add to the current token
 					lastToken = tokens.shift();
-					console.log( "Got next token: " + lastToken );
+					//console.log( "Got next token: " + lastToken );
 					tkn += " " + lastToken;
 				}
 				else if( lastToken.length > 0 )
 				{
-					console.log( "unshifted: " + lastToken );
+					//console.log( "unshifted: " + lastToken );
 					tokens.unshift( lastToken );
 					lastToken = "";
 				}
@@ -174,6 +175,79 @@ Scheduler.QueryMapper = {
 			{
 				result = val.split( ' ' );
 			}
+		}
+
+		return result;
+	},
+
+	makeNewFilter : function ( prototype )
+	{
+		var obj = JSON.parse( JSON.stringify( prototype ) );
+		obj.readOnly = [];
+
+		return obj;
+	},
+	
+	generateFilterObjects : function( input )
+	{
+		var filterTokens = Scheduler.QueryMapper.filterTokenize( input );
+		var result = [ { readOnly : [] } ];
+		var pos = 0;
+		var minPos = 0;
+
+		// While there are tokens process the filter objects
+		while( filterTokens.length )
+		{
+			var tkn = filterTokens.shift();
+
+			if( tkn.type == 'separator' )
+			{
+				result.push( { readOnly : [] } );
+				minPos = pos+1;
+				continue;
+			}
+
+			var newFilters = [];
+			// Check each filter for the given property
+			for( var i = result.length-1; i >= minPos; i-- )
+			{
+				// If the filter does not have a readonly flag for the attribute then it is either not a part of the object
+				// or has not been changed
+				if( $.inArray( tkn.type, result[i].readOnly ) == -1 )
+				{
+					result[i][tkn.type] = tkn.value;
+					result[i].readOnly.push( tkn.type );
+				}
+				else
+				{
+					if( result[i][tkn.type] != tkn.value )
+					{
+						var newFilter = Scheduler.QueryMapper.makeNewFilter( result[i] );
+						pos++;
+						newFilter[tkn.type] = tkn.value;
+						newFilter.readOnly.push( tkn.type );
+						newFilters.push( newFilter );
+					}
+				}
+			}
+
+			if( newFilters.length > 0 )
+			{
+				result = result.concat( newFilters );
+			}
+		}
+
+		// if the first result has no read only members then there
+		// were no matches, return an empty array
+		if( result[0].readOnly.length == 0 )
+		{
+			result = [];
+		}
+
+		// Remove the read only attribute from the filter objects
+		for( var i = 0; i < result.length; i++ )
+		{
+			delete result[i].readOnly;
 		}
 
 		return result;
