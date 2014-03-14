@@ -4,17 +4,16 @@ Template.home_page.events( {
 		var input = $("#query").val();
 		var results = Scheduler.QueryMapper.filterTokenize( input ) ;
 
+		$("#results").empty();
 
 		if( !( results instanceof Array ) || results.length <= 0 )
 		{
 			return null;
 		}
 
-		$("#results").empty();
-
 		for( var result in results )
 		{
-			var text = "Type: " + results[result].type + ", Value: " + results[result].value;
+			var text = "Token: {  Type: " + results[result].type + ", Value: " + results[result].value + "}";
 			var rsl = $("<div>",{
 				"text":text,
 			});

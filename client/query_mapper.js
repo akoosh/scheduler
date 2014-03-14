@@ -114,7 +114,7 @@ Scheduler.QueryMapper = {
 				}
 
 
-				//console.log( "Matches with token " + tkn + ": " + matches.length );
+				console.log( "Matches with token " + tkn + ": " + matches.length );
 				// check if matches is zero
 				if( matches.length > 0 )
 				{
@@ -128,12 +128,12 @@ Scheduler.QueryMapper = {
 
 					// get next token and add to the current token
 					lastToken = tokens.shift();
-					//console.log( "Got next token: " + lastToken );
+					console.log( "Got next token: " + lastToken );
 					tkn += " " + lastToken;
 				}
 				else if( lastToken.length > 0 )
 				{
-					//console.log( "unshifted: " + lastToken );
+					console.log( "unshifted: " + lastToken );
 					tokens.unshift( lastToken );
 					lastToken = "";
 				}
@@ -184,8 +184,10 @@ Scheduler.QueryMapper = {
 	{
 	
 		Scheduler.QueryMapper.addFilter( "units", Scheduler.QueryMapper._regexIsMember( /^([1-6])\s?(?:units?)?$/ ) );
-		Scheduler.QueryMapper.addFilter( "ge code", Scheduler.QueryMapper._regexIsMember( /\b(?:ge)?\s?([a-e][1-5]?)\s?(?:ge)?\b/ ) );
+		
+		Scheduler.QueryMapper.addFilter( "ge code", Scheduler.QueryMapper._regexIsMember( /^(ge\s?[a-e]?[1-5]?)$/ ) );
 		Scheduler.QueryMapper.addFilter( "separator", Scheduler.QueryMapper._regexIsMember( /(^,$)/ ) );
+
 		Scheduler.QueryMapper.addFilter( "subject", Scheduler.QueryMapper._valueIsMember( subjects ) );
 		Scheduler.QueryMapper.addFilter( "professor", Scheduler.QueryMapper._valueIsMember( professor_name ) );
 		Scheduler.QueryMapper.addFilter( "course title", Scheduler.QueryMapper._valueIsMember( course_title ) );
