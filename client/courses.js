@@ -1,11 +1,13 @@
 Scheduler.Courses = {
 
 	is_course_title: function( title ) {
-		return CoursesModel.find( { "title": /^title/i }, { "_id": 1 } ).fetch().length > 0;
+        rexp = RegExp(title, 'i');
+		return CoursesModel.find( { "title": rexp }, { "_id": 1 } ).fetch().length > 0;
 	},
 
 	is_professor: function( professor ) {
-		return CoursesModel.find( { "classes.sections.professors": /^professor/i }, { "_id": 1 } ).fetch().length > 0;
+        rexp = RegExp('^' + professor, 'i');
+		return CoursesModel.find( { "classes.sections.professors": rexp }, { "_id": 1 } ).fetch().length > 0;
 	}
 };
 
