@@ -46,6 +46,13 @@ Scheduler.QueryMapper = {
 			return null;
 		};
 	},
+
+	_valueFunction : function( fun )
+	{
+		return function( value ){
+			return fun(value)?value:null;
+		}
+	},
 	
 	// Filter object for the filets
 	Filter : function( category, isMember ){
@@ -258,13 +265,16 @@ Scheduler.QueryMapper = {
 	{
 	
 		Scheduler.QueryMapper.addFilter( "units", Scheduler.QueryMapper._regexIsMember( /^([1-6])\s?(?:units?)?$/ ) );
-		
 		Scheduler.QueryMapper.addFilter( "ge code", Scheduler.QueryMapper._regexIsMember( /^(ge\s?[a-e]?[1-5]?)$/ ) );
 		Scheduler.QueryMapper.addFilter( "separator", Scheduler.QueryMapper._regexIsMember( /(^,$)/ ) );
+		Scheduler.QueryMapper.addFilter( "time", Scheduler.QueryMapper._regexIsMember( /^(\d?\d?:?\d?\d\s?[ap]?\.?m?\.?)$/ ) );
+		Scheduler.QueryMapper.addFilter( "full day", Scheduler.QueryMapper._regexIsMember( /^((?:mon|tues?|wedn?e?s?|thurs?|fri|satu?r?|sun)(?:day)?)$/ ) );
 
 		Scheduler.QueryMapper.addFilter( "subject", Scheduler.QueryMapper._valueIsMember( subjects ) );
 		Scheduler.QueryMapper.addFilter( "professor", Scheduler.QueryMapper._valueIsMember( professor_name ) );
-		Scheduler.QueryMapper.addFilter( "course title", Scheduler.QueryMapper._valueIsMember( course_title ) );
+		Scheduler.QueryMapper.addFilter( "course title", Scheduler.QueryMapper._valueFunction( Scheduler.Courses.is_course_title ) );
+
+//		Scheduler.QueryMapper.addFilter( "course title", Scheduler.QueryMapper._valueIsMember( course_title ) );
 	}
 
 };
