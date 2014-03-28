@@ -50,6 +50,7 @@ Scheduler.QueryMapper = {
 	_valueFunction : function( fun )
 	{
 		return function( value ){
+			// if value has comma exit
 			return fun(value)?value:null;
 		}
 	},
@@ -118,11 +119,15 @@ Scheduler.QueryMapper = {
 					if( match != null )
 					{
 						matches.push( match );
+
+						if( f == 0 ){
+							break;
+						}
 					}
 				}
 
 
-				//console.log( "Matches with token " + tkn + ": " + matches.length );
+				// console.log( "Matches with token " + tkn + ": " + matches.length );
 				// check if matches is zero
 				if( matches.length > 0 )
 				{
@@ -210,7 +215,7 @@ Scheduler.QueryMapper = {
 			if( tkn.type == 'separator' )
 			{
 				result.push( { readOnly : [] } );
-				minPos = pos+1;
+				minPos = ++pos;
 				continue;
 			}
 
@@ -257,6 +262,8 @@ Scheduler.QueryMapper = {
 			delete result[i].readOnly;
 		}
 
+		console.log( result );
+
 		return result;
 	},
 
@@ -264,14 +271,15 @@ Scheduler.QueryMapper = {
 	init : function()
 	{
 	
+
+		Scheduler.QueryMapper.addFilter( "separator", Scheduler.QueryMapper._regexIsMember( /(^,$)/ ) );
 		Scheduler.QueryMapper.addFilter( "units", Scheduler.QueryMapper._regexIsMember( /^([1-6])\s?(?:units?)?$/ ) );
 		Scheduler.QueryMapper.addFilter( "ge code", Scheduler.QueryMapper._regexIsMember( /^(ge\s?[a-e]?[1-5]?)$/ ) );
-		Scheduler.QueryMapper.addFilter( "separator", Scheduler.QueryMapper._regexIsMember( /(^,$)/ ) );
 		Scheduler.QueryMapper.addFilter( "time", Scheduler.QueryMapper._regexIsMember( /^(\d?\d?:?\d?\d\s?[ap]?\.?m?\.?)$/ ) );
 		Scheduler.QueryMapper.addFilter( "full day", Scheduler.QueryMapper._regexIsMember( /^((?:mon|tues?|wedn?e?s?|thurs?|fri|satu?r?|sun)(?:day)?)$/ ) );
 
 		Scheduler.QueryMapper.addFilter( "subject", Scheduler.QueryMapper._valueIsMember( subjects ) );
-		Scheduler.QueryMapper.addFilter( "professor", Scheduler.QueryMapper._valueIsMember( professor_name ) );
+		Scheduler.QueryMapper.addFilter( "professor", Scheduler.QueryMapper._valueFunction( Scheduler.Courses.is_professor ) );
 		Scheduler.QueryMapper.addFilter( "course title", Scheduler.QueryMapper._valueFunction( Scheduler.Courses.is_course_title ) );
 
 //		Scheduler.QueryMapper.addFilter( "course title", Scheduler.QueryMapper._valueIsMember( course_title ) );
