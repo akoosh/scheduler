@@ -4,3 +4,4 @@
 
 PlansModel = new Meteor.Collection( "Plans" );
 EntriesModel = new Meteor.Collection( "Entries" );
+CoursesModel = new Meteor.Collection( "Courses" );
