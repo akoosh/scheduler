@@ -275,7 +275,8 @@ Scheduler.QueryMapper = {
 	
 		Scheduler.QueryMapper.addFilter( "separator", Scheduler.QueryMapper._regexIsMember( /(^,$)/ ) );
 		Scheduler.QueryMapper.addFilter( "units", Scheduler.QueryMapper._regexIsMember( /^([1-6])\s?(?:units?)?$/ ) );
-		Scheduler.QueryMapper.addFilter( "ge code", Scheduler.QueryMapper._regexIsMember( /^(ge\s?[a-e]?[1-5]?)$/ ) );
+		Scheduler.QueryMapper.addFilter( "ge code", Scheduler.QueryMapper._regexIsMember( 
+			/^(ge\s?[a-e]?[1-5]?)$/ ) );
 		Scheduler.QueryMapper.addFilter( "time", Scheduler.QueryMapper._regexIsMember( /^(\d?\d?:?\d?\d\s?[ap]?\.?m?\.?)$/ ) );
 		Scheduler.QueryMapper.addFilter( "full day", Scheduler.QueryMapper._regexIsMember( /^((?:mon|tues?|wedn?e?s?|thurs?|fri|satu?r?|sun)(?:day)?)$/ ) );
 
