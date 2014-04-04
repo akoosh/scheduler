@@ -280,11 +280,10 @@ Scheduler.QueryMapper = {
 		Scheduler.QueryMapper.addFilter( "time", Scheduler.QueryMapper._regexIsMember( /^(\d?\d?:?\d?\d\s?[ap]?\.?m?\.?)$/ ) );
 		Scheduler.QueryMapper.addFilter( "full day", Scheduler.QueryMapper._regexIsMember( /^((?:mon|tues?|wedn?e?s?|thurs?|fri|satu?r?|sun)(?:day)?)$/ ) );
 
-		Scheduler.QueryMapper.addFilter( "subject", Scheduler.QueryMapper._valueIsMember( subjects ) );
+		Scheduler.QueryMapper.addFilter( "subject", Scheduler.QueryMapper._valueFunction( Scheduler.Courses.is_subject ) );
 		Scheduler.QueryMapper.addFilter( "professor", Scheduler.QueryMapper._valueFunction( Scheduler.Courses.is_professor ) );
 		Scheduler.QueryMapper.addFilter( "course title", Scheduler.QueryMapper._valueFunction( Scheduler.Courses.is_course_title ) );
 
-//		Scheduler.QueryMapper.addFilter( "course title", Scheduler.QueryMapper._valueIsMember( course_title ) );
 	}
 
 };
