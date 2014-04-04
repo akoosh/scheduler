@@ -20,7 +20,7 @@
 	height: 30px;
 }
 
-#results div
+.filter
 {
 	width: 100%;
 	border: 1px solid #C3C3C3;
@@ -29,4 +29,41 @@
 	padding: 5px;
 	font-weight: bold;
 	background-color: #EEE;
+	font-size: 18px;
 }
+
+.result_a, .result_b
+{
+	margin-left: 20px;
+	padding: 3px;
+	width: 94%;
+	border-radius: 3px;
+	font-size: 13px;
+}
+
+.result_a
+{
+	background-color: #CCC;
+}
+
+.result_b
+{
+	background-color: #BBB;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* EOF */

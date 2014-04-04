@@ -63,7 +63,7 @@ Scheduler.QueryMapper = {
 		{
 			if( typeof isMember !== 'function' )
 			{
-				console.error( "Filter function is not defined correctly for filter with category: " + this.category );
+				//console.error( "Filter function is not defined correctly for filter with category: " + this.category );
 				return null;
 			}
 
@@ -127,7 +127,7 @@ Scheduler.QueryMapper = {
 				}
 
 
-				// console.log( "Matches with token " + tkn + ": " + matches.length );
+				//console.log( "Matches with token " + tkn + ": " + matches.length );
 				// check if matches is zero
 				if( matches.length > 0 )
 				{
@@ -212,6 +212,7 @@ Scheduler.QueryMapper = {
 		{
 			var tkn = filterTokens.shift();
 
+
 			if( tkn.type == 'separator' )
 			{
 				result.push( { readOnly : [] } );
@@ -220,6 +221,9 @@ Scheduler.QueryMapper = {
 			}
 
 			var newFilters = [];
+
+
+			var canCopy = true;
 			// Check each filter for the given property
 			for( var i = result.length-1; i >= minPos; i-- )
 			{
@@ -229,17 +233,15 @@ Scheduler.QueryMapper = {
 				{
 					result[i][tkn.type] = tkn.value;
 					result[i].readOnly.push( tkn.type );
+					canCopy = false;
 				}
-				else
+				else if( canCopy && result[i][tkn.type] != tkn.value )
 				{
-					if( result[i][tkn.type] != tkn.value )
-					{
-						var newFilter = Scheduler.QueryMapper.makeNewFilter( result[i] );
-						pos++;
-						newFilter[tkn.type] = tkn.value;
-						newFilter.readOnly.push( tkn.type );
-						newFilters.push( newFilter );
-					}
+					var newFilter = Scheduler.QueryMapper.makeNewFilter( result[i] );
+					pos++;
+					newFilter[tkn.type] = tkn.value;
+					newFilter.readOnly.push( tkn.type );
+					newFilters.push( newFilter );
 				}
 			}
 
@@ -262,7 +264,7 @@ Scheduler.QueryMapper = {
 			delete result[i].readOnly;
 		}
 
-		console.log( result );
+		//console.log( result );
 
 		return result;
 	},
@@ -277,11 +279,10 @@ Scheduler.QueryMapper = {
 		Scheduler.QueryMapper.addFilter( "time", Scheduler.QueryMapper._regexIsMember( /^(\d?\d?:?\d?\d\s?[ap]?\.?m?\.?)$/ ) );
 		Scheduler.QueryMapper.addFilter( "full day", Scheduler.QueryMapper._regexIsMember( /^((?:mon|tues?|wedn?e?s?|thurs?|fri|satu?r?|sun)(?:day)?)$/ ) );
 
-		Scheduler.QueryMapper.addFilter( "subject", Scheduler.QueryMapper._valueIsMember( subjects ) );
+		Scheduler.QueryMapper.addFilter( "subject", Scheduler.QueryMapper._valueFunction( Scheduler.Courses.is_subject ) );
 		Scheduler.QueryMapper.addFilter( "professor", Scheduler.QueryMapper._valueFunction( Scheduler.Courses.is_professor ) );
 		Scheduler.QueryMapper.addFilter( "course title", Scheduler.QueryMapper._valueFunction( Scheduler.Courses.is_course_title ) );
 
-//		Scheduler.QueryMapper.addFilter( "course title", Scheduler.QueryMapper._valueIsMember( course_title ) );
 	}
 
 };
