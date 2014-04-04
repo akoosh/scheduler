@@ -271,7 +271,6 @@ Scheduler.QueryMapper = {
 	init : function()
 	{
 	
-
 		Scheduler.QueryMapper.addFilter( "separator", Scheduler.QueryMapper._regexIsMember( /(^,$)/ ) );
 		Scheduler.QueryMapper.addFilter( "units", Scheduler.QueryMapper._regexIsMember( /^([1-6])\s?(?:units?)?$/ ) );
 		Scheduler.QueryMapper.addFilter( "ge code", Scheduler.QueryMapper._regexIsMember( /^(ge\s?[a-e]?[1-5]?)$/ ) );
