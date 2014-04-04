@@ -4,10 +4,7 @@ Template.home_page.events(
 			var input = $("#query").val();
 			var results = Scheduler.QueryMapper.generateFilterObjects( input );
 
-			console.log( results );
-
 			$("#results").empty();
-
 
 			if( !( results instanceof Array ) || results.length <= 0 )
 			{
