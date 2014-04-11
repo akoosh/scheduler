@@ -1,8 +1,30 @@
 Template.home_page.events( 
-	{
-		"keyup #query"	:	function(){
-			var input = $("#query").val();
-			var results = Scheduler.QueryMapper.generateFilterObjects( input );
+    {
+		"keyup #query": function() {
+			var handler = Session.get("timeout_handler");
+			if (typeof handler !== 'undefined') clearTimeout(handler);
+
+			var new_hander = setTimeout( function() {
+
+				var input = $("#query").val();
+				var filter_objects = Scheduler.QueryMapper.generateFilterObjects( input );
+				console.log(filter_objects);
+				var query_display = [];
+
+				for (var i=0; i < filter_objects.length; ++i) {
+					var display_object = {};
+					display_object.filters = filter_objects[i];
+					display_object.results = Scheduler.Courses.find_by_filter_object( filter_objects[i] );
+					query_display.push( display_object );
+				}
+
+				Session.set("query_display", query_display);
+
+			}, 2000 );
+ 
+			Session.set("timeout_handler", new_hander);
+		}
+		/*
 
 			$("#results").empty();
 
@@ -52,4 +74,6 @@ Template.home_page.events(
 				$("#results").append( rsl );
 			}
 		},
-	}	);
+	*/
+    }
+);

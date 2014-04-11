@@ -30,8 +30,7 @@ Scheduler.Courses = {
 	},
 
 	is_subject: function ( subject ) {
-		rexp = RegExp(subject, 'i');
-		return CoursesModel.find( { "subject": rexp }, {"_id": 1} ).fetch().length > 0;
+		return CoursesModel.find( { "subject": subject.toUpperCase() }, {"_id": 1} ).fetch().length > 0;
 	}
 };
 
