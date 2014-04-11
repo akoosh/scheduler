@@ -65,9 +65,9 @@ Scheduler.QueryMapper = {
 		}
 	},
 	
-	addFilter : function( category, isMember )
+	addFilter : function( category, isMember, priority )
 	{
-		var filter = new Scheduler.QueryMapper.Filter( category, isMember );
+		var filter = new Scheduler.QueryMapper.Filter( category, isMember, priority );
 		Scheduler.QueryMapper.filters.push( filter );
 		
 	},
