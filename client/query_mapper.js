@@ -95,8 +95,8 @@ Scheduler.QueryMapper = {
 
 	// Returns an array of matches for a given collection of filters
 	filterTokenize : function( input ){
-		var tokens = Scheduler.QueryMapper.stringTokenize( input );
-		var filters = Scheduler.QueryMapper.filters;
+		var tokens = this.stringTokenize( input );
+		var filters = this.filters;
 		var filterTokens = [];
 
 		while( tokens.length )
@@ -126,14 +126,34 @@ Scheduler.QueryMapper = {
 					}
 				}
 
-
 				//console.log( "Matches with token " + tkn + ": " + matches.length );
-				// check if matches is zero
+				// If there are matches then process the matches
 				if( matches.length > 0 )
 				{
+					// Get the highest priority in the matches array
+					var highestPriority = 0;
+					for( var i = 0; i < matches.length; i++ )
+					{
+						if( matches[i].priority > highestPriority )
+						{
+							highestPriority = matches[i].priority;
+						}
+					}
+
+
+					// Remove all matches that have lower priority
+					for( var i = 0; i < matches.length; i++ )
+					{
+						if( matches[i].priority < highestPriority )
+						{
+							matches = matches.slice( i--, 1 );
+						}
+					}
+
 					// Copy the matches array into the lastMatches array
 					possibleMatches = matches.slice();
 
+					// If we do not have any more tokens then exit the loop
 					if( tokens.length == 0 )
 					{
 						break;
@@ -141,17 +161,20 @@ Scheduler.QueryMapper = {
 
 					// get next token and add to the current token
 					lastToken = tokens.shift();
+
 					//console.log( "Got next token: " + lastToken );
 					tkn += " " + lastToken;
 				}
-				else if( lastToken.length > 0 )
+				
+				// If we had no matches and the last token has been defined then reinsert the last token before exiting loop
+				if( matches.length == 0 && lastToken.length > 0 )
 				{
 					//console.log( "unshifted: " + lastToken );
 					tokens.unshift( lastToken );
 					lastToken = "";
 				}
 
-				// if no more tokens exit
+				// If there were no matches exit the loop
 			} while( matches.length != 0 );
 
 			// have array of filters that matches 1 or more tokens
