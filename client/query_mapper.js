@@ -2,27 +2,8 @@
 // 02/28/2014
 // ZT & AW
 
-course_title = {
-	'intro to computer science':true,
-	'intro biology':true,
-	'data structures':true,
-	'weight lifting':true,
-};
-
-subjects = {
-	'cs':true,
-	'bio':true,
-	'math':true,
-	'pols':true,
-};
-
-professor_name = {
-	'billy bob':true,
-	'john doe':true,
-	'frank manning':true,
-};
-
 Scheduler.QueryMapper = {
+	PRIORITY: { NORMAL: 0, HIGH: 1 },
 
 	_regexIsMember : function( regex )
 	{
@@ -56,9 +37,10 @@ Scheduler.QueryMapper = {
 	},
 	
 	// Filter object for the filets
-	Filter : function( category, isMember ){
+	Filter : function( category, isMember, priority ){
 		this.category = category;
 		this.isMember = isMember;
+		this.priority = typeof priority !== 'undefined' ? priority : Scheduler.QueryMapper.PRIORITY.NORMAL;
 		this.parse = function( input )
 		{
 			if( typeof isMember !== 'function' )
@@ -125,8 +107,6 @@ Scheduler.QueryMapper = {
 						}
 					}
 				}
-
-
 				//console.log( "Matches with token " + tkn + ": " + matches.length );
 				// check if matches is zero
 				if( matches.length > 0 )
@@ -173,7 +153,7 @@ Scheduler.QueryMapper = {
 		{
 			val = val
 					// Replace multiple commas with single commas
-					.replace( /,{2,}/g , "," )			
+					.replace( /,{2,}/g , "," )
 					// Put spaces around commas to tokenize
 					.replace( /,/g, " , " )
 					// Remove duplicate spaces
@@ -273,16 +253,15 @@ Scheduler.QueryMapper = {
 	init : function()
 	{
 	
-		Scheduler.QueryMapper.addFilter( "separator", Scheduler.QueryMapper._regexIsMember( /(^,$)/ ) );
-		Scheduler.QueryMapper.addFilter( "units", Scheduler.QueryMapper._regexIsMember( /^([1-6])\s?(?:units?)?$/ ) );
-		Scheduler.QueryMapper.addFilter( "ge code", Scheduler.QueryMapper._regexIsMember( 
-			/^(ge\s?[a-e]?[1-5]?)$/ ) );
-		Scheduler.QueryMapper.addFilter( "time", Scheduler.QueryMapper._regexIsMember( /^(\d?\d?:?\d?\d\s?[ap]?\.?m?\.?)$/ ) );
-		Scheduler.QueryMapper.addFilter( "full day", Scheduler.QueryMapper._regexIsMember( /^((?:mon|tues?|wedn?e?s?|thurs?|fri|satu?r?|sun)(?:day)?)$/ ) );
+		Scheduler.QueryMapper.addFilter( "separator", this._regexIsMember( /(^,$)/ ), this.PRIORITY.HIGH );
+		Scheduler.QueryMapper.addFilter( "units", this._regexIsMember( /^([1-6])\s?(?:units?)?$/ ) );
+		Scheduler.QueryMapper.addFilter( "ge code", this._regexIsMember( /^(ge\s?[a-e]?[1-5]?)$/ ), this.PRIORITY.HIGH );
+		Scheduler.QueryMapper.addFilter( "time", this._regexIsMember( /^(\d?\d?:?\d?\d\s?[ap]?\.?m?\.?)$/ ) );
+		Scheduler.QueryMapper.addFilter( "full day", this._regexIsMember( /^((?:mon|tues?|wedn?e?s?|thurs?|fri|satu?r?|sun)(?:day)?)$/ ) );
 
-		Scheduler.QueryMapper.addFilter( "subject", Scheduler.QueryMapper._valueFunction( Scheduler.Courses.is_subject ) );
-		Scheduler.QueryMapper.addFilter( "professor", Scheduler.QueryMapper._valueFunction( Scheduler.Courses.is_professor ) );
-		Scheduler.QueryMapper.addFilter( "course title", Scheduler.QueryMapper._valueFunction( Scheduler.Courses.is_course_title ) );
+		Scheduler.QueryMapper.addFilter( "subject", this._valueFunction( Scheduler.Courses.is_subject ), this.PRIORITY.HIGH );
+		Scheduler.QueryMapper.addFilter( "professor", this._valueFunction( Scheduler.Courses.is_professor ) );
+		Scheduler.QueryMapper.addFilter( "course title", this._valueFunction( Scheduler.Courses.is_course_title ) );
 
 	}
 
