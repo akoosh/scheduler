@@ -4,6 +4,7 @@
 
 Scheduler.QueryMapper = {
 	PRIORITY: { NORMAL: 0, HIGH: 1 },
+	timeoutHandle : 0,
 
 	_regexIsMember : function( regex )
 	{
@@ -56,6 +57,7 @@ Scheduler.QueryMapper = {
 			{
 				return { 
 					"type": this.category, 
+					"priority":this.priority,
 					"value" : result,
 				};
 			}
@@ -114,21 +116,22 @@ Scheduler.QueryMapper = {
 				{
 					// Get the highest priority in the matches array
 					var highestPriority = 0;
+
 					for( var i = 0; i < matches.length; i++ )
 					{
+						console.log( matches[i] );
 						if( matches[i].priority > highestPriority )
 						{
 							highestPriority = matches[i].priority;
 						}
 					}
 
-
 					// Remove all matches that have lower priority
 					for( var i = 0; i < matches.length; i++ )
 					{
 						if( matches[i].priority < highestPriority )
 						{
-							matches = matches.slice( i--, 1 );
+							matches.splice( i--, 1 );
 						}
 					}
 
