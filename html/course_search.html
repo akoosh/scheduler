@@ -1,0 +1,43 @@
+<template name="query_page">
+	<div id="logo">
+		<div id="testing">
+			{{> search_bar}}
+			{{> query_display}}
+		</div>
+	</div>
+</template>
+
+<template name="search_bar">
+	<input type="text" id="query" />
+</template>
+
+<template name="query_display">
+	<div id="results">
+		{{#each filter_and_results}}
+			{{> filter_and_result}}
+		{{/each}}
+	</div>
+</template>
+
+<template name="filter_and_result">
+	{{> filter_display}}
+	{{#each results}}
+		{{> result_display}}
+	{{/each}}
+</template>
+
+<template name="filter_display">
+	<div>
+		<p>
+		{{#each arrayify_filter filter}}
+			{{key}}: {{value}}
+		{{/each}}
+		</p>
+	</div>
+</template>
+
+<template name="result_display">
+	<div>
+		{{title}}
+	</div>
+</template>

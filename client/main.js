@@ -1,4 +1,20 @@
-Template.home_page.events( 
+Template.filter_display.arrayify_filter = function(filter) {
+    array = [];
+    for (var attr in filter) {
+        var obj = {};
+        obj.key = attr;
+        obj.value = filter[attr];
+        array.push(obj);
+    }
+    return array;
+}
+
+Template.query_display.filter_and_results = function() {
+	var filter_and_results = Session.get("filter_and_results");
+	return typeof filter_and_results !== 'undefined' ? filter_and_results : [];
+}
+
+Template.query_page.events( 
     {
 		"keyup #query": function() {
 			var handler = Session.get("timeout_handler");
@@ -13,12 +29,12 @@ Template.home_page.events(
 
 				for (var i=0; i < filter_objects.length; ++i) {
 					var display_object = {};
-					display_object.filters = filter_objects[i];
+					display_object.filter = filter_objects[i];
 					display_object.results = Scheduler.Courses.find_by_filter_object( filter_objects[i] );
 					query_display.push( display_object );
 				}
 
-				Session.set("query_display", query_display);
+				Session.set("filter_and_results", query_display);
 
 			}, 2000 );
  
