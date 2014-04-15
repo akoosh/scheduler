@@ -237,7 +237,7 @@ Scheduler.QueryMapper = {
 			{
 				// If the filter does not have a readonly flag for the attribute then it is either not a part of the object
 				// or has not been changed
-				if( $.inArray( tkn.type, result[i].readOnly ) == -1 )
+				if( ! _.contains( result[i].readOnly, tkn.type ) )
 				{
 					result[i][tkn.type] = tkn.value;
 					result[i].readOnly.push( tkn.type );
@@ -294,6 +294,4 @@ Scheduler.QueryMapper = {
 	}
 
 };
-
-Scheduler.QueryMapper.init();
 

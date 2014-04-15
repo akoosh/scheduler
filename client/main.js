@@ -23,18 +23,8 @@ Template.query_page.events(
 			var new_hander = setTimeout( function() {
 
 				var input = $("#query").val();
-				var filter_objects = Scheduler.QueryMapper.generateFilterObjects( input );
-				console.log(filter_objects);
-				var query_display = [];
-
-				for (var i=0; i < filter_objects.length; ++i) {
-					var display_object = {};
-					display_object.filter = filter_objects[i];
-					display_object.results = Scheduler.Courses.find_by_filter_object( filter_objects[i] );
-					query_display.push( display_object );
-				}
-
-				Session.set("filter_and_results", query_display);
+				var query_objects = Scheduler.Courses.find_by_query( input );
+				Session.set("filter_and_results", query_objects);
 
 			}, 2000 );
  

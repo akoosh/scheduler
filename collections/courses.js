@@ -1,5 +1,18 @@
 Scheduler.Courses = {
 
+	find_by_query: function(query) {
+		filter_objects = Scheduler.QueryMapper.generateFilterObjects(query);
+		var query_results = [];
+
+		for (var i=0; i < filter_objects.length; ++i) {
+			var query_object = {};
+			query_object.filter = filter_objects[i];
+			query_object.results = this.find_by_filter_object( filter_objects[i] );
+			query_results.push( query_object );
+		}
+		return query_results;
+	},
+
 	build_query: function( filter_object ) {
 		query_object = {}
 		for (var key in filter_object) {
@@ -12,7 +25,7 @@ Scheduler.Courses = {
 
 	find_by_filter_object: function( filter_object ) {
 		query_object = this.build_query(filter_object);
-		if ( ! $.isEmptyObject( query_object ) ) {
+		if ( ! _.isEmpty( query_object ) ) {
 			return CoursesModel.find( query_object ).fetch();
 		}
 		else return [];
@@ -31,6 +44,10 @@ Scheduler.Courses = {
 
 	is_subject: function ( subject ) {
 		return CoursesModel.find( { "subject": subject.toUpperCase() }, {"_id": 1} ).fetch().length > 0;
+	},
+
+	init: function() {
+		Scheduler.QueryMapper.init()
 	}
 };
 
@@ -65,3 +82,4 @@ Scheduler.Courses.ValueMapper = {
 	}
 };
 
+Scheduler.Courses.init()
