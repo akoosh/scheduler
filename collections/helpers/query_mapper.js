@@ -284,9 +284,8 @@ Scheduler.QueryMapper = {
 		Scheduler.QueryMapper.addFilter( "separator", this._regexIsMember( /(^,$)/ ), this.PRIORITY.HIGH );
 		Scheduler.QueryMapper.addFilter( "units", this._regexIsMember( /^([1-6])\s?(?:units?)?$/ ) );
 		Scheduler.QueryMapper.addFilter( "ge code", this._regexIsMember( /^(ge\s?[a-e]?[1-5]?)$/ ), this.PRIORITY.HIGH );
-		Scheduler.QueryMapper.addFilter( "time", this._regexIsMember( /^(\d?\d?:?\d?\d\s?[ap]?\.?m?\.?)$/ ) );
+		Scheduler.QueryMapper.addFilter( "time", this._regexIsMember( /^(\d?\d?:?\d?\d\s?[ap]\.?m?\.?)$/ ) );
 		Scheduler.QueryMapper.addFilter( "full day", this._regexIsMember( /^((?:mon|tues?|wedn?e?s?|thurs?|fri|satu?r?|sun)(?:day)?)$/ ) );
-
 		Scheduler.QueryMapper.addFilter( "subject", this._valueFunction( Scheduler.Courses.is_subject ), this.PRIORITY.HIGH );
 		Scheduler.QueryMapper.addFilter( "professor", this._valueFunction( Scheduler.Courses.is_professor ) );
 		Scheduler.QueryMapper.addFilter( "course title", this._valueFunction( Scheduler.Courses.is_course_title ) );

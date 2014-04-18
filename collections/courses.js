@@ -56,7 +56,8 @@ Scheduler.Courses.KeyMapper = {
 	"ge code": "ge_code",
 	"subject": "subject",
 	"professor": "classes.sections.professors",
-	"course title": "title"
+	"course title": "title",
+    "time": "classes.sections.times.start_time"
 };
 
 Scheduler.Courses.ValueMapper = {
@@ -79,7 +80,22 @@ Scheduler.Courses.ValueMapper = {
 
 	"subject": function(subject) {
 		return subject.toUpperCase();
-	}
+	},
+
+    "time": function(time) {
+        var regexResults = time.toUpperCase().match(/(\d\d?):?(\d?\d?)\s?([AP])/);
+
+        var hour = regexResults[1];
+        hour = hour.length === 2 ? hour : "0" + hour;
+
+        var minute = regexResults[2];
+        minute = minute.length === 2 ? minute : "00";
+
+        var meridian = regexResults[3];
+        meridian = meridian.length === 2 ? meridian : meridian + "M";
+
+        return hour + ":" + minute + " " + meridian;
+    }
 };
 
 Scheduler.Courses.init()
