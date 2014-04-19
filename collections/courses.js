@@ -57,7 +57,8 @@ Scheduler.Courses.KeyMapper = {
 	"subject": "subject",
 	"professor": "classes.sections.professors",
 	"course title": "title",
-    "time": "classes.sections.times.start_time"
+    "time": "classes.sections.times.start_time",
+    "full day": "classes.sections.times.days"
 };
 
 Scheduler.Courses.ValueMapper = {
@@ -95,6 +96,11 @@ Scheduler.Courses.ValueMapper = {
         meridian = meridian.length === 2 ? meridian : meridian + "M";
 
         return hour + ":" + minute + " " + meridian;
+    },
+
+    "full day": function(day) {
+        code = day.search(/th/i) === -1 ? day.slice(0,1) : day.slice(0,2);
+        return RegExp( code + "((?!" + code + ").)*", 'i');
     }
 };
 
