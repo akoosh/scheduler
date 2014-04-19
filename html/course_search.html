@@ -14,7 +14,7 @@
 <template name="query_display">
 	<div id="results">
 		{{#each filter_and_results}}
-		<div class="result_a">
+		<div >
 			{{> filter_and_result}}
 		</div>
 		{{/each}}
@@ -22,24 +22,26 @@
 </template>
 
 <template name="filter_and_result">
-	{{> filter_display}}
-	{{#each results}}
-		{{> result_display}}
-	{{/each}}
+	<div class="filter_and_result">
+		<div class="filter_filter_label">Search Terms</div>
+		{{> filter_display}}
+		<div class="filter_results_label">Results</div>
+		{{#each results}}
+			{{> result_display}}
+		{{/each}}
+	</div>
 </template>
 
 <template name="filter_display">
-	<div>
-		<p>
+	<div class="filter_display">
 		{{#each arrayify_filter filter}}
-			{{key}}: {{value}}
+			<div class="filter_term">{{key}} as '{{value}}'</div>
 		{{/each}}
-		</p>
 	</div>
 </template>
 
 <template name="result_display">
-	<div>
+	<div class="result_display">
 		{{title}}
 	</div>
 </template>

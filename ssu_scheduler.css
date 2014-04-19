@@ -40,7 +40,7 @@
 	border: 1px solid #43759C;
 }
 
-.filter
+.filter_and_result
 {
 	width: 100%;
 	border: 1px solid #C3C3C3;
@@ -52,32 +52,39 @@
 	font-size: 18px;
 }
 
-.result_a, .result_b
+.filter_term
+{
+	padding: 5px;
+	border: 1px solid #AAA;
+	background-color: #BBB;
+	border-radius: 5px;
+	margin:3px;
+	width:200px;
+	float:left;
+}
+
+.filter_and_result > .result_display
 {
 	margin-left: 20px;
 	padding: 3px;
 	width: 94%;
-	border-radius: 3px;
+	border-bottom: 1px solid #000;
 	font-size: 13px;
 	-webkit-transition: background-color 1s; /* For Safari 3.1 to 6.0 */
 	transition: background-color 1s;
+	background-color: #BBB;
 }
 
-.result_a:hover, .result_b:hover
+.filter_and_result > .result_display:hover
 {
 	background-color: #AAA;
 }
 
-.result_a
+.filter_results_label, .filter_filter_label
 {
-	background-color: #CCC;
+	clear:both;
+	margin-bottom:10px;
 }
-
-.result_b
-{
-	background-color: #BBB;
-}
-
 
 
 
