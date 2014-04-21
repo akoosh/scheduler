@@ -41,7 +41,7 @@ class CourseModel(object):
 
     def update_matching_section_info(self, section):
         for cur_section in self.cur_class['sections']:
-            if cur_section['type'] is section['type']:
+            if cur_section['type'] == section['type']:
                 self.merge_section_into_cur_section(section, cur_section)
                 return
         print "No matching sections"
@@ -62,7 +62,7 @@ class CourseModel(object):
 
     def update_cur_class(self, this_class):
         section = self.get_section_from_class(this_class)
-        if this_class['number'] is self.cur_class['number']:
+        if this_class['number'] == self.cur_class['number']:
             self.update_matching_section_info(section)
         else:
             self.add_section_to_cur_class(section)
@@ -75,7 +75,7 @@ class CourseModel(object):
 
     def is_section_of_cur_class(self, this_class):
         section_type = self.get_section_from_class(this_class)['type']
-        return self.cur_class['number'] == this_class['number'] or all([section_type is not section['type'] for section in self.cur_class['sections']])
+        return self.cur_class['number'] == this_class['number'] or all([section_type != section['type'] for section in self.cur_class['sections']])
 
     def has_course(self, course):
         return course['subject_with_number'] in self.courses
@@ -85,7 +85,7 @@ class CourseModel(object):
         self.courses[subject_with_number] = course
         self.cur_class = self.get_class_from_course(course)
 
-    def add_class_to_course(course):
+    def add_class_to_course(self, course):
         this_class = self.get_class_from_course(course)
         subject_with_number = course['subject_with_number']
         self.courses[subject_with_number]['classes'].append( this_class)
@@ -103,7 +103,7 @@ class Course(object):
         course['subject'] = row['Sbjt']
         course['subject_with_number'] = row['Sbjt'] + row['Cat#']
         course['units'] = row['SUV']
-        course['ge_code'] = row['Designation']
+        course['ge_code'] = row['Component']
         course['classes'] = [] 
 
         this_class = {}
@@ -112,7 +112,7 @@ class Course(object):
 
         this_section = {}
         this_section['professors'] = [ row['Last'] ]
-        this_section['type'] = row['Component']
+        this_section['type'] = row['AsnType']
         this_section['locations'] = [ row['Facil ID'] ]
         this_section['times'] = []
 
