@@ -10,25 +10,29 @@ Template.filter_display.arrayify_filter = function(filter) {
 }
 
 Template.query_display.filter_and_results = function() {
-	var filter_and_results = Session.get("filter_and_results");
-	return typeof filter_and_results !== 'undefined' ? filter_and_results : [];
+    var filter_and_results = Session.get("filter_and_results");
+    return typeof filter_and_results !== 'undefined' ? filter_and_results : [];
 }
 
 Template.query_page.events( 
 {
-		"keyup #query": function() {
-			var handler = Session.get("timeout_handler");
-			if (typeof handler !== 'undefined') clearTimeout(handler);
+        "keyup #query": function() {
+            var handler = Session.get("timeoutHander");
+            if (typeof handler !== 'undefined') clearTimeout(handler);
 
-			var new_hander = setTimeout( function() {
+            var new_hander = setTimeout( function() {
 
-				var input = $("#query").val();
-				var query_objects = Scheduler.Courses.find_by_query( input );
-				Session.set("filter_and_results", query_objects);
+                var input = $("#query").val();
+                //var queryObjects = Scheduler.Courses.find_by_query( input );
+                Meteor.call('coursesForQuery', input, function(err, result) {
+                    if (err === undefined) {
+                        Session.set("filter_and_results", result);
+                    }
+                });
 
-			}, 500 );
+            }, 500 );
  
-			Session.set("timeout_handler", new_hander);
-		}
+            Session.set("timeoutHander", new_hander);
+        }
 }
 );

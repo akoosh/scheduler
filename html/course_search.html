@@ -1,47 +1,47 @@
 <template name="query_page">
-	<div id="logo">
-		<div id="testing">
-			{{> search_bar}}
-			{{> query_display}}
-		</div>
-	</div>
+    <div id="logo">
+        <div id="testing">
+            {{> search_bar}}
+            {{> query_display}}
+        </div>
+    </div>
 </template>
 
 <template name="search_bar">
-	<input type="text" id="query" />
+    <input type="text" id="query" />
 </template>
 
 <template name="query_display">
-	<div id="results">
-		{{#each filter_and_results}}
-		<div >
-			{{> filter_and_result}}
-		</div>
-		{{/each}}
-	</div>
+    <div id="results">
+        {{#each filter_and_results}}
+        <div >
+            {{> filter_and_result}}
+        </div>
+        {{/each}}
+    </div>
 </template>
 
 <template name="filter_and_result">
-	<div class="filter_and_result">
-		<div class="filter_filter_label">Search Terms</div>
-		{{> filter_display}}
-		<div class="filter_results_label">Results</div>
-		{{#each results}}
-			{{> result_display}}
-		{{/each}}
-	</div>
+    <div class="filter_and_result">
+        <div class="filter_filter_label">Search Terms</div>
+        {{> filter_display}}
+        <div class="filter_results_label">Results</div>
+        {{#each results}}
+            {{> result_display}}
+        {{/each}}
+    </div>
 </template>
 
 <template name="filter_display">
-	<div class="filter_display">
-		{{#each arrayify_filter filter}}
-			<div class="filter_term">{{key}} as '{{value}}'</div>
-		{{/each}}
-	</div>
+    <div class="filter_display">
+        {{#each arrayify_filter filter}}
+            <div class="filter_term">{{key}} as '{{value}}'</div>
+        {{/each}}
+    </div>
 </template>
 
 <template name="result_display">
-	<div class="result_display">
-		{{title}}
-	</div>
+    <div class="result_display">
+        {{title}}
+    </div>
 </template>
