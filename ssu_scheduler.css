@@ -15,7 +15,7 @@
 
 }
 
-#testing 
+#logo-wrapper
 {
 	width: 500px;
 	position: absolute;
@@ -25,9 +25,9 @@
 	margin: auto;
 }
 
-#testing input
+#home-wrapper input
 {
-	width: 100%;
+	width: 97%;
 	margin-top: 200px;
 	font-size: 28px;
 	height: 30px;
@@ -35,7 +35,7 @@
 	transition: border 1s;
 }
 
-#testing input:hover
+#home-wrapper input:hover
 {
 	border: 1px solid #43759C;
 }
