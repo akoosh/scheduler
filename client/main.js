@@ -14,9 +14,9 @@ Template.query_display.filter_and_results = function() {
     return typeof filter_and_results !== 'undefined' ? filter_and_results : [];
 }
 
-Template.query_page.events( 
-{
+Template.query_page.events( {
         "keyup #query": function() {
+            // Clear timout if there is a pending query
             var handler = Session.get("timeoutHander");
             if (typeof handler !== 'undefined') clearTimeout(handler);
 
