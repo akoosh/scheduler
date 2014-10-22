@@ -1,18 +1,22 @@
-Template.filter_display.arrayify_filter = function(filter) {
+Template.filter_display.helpers( {
+  "arrayify_filter" : function(filter) {
     array = [];
     for (var attr in filter) {
-        var obj = {};
-        obj.key = attr;
-        obj.value = filter[attr];
-        array.push(obj);
+      var obj = {};
+      obj.key = attr;
+      obj.value = filter[attr];
+      array.push(obj);
     }
     return array;
-}
+  }
+});
 
-Template.query_display.filter_and_results = function() {
-    var filter_and_results = Session.get("filter_and_results");
-    return typeof filter_and_results !== 'undefined' ? filter_and_results : [];
-}
+Template.query_display.helpers( {
+  "filter_and_results" : function() {
+      var filter_and_results = Session.get("filter_and_results");
+      return typeof filter_and_results !== 'undefined' ? filter_and_results : [];
+  },
+});
 
 Template.query_page.events( {
         "keyup #query": function() {
@@ -23,6 +27,7 @@ Template.query_page.events( {
             var new_hander = setTimeout( function() {
 
                 var input = $("#query").val();
+                Session.set("query", input );
                 //var queryObjects = Scheduler.Courses.find_by_query( input );
                 Meteor.call('coursesForQuery', input, function(err, result) {
                     if (err === undefined) {
@@ -36,3 +41,21 @@ Template.query_page.events( {
         }
 }
 );
+
+Template.page_loader.helpers( {
+  "loadPage" : function(name) {
+    var page = Session.get("current_page");
+    if( typeof page === "undefined" ) {
+      page = "query_page";
+      Session.set( "current_page", page );
+    }
+
+    return { template: Template[page] };
+  },
+});
+
+Template.page_loader.events( {
+  "mouseup #schedule_transition" : function() {
+    Session.set( "currentPage", "schedule_page" );
+  },
+});
