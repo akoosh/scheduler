@@ -28,7 +28,6 @@ Template.query_page.events( {
 
                 var input = $("#query").val();
                 Session.set("query", input );
-                //var queryObjects = Scheduler.Courses.find_by_query( input );
                 Meteor.call('coursesForQuery', input, function(err, result) {
                     if (err === undefined) {
                         Session.set("filter_and_results", result);
