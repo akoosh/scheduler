@@ -38,5 +38,10 @@ Template.query_page.events( {
  
             Session.set("timeoutHander", new_hander);
         }
-}
-);
+});
+
+Template.schedule_page.events( {
+        "click #render_schedules": function() {
+          console.log( "Render schedules" );
+        },
+});
