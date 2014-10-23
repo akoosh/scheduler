@@ -31,6 +31,7 @@ Template.query_page.events( {
                 Meteor.call('coursesForQuery', input, function(err, result) {
                     if (err === undefined) {
                         Session.set("filter_and_results", result);
+                        console.log( result );
                     }
                 });
 
