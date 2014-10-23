@@ -3,11 +3,15 @@
 // 10/21/2014
 
 Router.map(function () {
-  this.route('query_page', {
-    path: '/' // match the root path
+  
+
+  // Schedules
+  this.route('schedule_page', {
+    path: '/schedules' 
   });
 
-  this.route('schedule_page', {
-    path: '/schedules' // match the root path
+  // Home page
+  this.route('query_page', {
+    path: "/*",             // Match anything not matched
   });
 });
