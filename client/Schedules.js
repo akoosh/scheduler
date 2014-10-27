@@ -18,6 +18,7 @@ Scheduler.Schedules = {
               "unit" : c.course.units,
             },
             "time" : time,
+            "time_blocks": Scheduler.Schedules.generateTimeBlocks( time ),
           });
         }
       }
@@ -88,31 +89,37 @@ Scheduler.Schedules = {
   // Returns a array of time block objects converted into a general form
   // {time} => [ { day, start, end }, { day, start, end }, ... ]
   // where start and end are in the range [0-1] which represents 00:00 - 23:59
-  "generateTimeBlocks" : function( courses ) {
+  "generateTimeBlocks" : function( time ) {
     var result = [];
-    for( course in courses ) {
-      course = courses[course];
-      var timeString = course.time.days.split("");
-      for( day in timeString ) {
-        day = timeString[day];
-        if( day == "H" ) {
-          result[result.length-1].day += day;
-          continue;
-        }
 
-        result.push( {
-          "day"  : day,
-          "start": Scheduler.Schedules.timeStringConvert( course.time.start_time ),
-          "end": Scheduler.Schedules.timeStringConvert( course.time.end_time ),
-          "start_raw": course.time.start_time,
-          "end_raw": course.time.end_time,
-        });
+    var timeString = time.days.split("");
+    for( day in timeString ) {
+      day = timeString[day];
+      if( day == "H" ) {
+        result[result.length-1].day += day;
+        continue;
       }
+
+      result.push( {
+        "day"  : day,
+        "start": Scheduler.Schedules.timeStringConvert( time.start_time ),
+        "end": Scheduler.Schedules.timeStringConvert( time.end_time ),
+      });
     }
     return result;
   },
 
   // renders a schedule using render packets
-  "renderSchedule" : function( render ) {
+  "renderSchedule" : function( key ) {
+    // Get the schedule from storage
+    var schedule = Scheduler.ScheduleManager.get( key );
+
+    // If the schedule was found then render the schedule
+    if( schedule !== null ) {
+      // Generate render packets for the schedule
+      var renderPackets = Scheduler.Schedules.generateRenderPackage( schedule );
+      console.log( renderPackets );
+    }
+    
   },
 };
