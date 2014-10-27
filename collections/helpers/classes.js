@@ -4,9 +4,12 @@
 
 Scheduler.Classes = {
   // Returns a class object for the provided number
-  // return empty array if class is not found
+  // returns object with null classes and courses if not found
   classForNumber : function(number) {
-    result = null;
+    result = {
+      "classes" : null,
+      "course" : null,
+    };
 
     // Get the course object
     if( typeof number === "string" ) {
@@ -25,7 +28,8 @@ Scheduler.Classes = {
         for( c in course.classes ) {
           c = course.classes[c]
           if( c["number"] == number ) {
-            result = c;
+            result["course"] = course; 
+            result["classes"] = c;
             break;
           }
         }

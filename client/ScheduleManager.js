@@ -1,10 +1,9 @@
 // SchedulerManager
-// Stores and retreives schedule information from
-// a unified storage location
+// Stores and retreives schedule information from a unified storage location
 // Arthur Wuterich
 // 10/22/2014
 
-Scheduler.SchedulerManager = {
+Scheduler.ScheduleManager = {
   tmpToken : "tmp_classes",
   schedulesKey : "saved_schedules",
   schedules : null,
@@ -33,7 +32,7 @@ Scheduler.SchedulerManager = {
         number = raw[number];
         var c = Scheduler.Classes.classForNumber( number );
 
-        if( c != null ) {
+        if( c.classes != null ) {
           result.push( c );
         }
       }
@@ -52,5 +51,7 @@ Scheduler.SchedulerManager = {
     localStorage.setItem( token, JSON.stringify( courses ) );
   },
 };
+
+Scheduler.ScheduleManager.set( [ "2846", "2676", "2678" ], "mock" );
 
 // EOF

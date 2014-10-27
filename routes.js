@@ -4,6 +4,10 @@
 
 Router.map(function () {
   
+  // Session based page location
+  this.route('page_loader', {
+    path: '/session' 
+  });
 
   // Schedules
   this.route('schedule_page', {
