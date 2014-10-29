@@ -173,7 +173,7 @@ Scheduler.Schedules = {
           fillStyle: '#000',
           x: 50*dayToOffset( block.day ), 
           y: 0,
-          width: 49,
+          width: 45,
           height: 10
         });
       }
@@ -190,7 +190,9 @@ Scheduler.Schedules = {
       // Generate render packets for the schedule
       var renderPackets = Scheduler.Schedules.generateRenderPackage( schedule );
 
-      // Generate the schedule using the render packets
+      console.log( renderPackets );
+
+      // Generate the schedule using the render packes
       Scheduler.Schedules.generateSchedule( renderPackets );
     }
     

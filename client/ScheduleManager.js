@@ -18,7 +18,7 @@ Scheduler.ScheduleManager = {
   //  [token]: If not defined will assume to be the tmp token
   get : function( token ) {
     if( typeof token === "undefined" ) {
-      token = Scheduler.SchedulerManager.tmpToken
+      token = Scheduler.ScheduleManager.tmpToken
     }
 
     var result = null;
@@ -45,7 +45,8 @@ Scheduler.ScheduleManager = {
   //  [token]: If not defined will assume to be the tmp token
   set : function( courses, token ) {
     if( typeof token === "undefined" ) {
-      token = Scheduler.SchedulerManager.tmpToken
+      console.log( "Sure" );
+      token = Scheduler.ScheduleManager.tmpToken;
     }
 
     localStorage.setItem( token, JSON.stringify( courses ) );

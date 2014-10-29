@@ -29,9 +29,8 @@ Template.query_page.events( {
                 var input = $("#query").val();
                 Session.set("query", input );
                 Meteor.call('coursesForQuery', input, function(err, result) {
-                    if (err === undefined) {
+                    if ( err === undefined ) {
                         Session.set("filter_and_results", result);
-                        // console.log( result );
                     }
                 });
 
