@@ -86,13 +86,34 @@ Scheduler.Schedules = {
     return Math.round( val * 10000 ) / 10000;
   },
 
+  // Generates time string tokens
+  "parseTimeString" : function( times ) {
+    var result = [];
+    times = times.split("");
+
+    for( time in times ) {
+      time = times[time];
+
+      // Handle special cases
+      // Add the h to Thursday days
+      if( time == "H" ) {
+        result[result.length-1] += "H";
+        continue;
+      }
+
+      result.push( time );
+    }
+
+    return result;
+  },
+
   // Returns a array of time block objects converted into a general form
   // {time} => [ { day, start, end }, { day, start, end }, ... ]
   // where start and end are in the range [0-1] which represents 00:00 - 23:59
   "generateTimeBlocks" : function( time ) {
     var result = [];
 
-    var timeString = time.days.split("");
+    var timeString = Scheduler.Schedules.parseTimeString( time.days );
     for( day in timeString ) {
       day = timeString[day];
       if( day == "H" ) {
@@ -109,6 +130,56 @@ Scheduler.Schedules = {
     return result;
   },
 
+  "generateSchedule" : function( renderPackets ) {
+    var dayToOffset = function( day ) {
+      var result = 0;
+
+      switch( day ) {
+        case "M":
+          result = 0;
+          break;
+
+        case "T":
+          result = 1;
+          break;
+
+        case "W":
+          result = 2;
+          break;
+
+        case "TH":
+          result = 3;
+          break;
+
+        case "F":
+          result = 4;
+          break;
+
+        case "S":
+          result = 5;
+          break;
+      }
+
+      return result;
+    };
+
+    var canvas = $("canvas");
+    for( packet in renderPackets ) {
+      packet = renderPackets[packet];
+      for( block in packet.time_blocks ) {
+        block = packet.time_blocks[block];
+        console.log( block );
+        canvas.drawRect({
+          fillStyle: '#000',
+          x: 50*dayToOffset( block.day ), 
+          y: 0,
+          width: 49,
+          height: 10
+        });
+      }
+    }
+  },
+
   // renders a schedule using render packets
   "renderSchedule" : function( key ) {
     // Get the schedule from storage
@@ -118,7 +189,9 @@ Scheduler.Schedules = {
     if( schedule !== null ) {
       // Generate render packets for the schedule
       var renderPackets = Scheduler.Schedules.generateRenderPackage( schedule );
-      console.log( renderPackets );
+
+      // Generate the schedule using the render packets
+      Scheduler.Schedules.generateSchedule( renderPackets );
     }
     
   },
