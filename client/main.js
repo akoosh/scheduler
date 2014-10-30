@@ -1,4 +1,4 @@
-Template.filter_display.helpers( {
+Template.filterDisplay.helpers( {
   "arrayify_filter" : function(filter) {
     array = [];
     for (var attr in filter) {
@@ -11,14 +11,14 @@ Template.filter_display.helpers( {
   }
 });
 
-Template.query_display.helpers( {
+Template.queryDisplay.helpers( {
   "filter_and_results" : function() {
       var filter_and_results = Session.get("filter_and_results");
       return typeof filter_and_results !== 'undefined' ? filter_and_results : [];
   },
 });
 
-Template.query_page.events( {
+Template.queryPage.events( {
         "keyup #query": function() {
             // Clear timout if there is a pending query
             var handler = Session.get("timeoutHander");
