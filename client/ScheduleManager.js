@@ -25,17 +25,7 @@ Scheduler.ScheduleManager = {
     var raw = localStorage.getItem( token );
 
     if( raw != null ) {
-      raw = JSON.parse ( raw );
-      result = [];
-      
-      for( number in raw ) {
-        number = raw[number];
-        var c = Scheduler.Classes.classForNumber( number );
-
-        if( c.classes != null ) {
-          result.push( c );
-        }
-      }
+      result = JSON.parse ( raw );
     }
 
     return result; 
@@ -53,6 +43,6 @@ Scheduler.ScheduleManager = {
   },
 };
 
-Scheduler.ScheduleManager.set( [ "2846", "2676", "2678" ], "mock" );
+Scheduler.ScheduleManager.set( [ [ "2846", "2676", "2678" ], [ "1977", "1799" ] ], "mock" );
 
 // EOF

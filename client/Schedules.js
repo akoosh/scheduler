@@ -3,6 +3,7 @@
 // 10/27/2014
 
 Scheduler.Schedules = {
+  "bucketIterator" : null,
   // Converts an array of classes into units of renderable data
   "generateRenderPackage" : function( classes ) {
     var result = [];
@@ -130,71 +131,99 @@ Scheduler.Schedules = {
     return result;
   },
 
-  "generateSchedule" : function( renderPackets ) {
+  "drawSchedule" : function( renderPackets ) {
+    var canvas = $("canvas");
+    if( canvas.length == 0 ) {
+      return;
+    }
+
     var dayToOffset = function( day ) {
       var result = 0;
 
       switch( day ) {
         case "M":
-          result = 0;
-          break;
-
-        case "T":
           result = 1;
           break;
 
-        case "W":
+        case "T":
           result = 2;
           break;
 
-        case "TH":
+        case "W":
           result = 3;
           break;
 
-        case "F":
+        case "TH":
           result = 4;
           break;
 
-        case "S":
+        case "F":
           result = 5;
+          break;
+
+        case "S":
+          result = 6;
           break;
       }
 
       return result;
     };
 
-    var canvas = $("canvas");
+    var startToY = function( val ) {
+      return val * canvas.height();
+    };
+
+    var rangeToSize = function( begin, end ) {
+      return (end-begin)*canvas.height();
+    };
+
+    canvas.clearCanvas();
     for( packet in renderPackets ) {
       packet = renderPackets[packet];
       for( block in packet.time_blocks ) {
         block = packet.time_blocks[block];
-        console.log( block );
         canvas.drawRect({
           fillStyle: '#000',
           x: 50*dayToOffset( block.day ), 
-          y: 0,
+          y: startToY( block.start ),
           width: 45,
-          height: 10
+          height: rangeToSize( block.start, block.end )
         });
       }
     }
   },
 
   // renders a schedule using render packets
-  "renderSchedule" : function( key ) {
-    // Get the schedule from storage
-    var schedule = Scheduler.ScheduleManager.get( key );
+  "generateSchedules" : function( key ) {
+    Scheduler.Schedules.bucketIterator = new BucketIterator( Scheduler.ScheduleManager.get( key ) );
 
+    Session.set( "scheduleCount", Scheduler.Schedules.bucketIterator.size );
+    Scheduler.Schedules.renderSchedule();
+  },
+
+  // Goes to the next available schedule
+  "nextSchedule" : function() {
+    Scheduler.Schedules.bucketIterator.inc();
+    Scheduler.Schedules.renderSchedule();
+  },
+
+  // Goes to the requsted schedule
+  "gotoSchedule" : function(pos) {
+    Scheduler.Schedules.bucketIterator.setPosition( pos );
+    Scheduler.Schedules.renderSchedule();
+  },
+
+  "renderSchedule" : function() {
+    Session.set( "currentSchedule", Scheduler.Schedules.bucketIterator.position );
+    var schedule = Scheduler.Schedules.bucketIterator.getSchedule();
     // If the schedule was found then render the schedule
     if( schedule !== null ) {
       // Generate render packets for the schedule
       var renderPackets = Scheduler.Schedules.generateRenderPackage( schedule );
 
-      console.log( renderPackets );
-
       // Generate the schedule using the render packes
-      Scheduler.Schedules.generateSchedule( renderPackets );
+      Scheduler.Schedules.drawSchedule( renderPackets );
     }
-    
   },
 };
+
