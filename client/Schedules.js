@@ -179,12 +179,16 @@ Scheduler.Schedules = {
     };
 
     canvas.clearCanvas();
+    canvas.removeLayers();
 
     // Draw BG image
     canvas.drawImage({
       layer: true,
       source: "/image/schedule.200.500.png",
       fromCenter: false,
+      index: 0,
+      load: function() {
+      },
     });
 
     for( packet in renderPackets ) {
@@ -198,6 +202,7 @@ Scheduler.Schedules = {
         canvas.drawRect({
           "layer": true,
           "fillStyle": '#8891FF',
+          "group": ["days"],
           "x": x, 
           "y": y,
           "width": width,
@@ -206,16 +211,20 @@ Scheduler.Schedules = {
           "cornerRadius": 2,
           "strokeStyle": '#000',
           "strokeWidth": 2,
-          "click": function(layer){
-            console.log( layer );
+          "mouseover": function(layer){
             $(this).animateLayer(layer, {
-              rotate: '+=15',
-            });
+              "fillStyle": '#6974FF',
+            }, 100);
           },
+          "mouseout": function(layer){
+            $(this).animateLayer(layer, {
+              "fillStyle": '#8891FF',
+            }, 100);
+          },
+
           "data": {
             "id": packet.info.id,
           },
-          "dragigable" : true,
         });
       }
     }
