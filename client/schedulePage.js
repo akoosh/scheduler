@@ -1,4 +1,4 @@
-Template.schedule_page.helpers( {
+Template.schedulePage.helpers( {
   "var" : function(name) {
     var result = Session.get( name );
     if( Scheduler.Schedules.bucketIterator == null ) {
@@ -14,7 +14,7 @@ Template.schedule_page.helpers( {
 
 });
 
-Template.schedule_page.events( {
+Template.schedulePage.events( {
   "click #load_mock" : function( e, template ) {
     Scheduler.Schedules.generateSchedules( "mock" );
   },

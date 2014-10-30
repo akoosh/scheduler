@@ -1,4 +1,4 @@
-<template name="schedule_page">
+<template name="schedulePage">
   <div id="schedule-wrapper">
     <h1 class="test"> Schedules </h1>
     <hr />
@@ -9,13 +9,13 @@
     <canvas width="500px" height="200px"></canvas>
     <table>
       {{#each courses}}
-        {{> course_row}}
+        {{> courseRow}}
       {{/each}}
     </table>
   </div>
 </template>
 
-<template name="course_row">
+<template name="courseRow">
   <tr>
     <td>{{course.subject_with_number}}</td>
     <td>{{course.title}}</td>

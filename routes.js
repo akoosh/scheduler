@@ -5,12 +5,12 @@
 Router.map(function () {
   
   // Session based page location
-  this.route('page_loader', {
+  this.route('pageLoader', {
     path: '/session' 
   });
 
   // Schedules
-  this.route('schedule_page', {
+  this.route('schedulePage', {
     path: '/schedules' 
   });
 

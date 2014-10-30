@@ -40,10 +40,4 @@ Template.query_page.events( {
         }
 });
 
-Template.schedule_page.events( {
-        "click #render_schedules": function() {
-          console.log( "Render schedules" );
-        },
-});
-
 
