@@ -12,26 +12,24 @@ Scheduler.Classes = {
     };
 
     // Get the course object
-    if( typeof number === "string" ) {
-      var course = CoursesModel.find( { 
-        classes : { 
-          $elemMatch : { 
-            number : number 
-          } 
+    var course = CoursesModel.find( { 
+      classes : { 
+        $elemMatch : { 
+          number : String(number)
         } 
-      }).fetch();
+      } 
+    }).fetch();
 
-      // If the course was found then pull the correct class from the 
-      // course object
-      if( course.length != 0 ) {
-        course = course[0];
-        for( c in course.classes ) {
-          c = course.classes[c]
-          if( c["number"] == number ) {
-            result["course"] = course; 
-            result["classes"] = c;
-            break;
-          }
+    // If the course was found then pull the correct class from the 
+    // course object
+    if( course.length != 0 ) {
+      course = course[0];
+      for( c in course.classes ) {
+        c = course.classes[c]
+        if( c["number"] == number ) {
+          result["course"] = course; 
+          result["classes"] = c;
+          break;
         }
       }
     }

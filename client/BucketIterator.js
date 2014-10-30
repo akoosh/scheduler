@@ -49,12 +49,19 @@ BucketIterator.prototype.inc = function(pos) {
   }
 }
 
+BucketIterator.prototype.getCourseArray = function() {
+  var result = [];
+
+  for( bucket in this.buckets ) {
+    result.push( this.buckets[bucket][this.bucketPositions[bucket]] );
+  }
+
+  return result;
+}
+
 BucketIterator.prototype.getSchedule = function() {
   var result = [];
-  var classes = [];
-  for( bucket in this.buckets ) {
-    classes.push( this.buckets[bucket][this.bucketPositions[bucket]] );
-  }
+  var classes = this.getCourseArray();
 
   for( number in classes) {
     number = classes[number];

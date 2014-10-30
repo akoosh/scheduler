@@ -178,19 +178,31 @@ Scheduler.Schedules = {
     };
 
     canvas.clearCanvas();
-    for( packet in renderPackets ) {
-      packet = renderPackets[packet];
-      for( block in packet.time_blocks ) {
-        block = packet.time_blocks[block];
-        canvas.drawRect({
-          fillStyle: '#000',
-          x: 50*dayToOffset( block.day ), 
-          y: startToY( block.start ),
-          width: 45,
-          height: rangeToSize( block.start, block.end )
-        });
-      }
-    }
+
+    // Draw BG image
+    canvas.drawImage({
+      source: "/image/schedule.200.500.png",
+      fromCenter: false,
+      load: function(){
+        // Draw times
+        for( packet in renderPackets ) {
+          packet = renderPackets[packet];
+          for( block in packet.time_blocks ) {
+            block = packet.time_blocks[block];
+            canvas.drawRect({
+              fillStyle: '#000',
+              x: 50*dayToOffset( block.day ) + 2, 
+              y: startToY( block.start ),
+              width: 45,
+              height: rangeToSize( block.start, block.end ),
+              fromCenter: false
+            });
+          }
+        }
+      },
+    });
+
+
   },
 
   // renders a schedule using render packets
@@ -215,6 +227,7 @@ Scheduler.Schedules = {
 
   "renderSchedule" : function() {
     Session.set( "currentSchedule", Scheduler.Schedules.bucketIterator.position );
+    Session.set( "scheduleCourses", Scheduler.Schedules.bucketIterator.getSchedule() );
     var schedule = Scheduler.Schedules.bucketIterator.getSchedule();
     // If the schedule was found then render the schedule
     if( schedule !== null ) {

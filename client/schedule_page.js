@@ -8,4 +8,18 @@ Template.schedule_page.helpers( {
     return result;
   },
 
+  "courses" : function() {
+    return Session.get( "scheduleCourses" );
+  }
+
+});
+
+Template.schedule_page.events( {
+  "click #load_mock" : function( e, template ) {
+    Scheduler.Schedules.generateSchedules( "mock" );
+  },
+
+  "click #next_schedule" : function( e, template ) {
+    Scheduler.Schedules.nextSchedule(); 
+  },
 });

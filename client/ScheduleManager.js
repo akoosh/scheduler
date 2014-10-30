@@ -35,7 +35,6 @@ Scheduler.ScheduleManager = {
   //  [token]: If not defined will assume to be the tmp token
   set : function( courses, token ) {
     if( typeof token === "undefined" ) {
-      console.log( "Sure" );
       token = Scheduler.ScheduleManager.tmpToken;
     }
 
@@ -43,6 +42,6 @@ Scheduler.ScheduleManager = {
   },
 };
 
-Scheduler.ScheduleManager.set( [ [ "2846", "2676", "2678" ], [ "1977", "1799" ] ], "mock" );
+Scheduler.ScheduleManager.set( [ [ 2846, 2676, 2678 ], [ 1977, 1799 ], [ 1397, 1677 ], [ 1197, 3735, 1637 ] ], "mock" );
 
 // EOF
