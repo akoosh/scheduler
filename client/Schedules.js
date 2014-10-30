@@ -17,6 +17,7 @@ Scheduler.Schedules = {
             "info" : {
               "name" : c.course.title,
               "unit" : c.course.units,
+              "id"   : c.classes.number,
             },
             "time" : time,
             "time_blocks": Scheduler.Schedules.generateTimeBlocks( time ),
@@ -170,37 +171,54 @@ Scheduler.Schedules = {
     };
 
     var startToY = function( val ) {
-      return val * canvas.height();
+      return Math.floor( val * canvas.height() );
     };
 
     var rangeToSize = function( begin, end ) {
-      return (end-begin)*canvas.height();
+      return Math.floor( (end-begin)*canvas.height() );
     };
 
     canvas.clearCanvas();
 
     // Draw BG image
     canvas.drawImage({
+      layer: true,
       source: "/image/schedule.200.500.png",
       fromCenter: false,
-      load: function(){
-        // Draw times
-        for( packet in renderPackets ) {
-          packet = renderPackets[packet];
-          for( block in packet.time_blocks ) {
-            block = packet.time_blocks[block];
-            canvas.drawRect({
-              fillStyle: '#000',
-              x: 50*dayToOffset( block.day ) + 2, 
-              y: startToY( block.start ),
-              width: 45,
-              height: rangeToSize( block.start, block.end ),
-              fromCenter: false
-            });
-          }
-        }
-      },
     });
+
+    for( packet in renderPackets ) {
+      packet = renderPackets[packet];
+      for( block in packet.time_blocks ) {
+        block = packet.time_blocks[block];
+        var x = 50*dayToOffset( block.day ) + 3;
+        var y = startToY( block.start );
+        var width = 44;
+        var height = rangeToSize( block.start, block.end );
+        canvas.drawRect({
+          "layer": true,
+          "fillStyle": '#8891FF',
+          "x": x, 
+          "y": y,
+          "width": width,
+          "height": height,
+          "fromCenter": false,
+          "cornerRadius": 2,
+          "strokeStyle": '#000',
+          "strokeWidth": 2,
+          "click": function(layer){
+            console.log( layer );
+            $(this).animateLayer(layer, {
+              rotate: '+=15',
+            });
+          },
+          "data": {
+            "id": packet.info.id,
+          },
+          "dragigable" : true,
+        });
+      }
+    }
 
 
   },
