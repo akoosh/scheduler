@@ -6,6 +6,7 @@ BucketIterator = function( buckets ) {
 BucketIterator.prototype.setBuckets = function( buckets ) {
   this.buckets = buckets;
   this.size = 1;
+  this.ignore = {};
 
   for( bucket in this.buckets ) {
     this.size *= this.buckets[bucket].length;
@@ -31,6 +32,20 @@ BucketIterator.prototype.setPosition = function(pos) {
     this.inc();
   }
   
+}
+
+BucketIterator.prototype.isValid = function(pos) {
+  if( typeof pos === "undefined" ) {
+    pos = this.position;
+  }
+
+  if( typeof this.ignore[pos] !== "undefined" ) {
+    return false;
+  }
+
+  // Check for overlap
+  var courses = this.getSchedule()
+  console.log( courses );
 }
 
 BucketIterator.prototype.inc = function(pos) {
