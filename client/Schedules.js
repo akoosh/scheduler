@@ -181,13 +181,19 @@ Scheduler.Schedules = {
     canvas.clearCanvas();
     canvas.removeLayers();
 
+    var hasDrawn = false;
+
     // Draw BG image
     canvas.drawImage({
-      layer: true,
-      source: "/image/schedule.200.500.png",
-      fromCenter: false,
-      index: 0,
-      load: function() {
+      "layer": true,
+      "source": "/image/schedule.200.500.png",
+      "fromCenter": false,
+      "index": 0,
+      "load": function() {
+        if( !hasDrawn ) {
+          hasDrawn = true;
+          canvas.drawLayers();
+        }
       },
     });
 
@@ -219,6 +225,7 @@ Scheduler.Schedules = {
           "mouseout": function(layer){
             $(this).animateLayer(layer, {
               "fillStyle": '#8891FF',
+              "rotate": "+=45",
             }, 100);
           },
 

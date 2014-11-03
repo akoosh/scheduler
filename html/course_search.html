@@ -1,38 +1,38 @@
-<template name="query_page">
+<template name="queryPage">
     <div id="logo">
         <div id="home-wrapper">
-            {{> search_bar}}
-            {{> query_display}}
+            {{> searchBar}}
+            {{> queryDisplay}}
         </div>
     </div>
 </template>
 
-<template name="search_bar">
+<template name="searchBar">
     <input type="text" id="query" />
 </template>
 
-<template name="query_display">
+<template name="queryDisplay">
     <div id="results">
         {{#each filter_and_results}}
         <div >
-            {{> filter_and_result}}
+            {{> filterAndResult}}
         </div>
         {{/each}}
     </div>
 </template>
 
-<template name="filter_and_result">
+<template name="filterAndResult">
     <div class="filter_and_result">
         <div class="filter_filter_label">Search Terms</div>
-        {{> filter_display}}
+        {{> filterDisplay}}
         <div class="filter_results_label">Results</div>
         {{#each results}}
-            {{> result_display}}
+            {{> resultDisplay}}
         {{/each}}
     </div>
 </template>
 
-<template name="filter_display">
+<template name="filterDisplay">
     <div class="filter_display">
         {{#each arrayify_filter filter}}
             <div class="filter_term">{{key}} as '{{value}}'</div>
@@ -40,7 +40,7 @@
     </div>
 </template>
 
-<template name="result_display">
+<template name="resultDisplay">
     <div class="result_display">
         {{title}}
     </div>
