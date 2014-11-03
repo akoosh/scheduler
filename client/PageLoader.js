@@ -2,7 +2,7 @@ Template.pageLoader.helpers( {
   "loadPage" : function(name) {
     var page = Session.get("current_page");
     if( typeof page === "undefined" ) {
-      page = "query_page";
+      page = "queryPage";
       Session.set( "current_page", page );
     }
 
@@ -12,6 +12,6 @@ Template.pageLoader.helpers( {
 
 Template.pageLoader.events( {
   "mouseup #schedule_transition" : function() {
-    Session.set( "current_page", "schedule_page" );
+    Session.set( "current_page", "schedulePage" );
   },
 });
