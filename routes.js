@@ -3,7 +3,8 @@
 // 10/21/2014
 
 Router.map(function () {
-  this.route('query_page', {
+
+  this.route('queryPage', {
     path: '/' // match the root path
   });
 

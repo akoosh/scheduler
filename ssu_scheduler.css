@@ -1,5 +1,9 @@
 /* CSS declarations go here */
 
+html {
+    overflow-y: scroll;
+}
+
 #page_controls {
   position: fixed;
   top: 2px;
@@ -12,79 +16,39 @@
 }
 
 #logo {
-	width: 468px;
-	height: 163px;
-	background-image:url('/image/ssu_logo.jpg');
-	background-size: 100%;
-	position: absolute;
-	top: 70px;
-	right: 0px;
-	left: 0px;
-	margin: auto;
+    width: 468px;
+    height: 163px;
+    background-image:url('/image/ssu_logo.jpg');
+    background-size: 100%;
+    position: absolute;
+    top: 70px;
+    right: 0px;
+    left: 0px;
+    margin: auto;
 }
 
 #logo-wrapper {
-	width: 500px;
-	position: absolute;
-	top: -2px;
-	right: -5px;
-	bottom: 0px;
-	margin: auto;
+    width: 500px;
+    position: absolute;
+    top: -2px;
+    right: -5px;
+    bottom: 0px;
+    margin: auto;
 }
 
 #home-wrapper input {
-	width: 97%;
-	margin-top: 200px;
-	font-size: 28px;
-	height: 30px;
-	-webkit-transition: border 1s; /* For Safari 3.1 to 6.0 */
-	transition: border 1s;
+    width: 97%;
+    margin-top: 200px;
+    font-size: 28px;
+    height: 30px;
+    -webkit-transition: border 1s; /* For Safari 3.1 to 6.0 */
+    transition: border 1s;
 }
 
 #home-wrapper input:hover {
-	border: 1px solid #43759C;
+    border: 1px solid #43759C;
 }
 
-.filter_and_result {
-	width: 100%;
-	border: 1px solid #C3C3C3;
-	border-radius: 3px;
-	margin-top: 3px;
-	padding: 5px;
-	font-weight: bold;
-	background-color: #EEE;
-	font-size: 18px;
-}
-
-.filter_term {
-	padding: 5px;
-	border: 1px solid #AAA;
-	background-color: #BBB;
-	border-radius: 5px;
-	margin:3px;
-	width:200px;
-	float:left;
-}
-
-.filter_and_result > .result_display {
-	margin-left: 20px;
-	padding: 3px;
-	width: 94%;
-	border-bottom: 1px solid #000;
-	font-size: 13px;
-	-webkit-transition: background-color 1s; /* For Safari 3.1 to 6.0 */
-	transition: background-color 1s;
-	background-color: #BBB;
-}
-
-.filter_and_result > .result_display:hover {
-	background-color: #AAA;
-}
-
-.filter_results_label, .filter_filter_label {
-	clear:both;
-	margin-bottom:10px;
-}
 
 .hidden {
   display: none;
@@ -95,20 +59,28 @@ hr.clear {
   clear: both;
 }
 
+#results td {
+    padding-right: 10px;
+}
 
+.courseDisplay {
+    margin: 10px 0;
+    padding: 5px;
+    border: 1px solid;
+}
 
+.courseDisplay .description td {
+    font-size: 18px;
+    padding: 10px 10px 10px 0;
+}
 
+.classDisplay {
+    border: 1px solid;
+    padding: 5px;
+    margin: 5px 0;
+}
 
+.description {
+    font-weight: bold;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-/* EOF */

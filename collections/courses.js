@@ -5,8 +5,7 @@ Scheduler.Courses = {
         var tokens = this.QueryTokenizer.tokensForString(str);
         var query = this.QueryBuilder.queryForTokens(tokens);
         var result = this.QuerySearcher.resultsForQuery(query);
-        console.log(result[0]);
-        return [];
+        return result;
     }
 
 
@@ -184,7 +183,8 @@ Scheduler.Courses.QueryToken = {
         },
 
         isSubjectWithNumber: function(str) {
-            return /^[a-z]{2,4}\s?[0-9]{3}[a-z]*\w$/i.test(str);
+            console.log(str);
+            return /^[a-z]{2,4}\s?[0-9]{3}[a-z]*$/i.test(str);
         }
     },
 
