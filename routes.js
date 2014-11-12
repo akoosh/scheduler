@@ -15,7 +15,7 @@ Router.map(function () {
   });
 
   // Home page
-  this.route('query_page', {
-    path: "/*",             // Match anything not matched
+  this.route('queryPage', {
+    path: /\/.*/,             // Match anything not matched
   });
 });
