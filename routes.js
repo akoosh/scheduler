@@ -3,11 +3,19 @@
 // 10/21/2014
 
 Router.map(function () {
-  this.route('queryPage', {
-    path: '/' // match the root path
+  
+  // Session based page location
+  this.route('pageLoader', {
+    path: '/session' 
   });
 
-  this.route('schedule_page', {
-    path: '/schedules' // match the root path
+  // Schedules
+  this.route('schedulePage', {
+    path: '/schedules' 
+  });
+
+  // Home page
+  this.route('queryPage', {
+    path: /\/.*/,             // Match anything not matched
   });
 });
