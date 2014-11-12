@@ -2,7 +2,7 @@
     <div id="logo">
         <div id="home-wrapper">
             {{> searchBar}}
-            {{> queryDisplay}}
+            {{> queryDisplay }}
         </div>
     </div>
 </template>
@@ -13,35 +13,43 @@
 
 <template name="queryDisplay">
     <div id="results">
-        {{#each filter_and_results}}
-        <div >
-            {{> filterAndResult}}
-        </div>
+        {{#each queryResults}}
+            {{> courseDisplay }}
         {{/each}}
     </div>
 </template>
 
-<template name="filterAndResult">
-    <div class="filter_and_result">
-        <div class="filter_filter_label">Search Terms</div>
-        {{> filterDisplay}}
-        <div class="filter_results_label">Results</div>
-        {{#each results}}
-            {{> resultDisplay}}
+<template name="courseDisplay">
+    <div class="courseDisplay">
+        <table>
+            <tr class="description">
+                <td class="courseSubject">{{subject_with_number}}</td>
+                <td class="courseTitle">{{title}}</td>
+                <td class="courseUnits">{{units}} units</td>
+            </tr>
+        </table>
+        {{#each classes}}
+            <div>{{> classDisplay }}</div>
         {{/each}}
     </div>
 </template>
 
-<template name="filterDisplay">
-    <div class="filter_display">
-        {{#each arrayify_filter filter}}
-            <div class="filter_term">{{key}} as '{{value}}'</div>
-        {{/each}}
+<template name="classDisplay">
+    <div class="classDisplay">
+        <div class="description">#{{number}}</div>
+        <table>
+            {{#each sections}}
+                {{> sectionDisplay }}
+            {{/each}}
+        </table>
     </div>
 </template>
 
-<template name="resultDisplay">
-    <div class="result_display">
-        {{title}}
-    </div>
+<template name="sectionDisplay">
+    <tr>
+        <td>{{#each times}} {{days}} {{start_time}}-{{end_time}} {{/each}}</td>
+        <td>{{#each locations}} {{this}} {{/each}}</td>
+        <td>{{#each professors}} {{this}} {{/each}}</td>
+        <td>{{type}}</td>
+    </tr>
 </template>
