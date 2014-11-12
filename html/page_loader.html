@@ -1,0 +1,10 @@
+<template name="pageLoader">
+  <div id="page_loader">
+    <div id="page_controls">
+      <input id="schedule_transition" type="button" value="Schedules" />
+    </div>
+    {{#with loadPage name }}
+      {{> template }}
+    {{/with}}
+  </div>
+</template>

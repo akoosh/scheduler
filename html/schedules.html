@@ -1,5 +1,24 @@
-<template name="schedule_page">
+<template name="schedulePage">
   <div id="schedule-wrapper">
-    <h1> Schedules </h1>
+    <h1 class="test"> Schedules </h1>
+    <hr />
+    <button id="load_mock">Load Mock Data</button>
+    <button id="next_schedule">Next Schedule</button>
+    <hr />
+    <div>{{var "currentSchedule"}}/{{var "scheduleCount"}}</div>
+    <canvas width="500px" height="200px"></canvas>
+    <table>
+      {{#each courses}}
+        {{> courseRow}}
+      {{/each}}
+    </table>
   </div>
+</template>
+
+<template name="courseRow">
+  <tr>
+    <td>{{course.subject_with_number}}</td>
+    <td>{{course.title}}</td>
+    <td>{{course.units}}</td>
+  </tr>
 </template>

@@ -183,7 +183,6 @@ Scheduler.Courses.QueryToken = {
         },
 
         isSubjectWithNumber: function(str) {
-            console.log(str);
             return /^[a-z]{2,4}\s?[0-9]{3}[a-z]*$/i.test(str);
         }
     },
