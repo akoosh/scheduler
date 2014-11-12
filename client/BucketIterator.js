@@ -1,16 +1,26 @@
 BucketIterator = function( buckets ) {
   this.setBuckets( buckets );
   this.reset();
+
+  while( !this.isValid() ) {
+    this.inc();
+    if( this.position == 1 ) {
+      break;
+    }
+  }
+
 }
 
 BucketIterator.prototype.setBuckets = function( buckets ) {
   this.buckets = buckets;
   this.size = 1;
-  this.ignore = {};
+  this.valid = {};
 
   for( bucket in this.buckets ) {
     this.size *= this.buckets[bucket].length;
   }
+
+  
 }
 
 BucketIterator.prototype.reset = function() {
@@ -20,6 +30,7 @@ BucketIterator.prototype.reset = function() {
     bucket = this.buckets[bucket]; 
     this.bucketPositions.push( [ 0 ] );
   }
+
 }
 
 // *** REFACTOR ***
@@ -34,18 +45,57 @@ BucketIterator.prototype.setPosition = function(pos) {
   
 }
 
+BucketIterator.prototype.courseOverlap = function(courses) {
+  var days = {};
+
+  var renderPackets = Scheduler.Schedules.generateRenderPackage( courses );
+
+  for( packet in renderPackets ) {
+    packet = renderPackets[packet];
+    for( block in packet.time_blocks ) {
+      block = packet.time_blocks[block];
+      if( typeof days[block.day] === "undefined" ) {
+        days[block.day] = [ block ];
+      } else {
+        days[block.day].push( block );
+      }
+    }
+  }
+
+  for( day in days ) {
+    day = days[day];
+    if( day.length == 1 ) {
+      continue;
+    }
+    for( a in day ) {
+      for( b in day ) {
+        if( a==b ){ continue; }
+        if( ( day[a].start < day[b].end && day[a].end > day[b].start ) || ( day[a].end > day[b].start && day[a].start < day[b].end ) ) {
+          console.log( "overlap", day[a], day[b] );
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
+}
+
 BucketIterator.prototype.isValid = function(pos) {
   if( typeof pos === "undefined" ) {
     pos = this.position;
   }
 
-  if( typeof this.ignore[pos] !== "undefined" ) {
-    return false;
+  if( typeof this.valid[pos] === "undefined" ) {
+    // Check for overlap
+    if( this.courseOverlap( this.getSchedule() ) ){
+      this.valid[pos] = result = false;
+    } else {
+      this.valid[pos] = result = true;
+    }
   }
 
-  // Check for overlap
-  var courses = this.getSchedule()
-  console.log( courses );
+  return this.valid[pos];
 }
 
 BucketIterator.prototype.inc = function(pos) {
@@ -56,6 +106,7 @@ BucketIterator.prototype.inc = function(pos) {
     this.reset();
     return;
   }
+
   this.bucketPositions[pos]++;
 
   if( this.bucketPositions[pos] >= this.buckets[pos].length ) {

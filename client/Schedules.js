@@ -249,7 +249,13 @@ Scheduler.Schedules = {
 
   // Goes to the next available schedule
   "nextSchedule" : function() {
-    Scheduler.Schedules.bucketIterator.inc();
+   var cPos = Scheduler.Schedules.bucketIterator.position;
+    do { 
+      Scheduler.Schedules.bucketIterator.inc();
+      if( Scheduler.Schedules.bucketIterator.position == cPos ) {
+        break;
+      }
+    } while( !Scheduler.Schedules.bucketIterator.isValid() );
     Scheduler.Schedules.renderSchedule();
   },
 

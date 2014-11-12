@@ -1,10 +1,17 @@
 Template.schedulePage.helpers( {
-  "var" : function(name) {
-    var result = Session.get( name );
+  "scheduleCount" : function() {
+    var result = Session.get( "scheduleCount" );
     if( Scheduler.Schedules.bucketIterator == null ) {
       result = 0;
     }
+    return result;
+  },
 
+  "currentSchedule" : function() {
+    var result = Session.get( "currentSchedule" );
+    if( Scheduler.Schedules.bucketIterator == null ) {
+      result = 0;
+    }
     return result;
   },
 
