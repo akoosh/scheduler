@@ -70,8 +70,9 @@ BucketIterator.prototype.courseOverlap = function(courses) {
     for( a in day ) {
       for( b in day ) {
         if( a==b ){ continue; }
-        if( ( day[a].start < day[b].end && day[a].end > day[b].start ) || ( day[a].end > day[b].start && day[a].start < day[b].end ) ) {
-          console.log( "overlap", day[a], day[b] );
+        if( 
+          ( day[a].start < day[b].end && day[a].end > day[b].start ) || 
+          ( day[a].end > day[b].start && day[a].start < day[b].end ) ) {
           return true;
         }
       }
@@ -99,6 +100,10 @@ BucketIterator.prototype.isValid = function(pos) {
 }
 
 BucketIterator.prototype.inc = function(pos) {
+  if( this.buckets.length == 0 ) {
+    return;
+  }
+
   if( typeof pos === "undefined" ) {
     pos = this.buckets.length-1;
     this.position++;

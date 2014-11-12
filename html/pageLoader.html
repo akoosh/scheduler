@@ -2,6 +2,13 @@
   <div id="page_loader">
     <div id="page_controls">
       <input id="schedule_transition" type="button" value="Schedules" />
+      <input id="course_transition" type="button" value="Courses" />
+      <div>
+        {{#each schedule}}
+          <input class="setSchedule" type="button" value="{{this}}" />
+          
+        {{/each}}
+      </div>
     </div>
     {{#with loadPage name }}
       {{> template }}

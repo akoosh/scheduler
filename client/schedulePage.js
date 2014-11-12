@@ -23,7 +23,8 @@ Template.schedulePage.helpers( {
 
 Template.schedulePage.events( {
   "click #load_mock" : function( e, template ) {
-    Scheduler.Schedules.generateSchedules( "mock" );
+    var id = Session.get( "currentScheduleId" );
+    Scheduler.Schedules.generateSchedules( id );
   },
 
   "click #next_schedule" : function( e, template ) {

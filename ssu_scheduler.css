@@ -3,13 +3,10 @@
 #page_controls {
   position: fixed;
   top: 2px;
-  right: 2px;
-  width: 100px;
-}
-
-#page_controls > button {
+  left: 2px;
   width: 100%;
 }
+
 
 #logo {
 	width: 468px;
