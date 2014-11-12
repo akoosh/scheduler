@@ -5,8 +5,7 @@
       <input id="course_transition" type="button" value="Courses" />
       <div>
         {{#each schedule}}
-          <input class="setSchedule" type="button" value="{{this}}" />
-          
+          <input class="setSchedule" type="button" key="{{this.key}}" value="{{this.name}}" />
         {{/each}}
       </div>
     </div>

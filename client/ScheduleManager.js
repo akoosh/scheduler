@@ -49,7 +49,10 @@ Scheduler.ScheduleManager = {
 
     for( k in localStorage ) {
       if( k.indexOf( Scheduler.ScheduleManager.prefix ) == 0 ) {
-        result.push( k );
+        result.push( {
+          "key"   : k,
+          "name"  : k.substr(Scheduler.ScheduleManager.prefix.length)}
+        );
       }
     }
 

@@ -22,7 +22,9 @@ Template.pageLoader.events( {
     Session.set( "current_page", "queryPage" );
   },
 
-  "mouseup .setSchedule" : function(a,b,c) {
-    console.log( a,b,c );
+  "mouseup .setSchedule" : function( e, template ) {
+    var id = $(e.target).attr("key");
+    Session.set( "currentScheduleId", id );
+    Session.set( "current_page", "schedulePage" );
   },
 });
