@@ -50,9 +50,9 @@ Scheduler.ScheduleManager = {
     for( k in localStorage ) {
       if( k.indexOf( Scheduler.ScheduleManager.prefix ) == 0 ) {
         result.push( {
-          "key"   : k,
-          "name"  : k.substr(Scheduler.ScheduleManager.prefix.length)}
-        );
+          "key"  : k.substr(Scheduler.ScheduleManager.prefix.length),
+          "name"  : k.substr(Scheduler.ScheduleManager.prefix.length)
+        });
       }
     }
 

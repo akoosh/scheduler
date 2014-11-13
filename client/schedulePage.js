@@ -17,17 +17,12 @@ Template.schedulePage.helpers( {
 
   "courses" : function() {
     return Session.get( "scheduleCourses" );
-  }
+  },
 
 });
 
 Template.schedulePage.events( {
-  "click #load_mock" : function( e, template ) {
-    var id = Session.get( "currentScheduleId" );
-    Scheduler.Schedules.generateSchedules( id );
-  },
-
   "click #next_schedule" : function( e, template ) {
     Scheduler.Schedules.nextSchedule(); 
-  },
+  }
 });

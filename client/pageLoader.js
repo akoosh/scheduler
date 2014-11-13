@@ -26,5 +26,8 @@ Template.pageLoader.events( {
     var id = $(e.target).attr("key");
     Session.set( "currentScheduleId", id );
     Session.set( "current_page", "schedulePage" );
+    setTimeout( function() {
+      Scheduler.Schedules.generateSchedules( id );
+    }, 200 );
   },
 });
