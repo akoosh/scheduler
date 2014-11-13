@@ -1,11 +1,32 @@
 <template name="queryPage">
-    <div id="logo">
-        <div id="home-wrapper">
-            {{> searchBar}}
-            {{> queryDisplay }}
+    <div class="row">
+        <div class="span4">
+            {{> planLayout }}
+        </div>
+        <div class="span8">
+            {{> searchLayout }}
         </div>
     </div>
 </template>
+
+<template name="planLayout">
+    <div id="planLayout">
+        Bucket 1
+    </div>
+</template>
+
+<template name="searchLayout">
+    <div id="searchLayout">
+        {{> ssuLogo }}
+        {{> searchBar}}
+        {{> queryDisplay }}
+    </div>
+</template>
+
+<template name="ssuLogo">
+    <img id="logo" src="/image/ssu_logo.jpg">
+</template>
+
 
 <template name="searchBar">
     <input type="text" id="query" />
