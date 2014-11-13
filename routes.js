@@ -4,18 +4,19 @@
 
 Router.map(function () {
   
+
+  // Schedule page
+  this.route('schedulePage', {
+    path: '/schedules',
+  });
+
+  // Query page
+  this.route('queryPage', {
+    path: "/query",             // Match anything not matched
+  });
+
   // Session based page location
   this.route('pageLoader', {
-    path: '/session' 
-  });
-
-  // Schedules
-  this.route('schedulePage', {
-    path: '/schedules' 
-  });
-
-  // Home page
-  this.route('queryPage', {
     path: /\/.*/,             // Match anything not matched
   });
 });

@@ -6,14 +6,10 @@ html {
 
 #page_controls {
   position: fixed;
-  top: 2px;
-  right: 2px;
-  width: 100px;
+  top: 0px;
+  right: 0px;
 }
 
-#page_controls > button {
-  width: 100%;
-}
 
 #logo {
     width: 468px;
@@ -50,9 +46,37 @@ html {
 }
 
 
+/* Schedules */
+
+h3.header {
+  float: left;
+  margin-right: 100px;
+  margin-top: 0px;
+  height: 100px;
+}
+.add-code-row {
+  border: 1px solid #DDD;
+  background-color: #EEE;
+}
+
+.add-code-row > td {
+  padding: 5px;
+}
+
+tr.header {
+  font-size: large;
+  background-color: #DDD;
+}
+
+/* Generic */
+
 .hidden {
   display: none;
   visibility: hidden;
+}
+
+hr {
+  border-color: transparent;
 }
 
 hr.clear {

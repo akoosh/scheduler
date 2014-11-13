@@ -1,13 +1,25 @@
 <template name="schedulePage">
   <div id="schedule-wrapper">
-    <h1 class="test"> Schedules </h1>
+    <h3 class="header"> Schedules </h3>
+    <h3>Add Codes</h3>
+    <table>
+      <tr class="add-code-row">
+        {{#each courses}}
+          {{> codeCell}}
+        {{/each}}
+      </tr>
+    </table>
     <hr />
-    <button id="load_mock">Load Mock Data</button>
     <button id="next_schedule">Next Schedule</button>
+    <span>{{currentSchedule}}/{{scheduleCount}}</span>
     <hr />
-    <div>{{var "currentSchedule"}}/{{var "scheduleCount"}}</div>
     <canvas width="500px" height="200px"></canvas>
     <table>
+      <tr class="header">
+        <td>Subject</td>
+        <td>Title</td>
+        <td>Units</td>
+      </tr>
       {{#each courses}}
         {{> courseRow}}
       {{/each}}
@@ -21,4 +33,12 @@
     <td>{{course.title}}</td>
     <td>{{course.units}}</td>
   </tr>
+</template>
+
+<template name="codeCell">
+  <td>
+    {{#each course.classes}}
+      {{this.number}}
+    {{/each}}
+  </td>
 </template>

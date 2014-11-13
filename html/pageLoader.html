@@ -1,0 +1,17 @@
+<template name="pageLoader">
+  <div id="page_loader">
+    <div id="page_controls">
+      <h3>Goto Page</h3>
+      <input id="course_transition" type="button" value="Courses" />
+      <div>
+        <h3>Load Schedule</h3>
+        {{#each schedule}}
+          <input class="setSchedule" type="button" key="{{this.key}}" value="{{this.name}}" />
+        {{/each}}
+      </div>
+    </div>
+    {{#with loadPage name }}
+      {{> template }}
+    {{/with}}
+  </div>
+</template>
