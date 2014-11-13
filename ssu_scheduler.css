@@ -111,6 +111,10 @@ tr.header {
   visibility: hidden;
 }
 
+hr {
+  border-color: transparent;
+}
+
 hr.clear {
   clear: both;
 }
