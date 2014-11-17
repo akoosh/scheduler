@@ -74,7 +74,15 @@ hr.clear {
     margin: 5px 0;
 }
 
+.classDisplay .description button {
+    float: right;
+}
+
 .description {
     font-weight: bold;
+}
+
+.classButton {
+    display: inline-block;
 }
 

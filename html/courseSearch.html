@@ -11,14 +11,31 @@
 
 <template name="planLayout">
     <div id="planLayout">
-        Bucket 1
+        {{#each slots}}
+            {{> slotDisplay }}
+        {{/each}}
+    </div>
+</template>
+
+<template name="slotDisplay">
+    <div class="slotDisplay">
+        {{#each this}}
+            {{> classButton }}
+        {{/each}}
+    </div>
+</template>
+
+<template name="classButton">
+    <div class="classButton">
+        <span>{{subject_with_number}} (#{{number}})</span>
+        <button class="removeButton">x</button>
     </div>
 </template>
 
 <template name="searchLayout">
     <div id="searchLayout">
         {{> ssuLogo }}
-        {{> searchBar}}
+        {{> searchBar }}
         {{> queryDisplay }}
     </div>
 </template>
@@ -47,9 +64,10 @@
                 <td class="courseSubject">{{subject_with_number}}</td>
                 <td class="courseTitle">{{title}}</td>
                 <td class="courseUnits">{{units}} units</td>
+                <td>{{> addButton }}</td>
             </tr>
         </table>
-        {{#each classes}}
+        {{#each augmentedClasses}}
             <div>{{> classDisplay }}</div>
         {{/each}}
     </div>
@@ -57,7 +75,7 @@
 
 <template name="classDisplay">
     <div class="classDisplay">
-        <div class="description">#{{number}}</div>
+        <div class="description">#{{number}} {{> addButton }}</div>
         <table>
             {{#each sections}}
                 {{> sectionDisplay }}
@@ -73,4 +91,8 @@
         <td>{{#each professors}} {{this}} {{/each}}</td>
         <td>{{type}}</td>
     </tr>
+</template>
+
+<template name="addButton">
+    <button class="addButton">+</button>
 </template>
