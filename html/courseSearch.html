@@ -14,11 +14,12 @@
         {{#each slots}}
             {{> slotDisplay }}
         {{/each}}
+        {{>slotDisplay}}
     </div>
 </template>
 
 <template name="slotDisplay">
-    <div class="slotDisplay">
+    <div class="slotDisplay {{selectedOrEmpty}}">
         <h3>Slot #{{slotNumber}}</h3>
         {{#each classes}}
             {{> classButton }}
