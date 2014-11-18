@@ -82,7 +82,33 @@ hr.clear {
     font-weight: bold;
 }
 
+#planLayout {
+    margin-top: 30px;
+}
+
+.slotDisplay {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.slotDisplay h3 {
+    width: 100%;
+    text-align: center;
+}
+
 .classButton {
     display: inline-block;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 5px;
+}
+
+.removeButton {
+    border: none;
+    background: white;
+    color: blue;
+    font-weight: bold;
+    font-size: 20px;
+    vertical-align: bottom;
 }
 

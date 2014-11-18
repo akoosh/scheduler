@@ -72,8 +72,11 @@ Template.queryPage.events (
             var curSlot = slots[slotSelected] || [];
 
             var outerThis = this;
-            curSlot = _.reject(curSlot, function(ele) { return ele.number == outerThis.number; });
+            curSlot = _.reject(curSlot, function(ele) { return ele.number === outerThis.number; });
+
             slots[slotSelected] = curSlot;
+
+            slots = _.reject(slots, function(ele) { return ele.length === 0; });
 
             Session.set("slots", slots);
         }
