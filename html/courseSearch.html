@@ -19,8 +19,8 @@
 
 <template name="slotDisplay">
     <div class="slotDisplay">
-        <h3>Slot</h3>
-        {{#each this}}
+        <h3>Slot #{{slotNumber}}</h3>
+        {{#each classes}}
             {{> classButton }}
         {{/each}}
     </div>

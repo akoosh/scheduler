@@ -56,10 +56,15 @@ Template.queryPage.events (
             var slotSelected = Session.get("slotSelected") || 0;
             var slots = Session.get("slots") || [];
 
-            var curSlot = slots[slotSelected] || [];
+            var curSlot = slots[slotSelected] || { slotNumber: slotSelected+1, classes: [], selectedClasses: {} };
 
-            if (this.classes !== undefined) curSlot = curSlot.concat(this.classes);
-            else curSlot.push(this);
+            var classesToAdd = this.classes !== undefined ? this.classes : [this];
+            _.each(classesToAdd, function (cl) {
+                if (curSlot.selectedClasses[cl.number] === undefined) {
+                    curSlot.selectedClasses[cl.number] = true;
+                    curSlot.classes.push(cl);
+                }
+            });
 
             slots[slotSelected] = curSlot;
 
@@ -69,14 +74,23 @@ Template.queryPage.events (
         "click .removeButton": function() {
             var slotSelected = Session.get("slotSelected") || 0;
             var slots = Session.get("slots") || [];
-            var curSlot = slots[slotSelected] || [];
+            var curSlot = slots[slotSelected] || { slotNumber: slotSelected+1, classes: [], selectedClasses: {} };
 
+            // find and remove the appropriate class
             var outerThis = this;
-            curSlot = _.reject(curSlot, function(ele) { return ele.number === outerThis.number; });
+            curSlot.classes = _.reject(curSlot.classes, function(ele) { return ele.number === outerThis.number; });
+            delete curSlot.selectedClasses[this.number];
 
+            // update slots with the new curSlot
             slots[slotSelected] = curSlot;
 
-            slots = _.reject(slots, function(ele) { return ele.length === 0; });
+            // remove all slots that contain no classes
+            slots = _.reject(slots, function(ele) { return ele.classes.length === 0; });
+
+            // recalculate slot number in case an upper slot was removed
+            _.each(slots, function(slot, index) {
+                slot.slotNumber = index+1;
+            });
 
             Session.set("slots", slots);
         }
