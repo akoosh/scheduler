@@ -132,55 +132,42 @@ Scheduler.Schedules = {
     return result;
   },
 
+  // REFACTOR
   "drawSchedule" : function( renderPackets ) {
+    console.log( renderPackets );
+    // Get the canvas object that we will draw to. If this object is not found; exit.
     var canvas = $("canvas");
     if( canvas.length == 0 ) {
       return;
     }
 
+    // Returns day offsets
     var dayToOffset = function( day ) {
-      var result = 0;
-
-      switch( day ) {
-        case "M":
-          result = 1;
-          break;
-
-        case "T":
-          result = 2;
-          break;
-
-        case "W":
-          result = 3;
-          break;
-
-        case "TH":
-          result = 4;
-          break;
-
-        case "F":
-          result = 5;
-          break;
-
-        case "S":
-          result = 6;
-          break;
-      }
-
-      return result;
+      return ({
+        "M"  : 1,
+        "T"  : 2,
+        "W"  : 3,
+        "TH" : 4,
+        "F"  : 5,
+        "S"  : 6,
+      })[day];
     };
 
+    // Returns the starting position for a day block based on the size of the canvas
     var startToY = function( val ) {
       return Math.floor( val * canvas.height() );
     };
 
+    // Returns the size of an element based on the canvas size and length of the day
     var rangeToSize = function( begin, end ) {
       return Math.floor( (end-begin)*canvas.height() );
     };
 
+    // Prepare to draw the schedule
     canvas.clearCanvas();
     canvas.removeLayers();
 
+    // REFACTOR
     var hasDrawn = false;
 
     // Draw BG image
@@ -201,10 +188,12 @@ Scheduler.Schedules = {
       packet = renderPackets[packet];
       for( block in packet.time_blocks ) {
         block = packet.time_blocks[block];
+        
         var x = 50*dayToOffset( block.day ) + 3;
         var y = startToY( block.start );
         var width = 44;
         var height = rangeToSize( block.start, block.end );
+
         canvas.drawRect({
           "layer": true,
           "fillStyle": '#8891FF',
@@ -225,7 +214,6 @@ Scheduler.Schedules = {
           "mouseout": function(layer){
             $(this).animateLayer(layer, {
               "fillStyle": '#8891FF',
-              "rotate": "+=45",
             }, 100);
           },
 
