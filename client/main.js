@@ -9,7 +9,7 @@ Template.queryDisplay.helpers(
 
 Template.courseDisplay.helpers(
     {
-        augmentedClasses: function() {
+        "augmentedClasses": function() {
             var outerThis = this;
             return _.map( outerThis.classes, 
                 function(cl) { 
@@ -134,6 +134,15 @@ Template.queryPage.events (
                 var slots = Session.get("slots") || [];
                 Session.set("slotSelected", slots.length);
             }
+        },
+
+        "click .generateButton": function() {
+            var slots = Session.get("slots") || [];
+            var classesArray = _.map(slots, function(slot) {
+                return _.pluck(slot.classes, 'number');
+            });
+
+            Scheduler.ScheduleManager.set(classesArray, "plan");
         }
     }
 );

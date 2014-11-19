@@ -14,8 +14,13 @@
         {{#each slots}}
             {{> slotDisplay }}
         {{/each}}
-        {{>slotDisplay}}
+        {{> slotDisplay}}
+        {{> generateButton }}
     </div>
+</template>
+
+<template name="generateButton">
+    <button class="generateButton">Generate Schedules</button>
 </template>
 
 <template name="slotDisplay">
