@@ -1,11 +1,56 @@
 <template name="queryPage">
-    <div id="logo">
-        <div id="home-wrapper">
-            {{> searchBar}}
-            {{> queryDisplay }}
+    <div class="row">
+        <div class="span4">
+            {{> planLayout }}
+        </div>
+        <div class="span8">
+            {{> searchLayout }}
         </div>
     </div>
 </template>
+
+<template name="planLayout">
+    <div id="planLayout">
+        {{#each slots}}
+            {{> slotDisplay }}
+        {{/each}}
+        {{> slotDisplay}}
+        {{> generateButton }}
+    </div>
+</template>
+
+<template name="generateButton">
+    <button class="generateButton">Generate Schedules</button>
+</template>
+
+<template name="slotDisplay">
+    <div class="slotDisplay {{selectedOrEmpty}}">
+        <h3>Slot #{{slotNumber}}</h3>
+        {{#each classes}}
+            {{> classButton }}
+        {{/each}}
+    </div>
+</template>
+
+<template name="classButton">
+    <div class="classButton">
+        <span>{{subject_with_number}} (#{{number}})</span>
+        <button class="removeButton">x</button>
+    </div>
+</template>
+
+<template name="searchLayout">
+    <div id="searchLayout">
+        {{> ssuLogo }}
+        {{> searchBar }}
+        {{> queryDisplay }}
+    </div>
+</template>
+
+<template name="ssuLogo">
+    <img id="logo" src="/image/ssu_logo.jpg">
+</template>
+
 
 <template name="searchBar">
     <input type="text" id="query" />
@@ -26,9 +71,10 @@
                 <td class="courseSubject">{{subject_with_number}}</td>
                 <td class="courseTitle">{{title}}</td>
                 <td class="courseUnits">{{units}} units</td>
+                <td>{{> addButton }}</td>
             </tr>
         </table>
-        {{#each classes}}
+        {{#each augmentedClasses}}
             <div>{{> classDisplay }}</div>
         {{/each}}
     </div>
@@ -36,7 +82,7 @@
 
 <template name="classDisplay">
     <div class="classDisplay">
-        <div class="description">#{{number}}</div>
+        <div class="description">#{{number}} {{> addButton }}</div>
         <table>
             {{#each sections}}
                 {{> sectionDisplay }}
@@ -52,4 +98,8 @@
         <td>{{#each professors}} {{this}} {{/each}}</td>
         <td>{{type}}</td>
     </tr>
+</template>
+
+<template name="addButton">
+    <button class="addButton">+</button>
 </template>
