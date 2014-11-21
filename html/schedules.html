@@ -4,7 +4,7 @@
     <h3>Add Codes</h3>
     <table>
       <tr class="add-code-row">
-        {{#each courses}}
+        {{#each addCodes}}
           {{> codeCell}}
         {{/each}}
       </tr>
@@ -37,8 +37,6 @@
 
 <template name="codeCell">
   <td>
-    {{#each course.classes}}
-      {{this.number}}
-    {{/each}}
+    {{this}}
   </td>
 </template>
