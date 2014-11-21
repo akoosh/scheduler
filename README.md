@@ -2,7 +2,7 @@ ssu_scheduler
 =============
 
 
-Installation
+Installation(ubuntu)
 ============
 
 Installation is pretty simple
