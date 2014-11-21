@@ -19,6 +19,10 @@ Template.schedulePage.helpers( {
     return Session.get( "scheduleCourses" );
   },
 
+  "addCodes" : function() {
+    return Session.get( "addCodes" );
+  }
+
 });
 
 Template.schedulePage.events( {
