@@ -19,6 +19,7 @@ def main():
 class CourseModel(object):
 
     def __init__(self):
+        self.last_number = 0
         self.cur_class = None
         self.courses = {}
         self.counter = 0
@@ -29,12 +30,18 @@ class CourseModel(object):
         this_class = self.get_class_from_course(course)
 
         if self.has_course(course):
+            self.cur_class = self.get_last_class_from_course(course)
             if self.is_section_of_cur_class(this_class):
                 self.update_cur_class(this_class)
             else:
                 self.add_class_to_course(course)
         else:
             self.add_new_course(course)
+
+        self.last_number = this_class['number']
+
+    def get_last_class_from_course(self, course):
+        return self.courses[ course['subjectWithNumber'] ]['classes'][-1]
 
     def add_section_to_cur_class(self, section):
         self.cur_class['sections'].append(section)
@@ -67,8 +74,7 @@ class CourseModel(object):
 
     def is_section_of_cur_class(self, this_class):
         section_type = self.get_section_from_class(this_class)['type']
-        # potential bug: if one section has multiple meetings, second meeting might fail both conditions
-        return self.cur_class['number'] == this_class['number'] or all([section_type != section['type'] for section in self.cur_class['sections']])
+        return self.last_number == this_class['number'] or all([section_type != section['type'] for section in self.cur_class['sections']])
 
     def has_course(self, course):
         return course['subjectWithNumber'] in self.courses
