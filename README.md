@@ -35,7 +35,7 @@ Installation is pretty simple
     meteor
   ```
 
-  This will run the meteor package manager ( similar to doing a apt-get update ) then spin up the scheduler application. \
+  This will run the meteor package manager ( similar to doing a apt-get update ) then spin up the scheduler application.
   The app should build and start without any problem; however, there will be no course data yet. Run the following commands to insert the data
   ```
   cd scripts
