@@ -267,7 +267,7 @@ Scheduler.Schedules = {
 
   "renderSchedule" : function() {
     Session.set( "currentSchedule", Scheduler.Schedules.bucketIterator.position );
-    Session.set( "scheduleCourses", Scheduler.Schedules.bucketIterator.getSchedule() );
+    Session.set( "scheduleCourses", Scheduler.Schedules.bucketIterator.getCourseArray() );
     var schedule = Scheduler.Schedules.bucketIterator.getSchedule();
     // If the schedule was found then render the schedule
     if( schedule !== null ) {
