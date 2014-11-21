@@ -47,15 +47,7 @@ class CourseModel(object):
         print "No matching sections"
 
     def merge_section_into_cur_section(self, section, cur_section):
-
-        professor = section['professors'][0]
-        location = section['locations'][0]
-        time = section['times'][0]
-
-        if professor not in cur_section['professors']: cur_section['professors'].append( professor )
-        if location not in cur_section['locations']: cur_section['locations'].append( location )
-        if all([self.times_are_different(time, cur_time) for cur_time in cur_section['times']]):
-            cur_section['times'].append(time)
+        cur_section['meetings'].append( section['meetings'][0] )
 
     def times_are_different(self, time1, time2):
         return time1['start_time'] != time2['start_time'] or time1['end_time'] != time2['end_time'] or time1['days'] != time2['days']
@@ -75,20 +67,21 @@ class CourseModel(object):
 
     def is_section_of_cur_class(self, this_class):
         section_type = self.get_section_from_class(this_class)['type']
+        # potential bug: if one section has multiple meetings, second meeting might fail both conditions
         return self.cur_class['number'] == this_class['number'] or all([section_type != section['type'] for section in self.cur_class['sections']])
 
     def has_course(self, course):
-        return course['subject_with_number'] in self.courses
+        return course['subjectWithNumber'] in self.courses
 
     def add_new_course(self, course):
-        subject_with_number = course['subject_with_number']
-        self.courses[subject_with_number] = course
+        subjectWithNumber = course['subjectWithNumber']
+        self.courses[subjectWithNumber] = course
         self.cur_class = self.get_class_from_course(course)
 
     def add_class_to_course(self, course):
         this_class = self.get_class_from_course(course)
-        subject_with_number = course['subject_with_number']
-        self.courses[subject_with_number]['classes'].append( this_class)
+        subjectWithNumber = course['subjectWithNumber']
+        self.courses[subjectWithNumber]['classes'].append( this_class)
         self.cur_class = this_class
 
 class Course(object):
@@ -101,9 +94,9 @@ class Course(object):
         course = {}
         course['title'] = row['Descr']
         course['subject'] = row['Sbjt']
-        course['subject_with_number'] = row['Sbjt'] + row['Cat#']
+        course['subjectWithNumber'] = row['Sbjt'] + row['Cat#']
         course['units'] = row['SUV']
-        course['ge_code'] = row['Component']
+        course['geCode'] = row['Component']
         course['classes'] = [] 
 
         this_class = {}
@@ -111,17 +104,17 @@ class Course(object):
         this_class['sections'] = []
 
         this_section = {}
-        this_section['professors'] = [ row['Last'] ]
         this_section['type'] = row['AsnType']
-        this_section['locations'] = [ row['Facil ID'] ]
-        this_section['times'] = []
+        this_section['meetings'] = []
 
-        this_time = {}
-        this_time['start_time'] = row['START TIME']
-        this_time['end_time'] = row['END TIME']
-        this_time['days'] = row['Pat']
+        this_section_meeting = {}
+        this_section_meeting['professor'] = row['Last']
+        this_section_meeting['location'] = row['Facil ID']
+        this_section_meeting['startTime'] = row['START TIME']
+        this_section_meeting['endTime'] = row['END TIME']
+        this_section_meeting['days'] = row['Pat']
 
-        this_section['times'].append(this_time)
+        this_section['meetings'].append(this_section_meeting)
         this_class['sections'].append(this_section)
         course['classes'].append(this_class)
 
