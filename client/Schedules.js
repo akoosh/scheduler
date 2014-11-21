@@ -15,9 +15,10 @@ Scheduler.Schedules = {
           time = section.times[time];
           result.push( {
             "info" : {
-              "name" : c.course.title,
-              "unit" : c.course.units,
-              "id"   : c.classes.number,
+              "name"    : c.course.title,
+              "unit"    : c.course.units,
+              "id"      : c.classes.number,
+              "subject" : c.course.subject_with_number,
             },
             "time" : time,
             "time_blocks": Scheduler.Schedules.generateTimeBlocks( time ),
@@ -133,110 +134,15 @@ Scheduler.Schedules = {
   },
 
   "drawSchedule" : function( renderPackets ) {
-    var canvas = $("canvas");
-    if( canvas.length == 0 ) {
-      return;
+
+    // Create a renderer object
+    var renderer = new ScheduleRenderer( "canvas" ) ;
+
+    if( renderer != null ) {
+      renderer.clear();
+      renderer.drawBackground();
+      renderer.drawPackets( renderPackets );
     }
-
-    var dayToOffset = function( day ) {
-      var result = 0;
-
-      switch( day ) {
-        case "M":
-          result = 1;
-          break;
-
-        case "T":
-          result = 2;
-          break;
-
-        case "W":
-          result = 3;
-          break;
-
-        case "TH":
-          result = 4;
-          break;
-
-        case "F":
-          result = 5;
-          break;
-
-        case "S":
-          result = 6;
-          break;
-      }
-
-      return result;
-    };
-
-    var startToY = function( val ) {
-      return Math.floor( val * canvas.height() );
-    };
-
-    var rangeToSize = function( begin, end ) {
-      return Math.floor( (end-begin)*canvas.height() );
-    };
-
-    canvas.clearCanvas();
-    canvas.removeLayers();
-
-    var hasDrawn = false;
-
-    // Draw BG image
-    canvas.drawImage({
-      "layer": true,
-      "source": "/image/schedule.200.500.png",
-      "fromCenter": false,
-      "index": 0,
-      "load": function() {
-        if( !hasDrawn ) {
-          hasDrawn = true;
-          canvas.drawLayers();
-        }
-      },
-    });
-
-    for( packet in renderPackets ) {
-      packet = renderPackets[packet];
-      for( block in packet.time_blocks ) {
-        block = packet.time_blocks[block];
-        var x = 50*dayToOffset( block.day ) + 3;
-        var y = startToY( block.start );
-        var width = 44;
-        var height = rangeToSize( block.start, block.end );
-        canvas.drawRect({
-          "layer": true,
-          "fillStyle": '#8891FF',
-          "group": ["days"],
-          "x": x, 
-          "y": y,
-          "width": width,
-          "height": height,
-          "fromCenter": false,
-          "cornerRadius": 2,
-          "strokeStyle": '#000',
-          "strokeWidth": 2,
-          "mouseover": function(layer){
-            $(this).animateLayer(layer, {
-              "fillStyle": '#6974FF',
-            }, 100);
-          },
-          "mouseout": function(layer){
-            $(this).animateLayer(layer, {
-              "fillStyle": '#8891FF',
-              "rotate": "+=45",
-            }, 100);
-          },
-
-          "data": {
-            "id": packet.info.id,
-          },
-        });
-      }
-    }
-
-
   },
 
   // renders a schedule using render packets
