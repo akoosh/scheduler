@@ -17,7 +17,7 @@ Installation is pretty simple
   ```
     curl https://install.meteor.com/ | sh
   ```
-    This will install meteor and the meteor package manager on your machine. packages are local to projects so when you clone the scheduler repo you will be fine.
+    This will install meteor and the meteor package manager on your machine.
 
   3. Get Mongodb
   ```
