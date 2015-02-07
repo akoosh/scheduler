@@ -1,3 +1,5 @@
+// Main.js
+// events and helpers for queryDisplay and courseDisplay templates
 Template.queryDisplay.helpers( 
     {
         "queryResults": function() {
