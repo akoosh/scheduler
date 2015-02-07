@@ -55,6 +55,14 @@ db.Courses.remove()
 Import new data from json:
 mongoimport -h localhost:3002 --db meteor --collection Courses --type json --jsonArray --file courses.json
 
+Wire Frame
+==========
+
+Here is a image of the basic wireframe
+
+
+![Wireframe](https://raw.githubusercontent.com/Alfwich/ssu_scheduler/master/public/image/WhiteboardWireframe.jpg "Wireframe for ssu scheduler")
+
 Currently Implemented
 =====================
 
