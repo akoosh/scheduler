@@ -1,3 +1,6 @@
+// Course tonkenizer + Query processing
+// Zack Thompson
+
 Scheduler.Courses = {
 
 
@@ -10,7 +13,6 @@ Scheduler.Courses = {
 
 
 };
-
 
 Scheduler.Courses.QueryTokenizer = {
 
@@ -62,7 +64,6 @@ Scheduler.Courses.QueryTokenizer = {
 
 };
 
-
 Scheduler.Courses.QueryBuilder = {
 
 
@@ -91,7 +92,6 @@ Scheduler.Courses.QueryBuilder = {
 
 };
 
-
 Scheduler.Courses.QuerySearcher = {
 
 
@@ -102,8 +102,6 @@ Scheduler.Courses.QuerySearcher = {
 
 
 };
-
-
 
 Scheduler.Courses.QueryToken = {
 
@@ -312,3 +310,5 @@ Scheduler.Courses.QueryToken = {
 
 
 
+
+// EOF

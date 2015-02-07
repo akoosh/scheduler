@@ -5,7 +5,7 @@
 Scheduler.Classes = {
   // Returns a class object for the provided number
   // returns object with null classes and courses if not found
-  classForNumber : function(number) {
+  "classForNumber" : function(number) {
     result = {
       "classes" : null,
       "course" : null,

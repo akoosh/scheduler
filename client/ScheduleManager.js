@@ -9,7 +9,7 @@ Scheduler.ScheduleManager = {
   prefix : "schmgr_",
   schedules : null,
 
-  cacheSchedules : function () {
+  "cacheSchedules" : function () {
     if( Scheduler.SchedulerManager.schedules == null ) {
       
     }
@@ -17,7 +17,7 @@ Scheduler.ScheduleManager = {
     
   // Returns the object saved with scheduler manager
   //  [token]: If not defined will assume to be the tmp token
-  get : function( token ) {
+  "get" : function( token ) {
     if( typeof token === "undefined" ) {
       token = Scheduler.ScheduleManager.tmpToken
     }
@@ -34,7 +34,7 @@ Scheduler.ScheduleManager = {
 
   // Sets courses for the token provided
   //  [token]: If not defined will assume to be the tmp token
-  set : function( courses, token ) {
+  "set" : function( courses, token ) {
     if( typeof token === "undefined" ) {
       token = Scheduler.ScheduleManager.tmpToken;
     }
@@ -44,7 +44,8 @@ Scheduler.ScheduleManager = {
     Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
   },
 
-  list : function() {
+  // Returns a listing of the schedules stored with the manager
+  "list" : function() {
     var result = [];
 
     for( k in localStorage ) {
@@ -61,6 +62,7 @@ Scheduler.ScheduleManager = {
   }
 };
 
+// Mock schedule
 Scheduler.ScheduleManager.set( [ [ 2846, 2676, 2678 ], [ 1977, 1799 ], [ 1397, 1677 ], [ 1197, 3735, 1637 ] ], "mock" );
 
 // EOF
