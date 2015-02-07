@@ -174,7 +174,5 @@ BucketIterator.prototype.getSchedule = function() {
     }
   }
 
-  console.log( result );
-
   return result;
 }
