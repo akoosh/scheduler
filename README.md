@@ -54,3 +54,16 @@ db.Courses.remove()
 
 Import new data from json:
 mongoimport -h localhost:3002 --db meteor --collection Courses --type json --jsonArray --file courses.json
+
+Currently Implemented
+=====================
+
++ CSV Parser for Backend Data:
+  Zack has created a python script for taking .csv files and converting them into JSON. This JSON file is then imported into the mongo database using the command above.
+
++ Backend:
++ Search Template:
++ Search Functionality:
++ Query Parsing:
++ Schedule Template:
++ Schedule Generation:
