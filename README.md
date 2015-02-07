@@ -58,12 +58,60 @@ mongoimport -h localhost:3002 --db meteor --collection Courses --type json --jso
 Currently Implemented
 =====================
 
-+ CSV Parser for Backend Data:
-  Zack has created a python script for taking .csv files and converting them into JSON. This JSON file is then imported into the mongo database using the command above.
+##CSV Parser for Backend Data: 
+Zack has created a python script for taking .csv files and converting them into JSON.
+This JSON file is then imported into the mongo database using the command above.
 
-+ Backend:
-+ Search Template:
-+ Search Functionality:
-+ Query Parsing:
-+ Schedule Template:
-+ Schedule Generation:
+##Backend: 
+Currently we are using mongo through a helper objects to access the course information. 
+
+```
+CoursesModel = new Meteor.Collection( "Courses" );
+```
+
+Which is used in the following files:
+
++ /collections/course.js
++ /collections/helpers/courses.js
+
+##Page Loader:
+The page loader is functionally complete. This contains the developer sidebar.
+
+###Related Files:
++ /html/pageLoader.html
++ /client/pageLoader.js
+
+##Search Template:
+The search template page is functionally complete.
+
+###Related Files:
++ /html/courseSearch.htlp
++ /html/main.js
+
+##Search Functionality:
+The current state of searching allows searching from the following fields:
++ Professors
++ Title
++ GE Code
++ Subject Number
++ Subject
++ Units
+
+There is still work to be done with documenting the search functionality.
+
+###Related Files:
++ /client/collections/courses.js
+
+##Schedule Template:
+The schedule template is functional. 
+
+###Related Files:
+/html/schedules.html
+/client/schedulePage.js
+
+##Schedule Generation:
+Schedules are generated currently using a canvas object and jCanvas. There is a good deal of work here to make the schedules more readable and useful.
+
+###Related Files:
++ /client/ScheduleManager.js
++ /client/ScheduleRenderer.js 
