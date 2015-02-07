@@ -1,5 +1,6 @@
 // Schedule Renderer: Responsible for drawing to a canvas object
 
+// Factory method for the ScheduleRenderer
 ScheduleRenderer = function( canvas ) {
   this.dayToInt = {
     "M"  : 1,
@@ -10,10 +11,12 @@ ScheduleRenderer = function( canvas ) {
     "S"  : 6,
   };
 
+  // Background image
   this.backgroundImage = "schedule.200.500.png";
+
+  // Formatting constants
   this.columnWidth = 50;
   this.columnPadding = 3;
-
   this.blockWidth = 44;
 
   // If the canvas could not be located then return null
@@ -66,6 +69,7 @@ ScheduleRenderer.prototype.generateRect = function( x, y, width, height, info ) 
     };
 };
 
+// Generates a text object for rendering through a jCanvas
 ScheduleRenderer.prototype.generateText = function( x, y, text ) {
   return {
     "layer"       : true,
@@ -84,6 +88,7 @@ ScheduleRenderer.prototype.generateText = function( x, y, text ) {
   };
 };
 
+// Draws the background image to the schedule
 ScheduleRenderer.prototype.drawBackground = function() {
   // REFACTOR
   var hasDrawn = false;
@@ -103,18 +108,20 @@ ScheduleRenderer.prototype.drawBackground = function() {
   });
 }
 
+// Draws a render packet to the canvas
 ScheduleRenderer.prototype.drawPacket = function( packet ) {
   // Draw each time block
   for( block in packet.time_blocks ) {
     block = packet.time_blocks[block];
     
     // Draw the block
-    this.drawRect( block, packet );
+    this.drawBlock( block, packet );
     this.drawText( block, packet );
   }
 }
 
-ScheduleRenderer.prototype.drawRect = function( block, packet ) {
+//
+ScheduleRenderer.prototype.drawBlock = function( block, packet ) {
   this.canvas.drawRect( 
     this.generateRect(
       this.dayToX( block.day ),
@@ -136,7 +143,7 @@ ScheduleRenderer.prototype.drawText = function( block, packet ) {
     );
 }
 
-
+// Renders each packet to the canvas
 ScheduleRenderer.prototype.drawPackets = function( packets ) {
   // For each packet draw the time blocks
   for( packet in packets ) {
@@ -144,8 +151,8 @@ ScheduleRenderer.prototype.drawPackets = function( packets ) {
   }
 }
 
+// Clears the canvas
 ScheduleRenderer.prototype.clear = function() {
-  // Prepare to draw the schedule
   this.canvas.clearCanvas();
   this.canvas.removeLayers();
 }
