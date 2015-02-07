@@ -1,7 +1,13 @@
+// Bucket Iterator
+// Creates an iterator for iterating over buckets within a schedule
+// This is needed because not all schedules are valid ( time conflicts, etc )
+
+// Factory method for a BucketIterator
 BucketIterator = function( buckets ) {
   this.setBuckets( buckets );
   this.reset();
 
+  // Get the position to the first valid position
   while( !this.isValid() ) {
     this.inc();
     if( this.position == 1 ) {
@@ -11,6 +17,8 @@ BucketIterator = function( buckets ) {
 
 }
 
+// Sets the buckets for iteration
+//  -more of an internal function
 BucketIterator.prototype.setBuckets = function( buckets ) {
   this.buckets = buckets;
   this.size = 1;
@@ -19,10 +27,10 @@ BucketIterator.prototype.setBuckets = function( buckets ) {
   for( bucket in this.buckets ) {
     this.size *= this.buckets[bucket].length;
   }
-
   
 }
 
+// Resets the iterator array and the position of iterator
 BucketIterator.prototype.reset = function() {
   this.position = 1;
   this.bucketPositions = [];
@@ -34,6 +42,7 @@ BucketIterator.prototype.reset = function() {
 }
 
 // *** REFACTOR ***
+// Sets the position of the iterator to the provided position
 BucketIterator.prototype.setPosition = function(pos) {
   if( pos < 1 || pos > this.size ) {
     return;
@@ -45,34 +54,46 @@ BucketIterator.prototype.setPosition = function(pos) {
   
 }
 
+// Returns true if the provided courses has overlap
 BucketIterator.prototype.courseOverlap = function(courses) {
   var days = {};
-
   var renderPackets = Scheduler.Schedules.generateRenderPackage( courses );
 
+  // Load the corses into a temporary associative array for comparision
+  //  This is to allow us to reduce the number of comparisons between courses where
+  //  we only need to check between courses on the same day
   for( packet in renderPackets ) {
     packet = renderPackets[packet];
     for( block in packet.time_blocks ) {
       block = packet.time_blocks[block];
+
+      // If the day has not been generated make it
       if( typeof days[block.day] === "undefined" ) {
-        days[block.day] = [ block ];
-      } else {
-        days[block.day].push( block );
+        days[block.day] = [];
       }
+
+      // Add the block to the day
+      days[block.day].push( block );
     }
   }
 
+  // Check for overlap between the courses on the same days
   for( day in days ) {
     day = days[day];
     if( day.length == 1 ) {
       continue;
     }
     for( a in day ) {
+      var dayA = day[a];
       for( b in day ) {
+        var dayB = day[b];
+        // Don't compare the same course with itself
         if( a==b ){ continue; }
+
+        // 1D Rect collision
         if( 
-          ( day[a].start < day[b].end && day[a].end > day[b].start ) || 
-          ( day[a].end > day[b].start && day[a].start < day[b].end ) ) {
+          ( dayA.start < dayB.end && dayA.end     > dayB.start ) || 
+          ( dayA.end   > dayB.start && dayA.start < dayB.end ) ) {
           return true;
         }
       }
@@ -82,23 +103,30 @@ BucketIterator.prototype.courseOverlap = function(courses) {
   return false;
 }
 
+// Returns the result of a position in the iterator being a valid schedule or not
+//  this is to prevent checking the same schedule multiple times for being valid or not
 BucketIterator.prototype.isValid = function(pos) {
   if( typeof pos === "undefined" ) {
     pos = this.position;
   }
 
+  // Generate the valid check if not available in the valid array
   if( typeof this.valid[pos] === "undefined" ) {
+
     // Check for overlap
-    if( this.courseOverlap( this.getSchedule() ) ){
-      this.valid[pos] = result = false;
-    } else {
-      this.valid[pos] = result = true;
-    }
+    //  this will set the valid[pos] to TRUE is there is no overlap
+    this.valid[pos] = !this.courseOverlap( this.getSchedule() );
   }
 
   return this.valid[pos];
 }
 
+// Recursive increment function
+// This will modify the iterator arrays based on the size of the buckets
+// EX: Buckets = [ [ c1, c2, c3 ], [ c4, c2 ], [ c5 ] ]
+//     pos     = [ [ 0 ],          [ 1 ],      [ 0  ] ] => { c1, c2, c5 }
+// A call to inc will alter the pos array to point to the next schedule
+//     pos     = [ [ 1 ],          [ 0 ],      [ 0 ]  ] => { c2, c4, c5 }
 BucketIterator.prototype.inc = function(pos) {
   if( this.buckets.length == 0 ) {
     return;
@@ -120,6 +148,8 @@ BucketIterator.prototype.inc = function(pos) {
   }
 }
 
+// Returns an array of course identifiers
+// EX: [2846, 1977, 1677, 1197]
 BucketIterator.prototype.getCourseArray = function() {
   var result = [];
 
@@ -130,6 +160,7 @@ BucketIterator.prototype.getCourseArray = function() {
   return result;
 }
 
+// Returns an array of course objects from the database
 BucketIterator.prototype.getSchedule = function() {
   var result = [];
   var classes = this.getCourseArray();
@@ -142,6 +173,8 @@ BucketIterator.prototype.getSchedule = function() {
       result.push( c );
     }
   }
+
+  console.log( result );
 
   return result;
 }
