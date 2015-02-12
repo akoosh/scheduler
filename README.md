@@ -63,6 +63,14 @@ Here is a image of the basic wireframe
 
 ![Wireframe](https://raw.githubusercontent.com/Alfwich/ssu_scheduler/master/public/image/WhiteboardWireframe.jpg "Wireframe for ssu scheduler")
 
+Alpha Feature List
+====================
+
+1. Search for classes
+2. Generate schedules from selected classes & display them
+3. Filter/pair-down generated schedules
+4. Save specific schedules
+
 Currently Implemented
 =====================
 
