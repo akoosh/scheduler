@@ -1,5 +1,5 @@
 // Schedule Renderer: Responsible for drawing to a canvas object
-
+/*
 // Factory method for the ScheduleRenderer
 ScheduleRenderer = function( canvas ) {
   this.dayToInt = {
@@ -159,5 +159,5 @@ ScheduleRenderer.prototype.clear = function() {
 
 
 
-
+*/
 // EOF

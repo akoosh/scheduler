@@ -1,21 +1,17 @@
 <!-- Template for displaying schedules -->
 <template name="schedulePage">
   <div id="schedule-wrapper">
-    <h3 class="header"> Schedules </h3>
-    <h3>Add Codes</h3>
-    <table>
-      <tr class="add-code-row">
-        {{#each addCodes}}
-          {{> codeCell}}
-        {{/each}}
+    <table id="addCodes">
+      <tr>
+      <td>
+        <h3>Add Codes:</h3>
+      </td>
+      <td class="add-code-row">
+         {{addCodes}}
+      </td>
       </tr>
     </table>
-    <hr />
-    <button id="next_schedule">Next Schedule</button>
-    <span>{{currentSchedule}}/{{scheduleCount}}</span>
-    <hr />
-    <canvas width="500px" height="200px"></canvas>
-    <table>
+    <table id="scheduleTable">
       <tr class="header">
         <td>Subject</td>
         <td>Title</td>
@@ -25,6 +21,11 @@
         {{> courseRow}}
       {{/each}}
     </table>
+    <hr />
+    <button id="next_schedule">Next Schedule</button>
+    <span>{{currentSchedule}}/{{scheduleCount}}</span>
+    <div id="calendar"></div>
+
   </div>
 </template>
 

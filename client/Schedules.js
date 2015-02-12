@@ -4,6 +4,7 @@
 
 Scheduler.Schedules = {
   "bucketIterator" : null,
+
   // Converts an array of classes into units of renderable data
   "generateRenderPackage" : function( classes ) {
     var result = [];
@@ -110,12 +111,39 @@ Scheduler.Schedules = {
     return result;
   },
 
+  "timeStringHour" : function( raw ) {
+    var result = 0;
+    raw = raw.split(":");
+    result = parseInt(raw[0]);
+    if( raw[1].search(/pm/gi) != -1 && result != 12 ){
+      result = parseInt(raw[0])+12;
+    }
+    return result;
+  },
+
+  "timeStringMinute" : function( raw ) {
+    var result = 0;
+    raw = raw.split(":");
+    result = parseInt(raw[1]);
+    return result;
+
+  },
+
   // Returns a array of time block objects converted into a general form
   // {time} => [ { day, start, end }, { day, start, end }, ... ]
   // where start and end are in the range [0-1] which represents 00:00 - 23:59
   "generateTimeBlocks" : function( time ) {
     var result = [];
-
+    var dayToFull = {
+      "M" : "Monday",
+      "T" : "Tuesday",
+      "W" : "Wednesday",
+      "TH" : "Thursday",
+      "F" : "Friday",
+      "S" : "Saturday",
+    };
+    var start = moment().seconds(0), end = moment().seconds(0);
+    // Moment.js date time formatting for fullCalendar
     var timeString = Scheduler.Schedules.parseTimeString( time.days );
     for( day in timeString ) {
       day = timeString[day];
@@ -124,15 +152,27 @@ Scheduler.Schedules = {
         continue;
       }
 
+      start.day( dayToFull[day] );
+      end.day( dayToFull[day] );
+
+      start.hour( Scheduler.Schedules.timeStringHour( time.start_time ) );
+      end.hour( Scheduler.Schedules.timeStringHour( time.end_time ) );
+
+      start.minute( Scheduler.Schedules.timeStringMinute( time.start_time ) );
+      end.minute( Scheduler.Schedules.timeStringMinute( time.end_time ) );
+
       result.push( {
         "day"  : day,
         "start": Scheduler.Schedules.timeStringConvert( time.start_time ),
         "end": Scheduler.Schedules.timeStringConvert( time.end_time ),
+        "mStart" : start.format(),
+        "mEnd" : end.format(),
       });
     }
     return result;
   },
 
+  /*
   "drawSchedule" : function( renderPackets ) {
 
     // Create a renderer object
@@ -144,6 +184,7 @@ Scheduler.Schedules = {
       renderer.drawPackets( renderPackets );
     }
   },
+  */
 
   // renders a schedule using render packets
   "generateSchedules" : function( key ) {
@@ -171,19 +212,49 @@ Scheduler.Schedules = {
     Scheduler.Schedules.renderSchedule();
   },
 
+  "generateEvents" : function(schedule) {
+    var result = [];
+    var packets = Scheduler.Schedules.generateRenderPackage( schedule );
+    for(var packet in packets ) {
+       packet = packets[packet];
+      for( var block in packet.time_blocks ) {
+        block = packet.time_blocks[block];
+
+        result.push( {
+          "title" : packet.info.subject + " " + packet.info.name,
+          "start" : block.mStart,
+          "end"   : block.mEnd,
+        });
+      }
+    }
+    return result;
+  },
+
   "renderSchedule" : function() {
     Session.set( "currentSchedule", Scheduler.Schedules.bucketIterator.position );
     Session.set( "addCodes", Scheduler.Schedules.bucketIterator.getCourseArray() );
     Session.set( "scheduleCourses", Scheduler.Schedules.bucketIterator.getSchedule() );
     var schedule = Scheduler.Schedules.bucketIterator.getSchedule();
+    var events = Scheduler.Schedules.generateEvents( schedule );
+    $('#calendar').fullCalendar( "destroy" );
+    $('#calendar').fullCalendar({
+      "defaultView"   : "agendaWeek",
+      "titleFormat"   : "",
+      "header"        : false,
+      "allDaySlot"    : false,
+      "height"        : 800,
+      "columnFormat"  : "dddd",
+      "events" : events,
+    });
+    /*
     // If the schedule was found then render the schedule
     if( schedule !== null ) {
       // Generate render packets for the schedule
-      var renderPackets = Scheduler.Schedules.generateRenderPackage( schedule );
 
       // Generate the schedule using the render packes
       Scheduler.Schedules.drawSchedule( renderPackets );
     }
+    */
   },
 };
 
