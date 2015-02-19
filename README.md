@@ -1,7 +1,6 @@
 ssu_scheduler
 =============
 
-
 Installation(ubuntu)
 ============
 
@@ -41,6 +40,32 @@ Installation is pretty simple
   cd scripts
   mongoimport -h localhost:3001 --db meteor --collection Courses --type json --jsonArray --file courses.json
   ```
+Installation(osx)
+============
+  Installation is similar to ubuntu
+
+  0. Get Brew:
+    https://github.com/Homebrew/homebrew
+    Package manager for osx.
+
+  1. Get nodejs:
+  ```
+    brew install node
+  ```
+
+  2. Get meteor:
+  ```
+    curl https://install.meteor.com/ | sh
+  ```
+    This will install meteor and the meteor package manager on your machine.
+
+  3. Get Mongodb
+  ```
+    brew install mongodb
+  ```
+
+  4. Same as Ubuntu
+  5. Same as Ubuntu
 
 Update Database
 ===============
