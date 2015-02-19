@@ -57,7 +57,7 @@ BucketIterator.prototype.setPosition = function(pos) {
 // Returns true if the provided courses has overlap
 BucketIterator.prototype.courseOverlap = function(courses) {
   var days = {};
-  var renderPackets = Scheduler.Schedules.generateRenderPackage( courses );
+  var renderPackets = Scheduler.Converter.generateRenderPackage( courses );
 
   // Load the corses into a temporary associative array for comparision
   //  This is to allow us to reduce the number of comparisons between courses where
