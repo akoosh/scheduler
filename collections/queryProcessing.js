@@ -1,5 +1,6 @@
 // Course tonkenizer + Query processing
 // Zack Thompson
+// Arthur Wuterich
 
 Scheduler.Courses = {
 
