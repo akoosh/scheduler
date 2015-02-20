@@ -69,6 +69,7 @@ Scheduler.Courses.QueryBuilder = {
 
     queryForTokens: function(tokens) {
 
+        //console.log( tokens );
         var groupedTokens =_.groupBy(tokens, 'type');
 
         _.each(groupedTokens, function(tokenGroup, type, obj) {
@@ -86,6 +87,7 @@ Scheduler.Courses.QueryBuilder = {
             }
         });
 
+        //console.log( queryObject );
         return queryObject;
     }
 
@@ -114,7 +116,8 @@ Scheduler.Courses.QueryToken = {
         DAY: 5,
         GE: 6,
         NUMBER: 7,
-        UNITS: 8
+        UNITS: 8,
+        DIVISION: 9,
     },
 
 
@@ -133,8 +136,12 @@ Scheduler.Courses.QueryToken = {
 
         stringIsType: function(str, type) {
             switch (type) {
+                case Scheduler.Courses.QueryToken.Type.DIVISION:
+                    return this.isDivision(str);
+
                 case Scheduler.Courses.QueryToken.Type.PROFESSOR:
                     return this.isProfessor(str);
+
                 case Scheduler.Courses.QueryToken.Type.TITLE:
                     return this.isTitle(str);
                 case Scheduler.Courses.QueryToken.Type.DEPARTMENT:
@@ -166,6 +173,10 @@ Scheduler.Courses.QueryToken = {
         isTitle: function(str) {
             var regx = RegExp(str, 'i');
             return (str.length > 2) && (CoursesModel.find( { "title": regx }, { "_id": 1 } ).fetch().length > 0);
+        },
+
+        isDivision: function(str) {
+          return /^[L|U]D$/i.test( str )
         },
 
         isSubject: function(str) {
@@ -207,6 +218,8 @@ Scheduler.Courses.QueryToken = {
                     return "units";
                 case Scheduler.Courses.QueryToken.Type.NUMBER:
                     return "subject_with_number";
+                case Scheduler.Courses.QueryToken.Type.DIVISION:
+                    return "subject_number";
                 default:
                     console.log("Unrecognized QueryToken.Type in queryKeyForType(): " + type);
                     return undefined;
@@ -248,6 +261,10 @@ Scheduler.Courses.QueryToken = {
                 case Scheduler.Courses.QueryToken.Type.NUMBER:
                     valueMapFunction = this.numberValueMap;
                     break;
+                case Scheduler.Courses.QueryToken.Type.DIVISION:
+                    valueMapFunction = this.divisionValueMap;
+                    break;
+
                 default:
                     console.log("Unrecognized QueryToken.Type in queryValuesForValuesWithType(): " + type);
                     return undefined;
@@ -301,7 +318,13 @@ Scheduler.Courses.QueryToken = {
 
         numberValueMap: function(str) {
             return str.toUpperCase().replace(' ', '');
-        }
+        },
+
+        divisionValueMap: function(str) {
+            // If the string is lower division then search for classes less than 300 
+            // else search for classes 300 or greater
+            return /LD/i.test(str) ? { "$lt" : 300 } : { "$gte" : 300 };
+        },
     }
 
 
