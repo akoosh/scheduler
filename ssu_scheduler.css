@@ -77,6 +77,12 @@ hr.clear {
   clear: both;
 }
 
+#addCodes, #scheduleTable {
+  display: inline-block;
+  height: 120px;
+  margin: 5px;
+}
+
 #results td {
     padding-right: 10px;
 }
