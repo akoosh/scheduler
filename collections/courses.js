@@ -69,11 +69,12 @@ Scheduler.Courses.QueryBuilder = {
 
     queryForTokens: function(tokens) {
 
-        var groupedTokens =_.groupBy(tokens, 'type');
+        var groupedTokens = _.groupBy(tokens, 'type');
 
         _.each(groupedTokens, function(tokenGroup, type, obj) {
             obj[type] = _.pluck(tokenGroup, 'value');
         });
+
 
         var queryObject = {};
 
@@ -94,7 +95,6 @@ Scheduler.Courses.QueryBuilder = {
 
 Scheduler.Courses.QuerySearcher = {
 
-
     resultsForQuery: function(query) {
         if (_.isEmpty(query)) return [];
         else return CoursesModel.find( query ).fetch();
@@ -106,15 +106,15 @@ Scheduler.Courses.QuerySearcher = {
 Scheduler.Courses.QueryToken = {
 
     Type: {
-        SUBJECT: 0,
-        PROFESSOR: 1,
-        TITLE: 2,
+        SUBJECT:    0,
+        PROFESSOR:  1,
+        TITLE:      2,
         DEPARTMENT: 3,
-        TIME: 4,
-        DAY: 5,
-        GE: 6,
-        NUMBER: 7,
-        UNITS: 8
+        TIME:       4,
+        DAY:        5,
+        GE:         6,
+        NUMBER:     7,
+        UNITS:      8
     },
 
 
@@ -123,6 +123,8 @@ Scheduler.Courses.QueryToken = {
 
         stringMatchesTypes: function(str) {
             var outerThis = this;
+
+            // Apply the types of each token
             return _.chain(Scheduler.Courses.QueryToken.Type)
                 .values()
                 .sortBy('valueOf')
@@ -181,7 +183,7 @@ Scheduler.Courses.QueryToken = {
         },
 
         isSubjectWithNumber: function(str) {
-            return /^[a-z]{2,4}\s?[0-9]{3}[a-z]*$/i.test(str);
+            return /^[a-z]{0,4}\s?[0-9]{3}[a-z]*$/i.test(str);
         }
     },
 
@@ -300,7 +302,7 @@ Scheduler.Courses.QueryToken = {
         },
 
         numberValueMap: function(str) {
-            return str.toUpperCase().replace(' ', '');
+            return RegExp('[A-Z]{2,4}' + str.toUpperCase().replace(' ', '') );
         }
     }
 
