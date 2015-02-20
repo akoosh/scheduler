@@ -58,16 +58,16 @@ Scheduler.Converter = {
 
       switch( timeString.length ) {
         // X#:##
-        case 3: val += c * 0.41666666666666663; break;
+        case 3: val += c * 0.416666666; break;
 
         // #X:##
-        case 2: val += c * 0.041666666666666664; break;
+        case 2: val += c * 0.041666666; break;
 
         // ##:x#
-        case 1: val += c * 0.006944444444444444; break;
+        case 1: val += c * 0.006944444; break;
 
         // ##:#x
-        case 0: val += c * 0.0006944444444444444; break;
+        case 0: val += c * 0.000694444; break;
       }
     }
 
@@ -171,7 +171,8 @@ Scheduler.Converter = {
     return result;
   },
 
-  // Returns an array of events based on the passed schedule
+  // Returns an array of events based on the passed schedule.
+  // This is used within full-calendar to render time blocks
   "generateEvents" : function(schedule) {
     var result = [];
     var packets = Scheduler.Converter.generateRenderPackage( schedule );
