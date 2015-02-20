@@ -1,5 +1,6 @@
 // Course tonkenizer + Query processing
 // Zack Thompson
+// Arthur Wuterich
 
 Scheduler.Courses = {
 
@@ -206,7 +207,7 @@ Scheduler.Courses.QueryToken = {
 
     KeyMapper: {
 
-
+        // Returns the course object key that should be searched for the given type
         queryKeyForType: function(type) {
             switch (Number(type)) {
                 case Scheduler.Courses.QueryToken.Type.PROFESSOR:
