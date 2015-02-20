@@ -38,7 +38,7 @@ Scheduler.Converter = {
     return result;
   },
 
-  // Converts a time string into an integer representaiton
+  // Converts a time string into an integer representaiton on the domain [0,1]
   "timeStringToInt" : function(timeString) {
     var val = 0;
 
