@@ -4,6 +4,8 @@
 Scheduler.Courses = {
 
 
+    // Main interface for accessing the query processing. This is used withing the application 
+    // through Meteor's call() syntax.
     coursesForString: function(str) {
         var tokens = this.QueryTokenizer.tokensForString(str);
         var query = this.QueryBuilder.queryForTokens(tokens);
@@ -14,8 +16,13 @@ Scheduler.Courses = {
 
 };
 
+// Converts raw query data into tokens of the following form:
+// { "type":type, "value":value }
+// Token types are defined in the QueryToken object
 Scheduler.Courses.QueryTokenizer = {
 
+    // Returns an array of token objects for the provided string.
+    // The search tokens are broken up by spaces as a natural delimiter
     tokensForString: function(str) {
 
         var wordArray = str.trim().split(/\s+/);
@@ -34,7 +41,10 @@ Scheduler.Courses.QueryTokenizer = {
         return tokens;
     },
 
-
+    // Returns the next discovered token based on an array of strings. Each string
+    // will be considered individually, initially, for identification and will continually 
+    // pull elements from the wordArray until there is no match. Then the last matched element
+    // will be returned.
     nextToken: function(wordArray) {
 
         var words = [];
@@ -67,16 +77,23 @@ Scheduler.Courses.QueryTokenizer = {
 Scheduler.Courses.QueryBuilder = {
 
 
+    // Takes in an array of processed tokens and builds a mongo search query
+    // The format of the tokens is described in the QueryTokenizer
     queryForTokens: function(tokens) {
 
+        // Group the tokens based on their type for the query processing
+        // to allow like tokens to be searched on an OR relationship
+        // while non-like tokens will be searched on an AND relationship
         var groupedTokens =_.groupBy(tokens, 'type');
-
         _.each(groupedTokens, function(tokenGroup, type, obj) {
             obj[type] = _.pluck(tokenGroup, 'value');
         });
 
         var queryObject = {};
 
+        // Maps each token group to a mongo query structure
+        // queryValuesForValuesWithType will return a $in mongo 
+        // structure if there are more than one value present
         _.each(groupedTokens, function(values, type) {
             var queryKey = Scheduler.Courses.QueryToken.KeyMapper.queryKeyForType(type);
             var queryValues = Scheduler.Courses.QueryToken.ValueMapper.queryValuesForValuesWithType(values, type);
@@ -86,6 +103,7 @@ Scheduler.Courses.QueryBuilder = {
             }
         });
 
+
         return queryObject;
     }
 
@@ -94,7 +112,7 @@ Scheduler.Courses.QueryBuilder = {
 
 Scheduler.Courses.QuerySearcher = {
 
-
+    // Access point for the searcher and the Meteor mongo helper object
     resultsForQuery: function(query) {
         if (_.isEmpty(query)) return [];
         else return CoursesModel.find( query ).fetch();
@@ -121,6 +139,7 @@ Scheduler.Courses.QueryToken = {
     TypeChecker: {
 
 
+        // Returns the type value for a provided string
         stringMatchesTypes: function(str) {
             var outerThis = this;
             return _.chain(Scheduler.Courses.QueryToken.Type)
@@ -185,7 +204,6 @@ Scheduler.Courses.QueryToken = {
         }
     },
 
-
     KeyMapper: {
 
 
@@ -219,6 +237,8 @@ Scheduler.Courses.QueryToken = {
     ValueMapper: {
 
 
+        // Will process a token-value and a token-type to the respective mongo
+        // structure. Each type has a defined conversion mapping below.
         queryValuesForValuesWithType: function(values, type) {
 
             var valueMapFunction;
