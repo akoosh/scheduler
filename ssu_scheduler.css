@@ -62,6 +62,33 @@ tr.header {
   background-color: #DDD;
 }
 
+
+
+table tr {
+    border-bottom: 1px solid black; 
+}
+
+table tr:hover {
+    z-index:25; 
+    background-color:#FF0; 
+}
+
+table tr span {
+    display: none; 
+}
+
+table tr:hover span{
+    display:block; 
+    position:absolute; 
+    top:2em; left:2em; width:10em; 
+    border:1px solid #0cf; 
+    background-color:#555; color:#fff; 
+}    
+
+table tr:last-child {
+    border-bottom: none; 
+}
+
 /* Generic */
 
 .hidden {
@@ -81,10 +108,12 @@ hr.clear {
   display: inline-block;
   height: 120px;
   margin: 5px;
+  border: 1px solid black; 
 }
 
 #results td {
-    padding-right: 10px;
+    padding-right: 10px; 
+    font-size: 15px; 
 }
 
 .courseDisplay {
