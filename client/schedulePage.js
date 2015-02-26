@@ -37,5 +37,16 @@ Template.schedulePage.events( {
   }
 });
 
+Template.sectionRow.helpers( {
+  // Flatten the times array into a single line per time entry for the sectionRow
+  "formatTimes" : function( times, options ) {
+    var result = "";
+    for( time in times ) {
+      time = times[time];
+      result += time.days + " " + time.start_time + " - " + time.end_time + " ";
+    }
+    return result;
+  },
+});
 
-// EOF
+

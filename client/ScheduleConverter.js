@@ -8,17 +8,16 @@ Scheduler.Converter = {
     var result = [];
     for( c in classes ) {
       c = classes[c];
-      for( section in c.classes.sections ) {
-        section = c.classes.sections[section];
+      for( section in c.sections ) {
+        section = c.sections[section];
         for( time in section.times ) {
           time = section.times[time];
           result.push( {
             "info" : {
-              "name"    : c.course.title,
-              "unit"    : c.course.units,
-              "id"      : c.classes.number,
-              "subject" : c.course.subject_with_number, 
-		"location" : c.course.location,
+              "name"    : c.title,
+              "unit"    : c.units,
+              "id"      : c.number,
+              "subject" : c.subject_with_number, 
             },
             "time" : time,
             "time_blocks": Scheduler.Converter.generateTimeBlocks( time ),

@@ -169,7 +169,8 @@ BucketIterator.prototype.getSchedule = function() {
     number = classes[number];
     var c = Scheduler.Classes.classForNumber( number );
 
-    if( c.classes != null ) {
+    // Make sure that the sections has some data for display
+    if( typeof c.sections == "object" && c.sections.length > 0 ) {
       result.push( c );
     }
   }
