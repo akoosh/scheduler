@@ -28,7 +28,8 @@ Template.schedulePage.helpers( {
   // Return an array of the add codes for the currently displayed corses
   "addCodes" : function() {
     return Session.get( "addCodes" ).join(" ");
-  }  
+  }
+
 });
 
 Template.schedulePage.events( {

@@ -1,18 +1,21 @@
-
 <!-- Template for displaying schedules -->
 <template name="schedulePage">
   <div id="schedule-wrapper">
-
+    <table id="addCodes">
+      <tr>
+      <td>
+        <h3>Add Codes:</h3>
+      </td>
+      <td class="add-code-row">
+         {{addCodes}}
+      </td>
+      </tr>
+    </table>
     <table id="scheduleTable">
       <tr class="header">
         <td>Subject</td>
         <td>Title</td>
-	<td>Type</td>
-	<td>Professor</td>
-	<td>Location</td>
-	<td>Time</td>
         <td>Units</td>
-	<td>Add Code</td>
       </tr>
       {{#each courses}}
         {{> courseRow}}
@@ -30,12 +33,7 @@
   <tr>
     <td>{{course.subject_with_number}}</td>
     <td>{{course.title}}</td>
-    <td>{{section.type}}</td>
-    <td>{{classes.professors}}</td>
-    <td>{{course.location}}</td>
-    <td>{{time}}</td>
-    <td>{{course.units}}</td> 
-    <td>{{classes.number}}</td>
+    <td>{{course.units}}</td>
   </tr>
 </template>
 
