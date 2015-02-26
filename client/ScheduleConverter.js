@@ -13,12 +13,7 @@ Scheduler.Converter = {
         for( time in section.times ) {
           time = section.times[time];
           result.push( {
-            "info" : {
-              "name"    : c.title,
-              "unit"    : c.units,
-              "id"      : c.number,
-              "subject" : c.subject_with_number, 
-            },
+            "info" : c,
             "time" : time,
             "time_blocks": Scheduler.Converter.generateTimeBlocks( time ),
           });
@@ -142,6 +137,7 @@ Scheduler.Converter = {
       "S" : "Saturday",
     };
     var start = moment().seconds(0), end = moment().seconds(0);
+
     // Moment.js date time formatting for fullCalendar
     var timeString = Scheduler.Converter.parseTimeString( time.days );
     for( day in timeString ) {
@@ -182,7 +178,7 @@ Scheduler.Converter = {
         block = packet.time_blocks[block];
 
         result.push( {
-          "title" : packet.info.subject + " " + packet.info.name,
+          "title" : packet.info.subject_with_number + " " + packet.info.title,
           "start" : block.mStart,
           "end"   : block.mEnd,
         });
