@@ -70,7 +70,8 @@ Template.queryPage.events (
 
                 Meteor.call('coursesForQuery', input, function(err, results) {
                     if (err === undefined) {
-                        Session.set("queryResults", results);
+                        Session.set("queryResults", results.courses );
+                        Session.set("queryInfo", results.info );
                     }
                 });
 

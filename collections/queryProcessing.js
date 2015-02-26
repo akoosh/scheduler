@@ -10,12 +10,25 @@ Scheduler.Courses = {
     coursesForString: function(str) {
         var tokens = this.QueryTokenizer.tokensForString(str);
         var query = this.QueryBuilder.queryForTokens(tokens);
-        var result = this.QuerySearcher.resultsForQuery(query);
+        var result = {
+          "courses" : this.QuerySearcher.resultsForQuery(query),
+          "info" : this.QueryTranslator.translateQuery(query),
+        }
         return result;
     }
 
 
 };
+
+Scheduler.Courses.QueryTranslator = {
+  // Will take in a raw query object and convert to an english sentence ( or an interchange format? )
+  // { subject_with_number: { '$in': [ 'CS315', 'CS215' ] }, units: /4/ }
+  // => "Courses with subject number either CS315 or CS215 and is 4 units"
+  translateQuery : function(query) {
+    result = "";
+    return result;
+  }
+}
 
 // Converts raw query data into tokens of the following form:
 // { "type":type, "value":value }
