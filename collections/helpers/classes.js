@@ -11,7 +11,8 @@ Scheduler.Classes = {
       "course" : null,
     };
 
-    // Get the course object
+    // Get the course object/s that have a class that contains the 
+    // class with the provided class number
     var course = CoursesModel.find( { 
       classes : { 
         $elemMatch : { 
@@ -22,7 +23,7 @@ Scheduler.Classes = {
 
     // If the course was found then pull the correct class from the 
     // course object
-    if( course.length != 0 ) {
+    if( course.length ) {
       course = course[0];
       for( c in course.classes ) {
         c = course.classes[c]
