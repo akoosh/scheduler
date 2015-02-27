@@ -213,6 +213,7 @@ Scheduler.Converter = {
     return row;
   },
 
+  // Flatten the times array into a single line per time entry for the sectionRow
   "formatTimes" : function( times ) {
     var result = "";
     for( time in times ) {
