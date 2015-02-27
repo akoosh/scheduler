@@ -30,16 +30,16 @@
 
 <template name="sectionRow">
   <tr>
-    <td>{{../subject_with_number}}</td>
-    <td>{{../title}}</td>
+    <td>{{removeDuplicate ../subject_with_number "subject"}}</td>
+    <td>{{removeDuplicate ../title "title"}}</td>
 
-    <td>{{type}}</td>
-    <td>{{professors.[0]}}</td>
-    <td>{{locations.[0]}}</td>
+    <td>{{removeDuplicate type}}</td>
+    <td>{{removeDuplicate professors.[0] "professors"}}</td>
+    <td>{{removeDuplicate locations.[0] "locations"}}</td>
     <td>{{formatTimes times}}</td>
 
-    <td>{{../units}}</td>
-    <td>{{../id}}</td>
+    <td>{{removeDuplicate ../units "units"}}</td>
+    <td>{{removeDuplicate ../id "id"}}</td>
 
   </tr>
 </template>
