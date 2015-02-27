@@ -14,10 +14,8 @@
         <td>Units</td>
         <td>Add Code</td>
       </tr>
-        {{#each courses}}
-          {{#each sections}}
-            {{> sectionRow }}
-          {{/each}}
+        {{#each formattedRow}}
+          {{> sectionRow }}
         {{/each}}
     </table>
     <hr />
@@ -30,16 +28,14 @@
 
 <template name="sectionRow">
   <tr>
-    <td>{{removeDuplicate ../subject_with_number "subject"}}</td>
-    <td>{{removeDuplicate ../title "title"}}</td>
-
-    <td>{{removeDuplicate type}}</td>
-    <td>{{removeDuplicate professors.[0] "professors"}}</td>
-    <td>{{removeDuplicate locations.[0] "locations"}}</td>
-    <td>{{formatTimes times}}</td>
-
-    <td>{{removeDuplicate ../units "units"}}</td>
-    <td>{{removeDuplicate ../id "id"}}</td>
+    <td>{{subject_with_number}}</td>
+    <td>{{title}}</td>
+    <td>{{type}}</td>
+    <td>{{professor}}</td>
+    <td>{{location}}</td>
+    <td>{{times}}</td>
+    <td>{{units}}</td>
+    <td>{{id}}</td>
 
   </tr>
 </template>

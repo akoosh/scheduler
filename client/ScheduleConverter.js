@@ -187,4 +187,78 @@ Scheduler.Converter = {
     return result;
   },
 
+  // Generate a row for display on the scheduler page
+  "generateRow": function(course,section,dict) {
+
+    var row = {
+      "subject_with_number":course.subject_with_number,
+      "title":course.title,
+      "type":section.type,
+      "professor":section.professors[0],
+      "location":section.locations[0],
+      "times":Scheduler.Converter.formatTimes(section.times),
+      "units":course.units,
+      "id":course.id,
+    };
+
+    // Removes duplicate row information
+    for( var key in row ) {
+      if( dict[key] !== undefined && dict[key] == row[key] ) {
+        row[key] = "";
+      } else {
+        dict[key] = row[key];
+      }
+    }
+
+    return row;
+  },
+
+  "formatTimes" : function( times ) {
+    var result = "";
+    for( time in times ) {
+      time = times[time];
+      result += time.days + " " + time.start_time + " - " + time.end_time + " ";
+    }
+
+    return result;
+  },
+
+  // Will return a collection of row elements for display in the schedule template
+  // returns an array of objects => [ { }, ..., { } ] which holds data for each row
+  // also will remove duplicate row data
+  "coursesToRows" : function(courses) {
+    var result = [], dict = {};
+
+    // For section per course generate a row
+    for( var course in courses ) {
+      course = courses[course];
+      for( var section in course.sections ) {
+        section = course.sections[section];
+
+        // dict will be modified to contain the last experianced
+        // rows values. This is used to remove the cell text that
+        // is duplicated
+        result.push(Scheduler.Converter.generateRow( course, section, dict ) );
+      }
+      
+    }
+
+    return result;
+  },
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
