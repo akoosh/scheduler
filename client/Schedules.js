@@ -1,4 +1,4 @@
-// Schedules page handler
+// Schedule generation controller
 // Arthur W
 // 10/27/2014
 
