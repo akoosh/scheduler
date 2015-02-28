@@ -25,7 +25,7 @@ Scheduler.Courses.QueryTranslator = {
   // { subject_with_number: { '$in': [ 'CS315', 'CS215' ] }, units: /4/ }
   // => "Courses with subject number either CS315 or CS215 and is 4 units"
   translateQuery : function(query) {
-    result = "";
+    var result = "";
     return result;
   }
 }
