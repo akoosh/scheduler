@@ -1,6 +1,4 @@
-import csv
-import sys
-import json
+import csv, sys, json, string
 
 def main():
     course_model= CourseModel()
@@ -101,6 +99,7 @@ class Course(object):
         course = {}
         course['title'] = row['Descr']
         course['subject'] = row['Sbjt']
+        course['subject_number'] = int("".join( [ x for x in row['Cat#'].lower() if x not in string.ascii_lowercase  ] ))
         course['subject_with_number'] = row['Sbjt'] + row['Cat#']
         course['units'] = row['SUV']
         course['ge_code'] = row['Component']
@@ -133,3 +132,4 @@ class Course(object):
             row[k] = row[k].strip()
 
 main()
+

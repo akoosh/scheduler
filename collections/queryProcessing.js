@@ -1,9 +1,12 @@
 // Course tonkenizer + Query processing
 // Zack Thompson
+// Arthur Wuterich
 
 Scheduler.Courses = {
 
 
+    // Main interface for accessing the query processing. This is used withing the application
+    // through Meteor's call() syntax.
     coursesForString: function(str) {
         var tokens = this.QueryTokenizer.tokensForString(str);
         var query = this.QueryBuilder.queryForTokens(tokens);
@@ -14,8 +17,13 @@ Scheduler.Courses = {
 
 };
 
+// Converts raw query data into tokens of the following form:
+// { "type":type, "value":value }
+// Token types are defined in the QueryToken object
 Scheduler.Courses.QueryTokenizer = {
 
+    // Returns an array of token objects for the provided string.
+    // The search tokens are broken up by spaces as a natural delimiter
     tokensForString: function(str) {
 
         var wordArray = str.trim().split(/\s+/);
@@ -34,7 +42,10 @@ Scheduler.Courses.QueryTokenizer = {
         return tokens;
     },
 
-
+    // Returns the next discovered token based on an array of strings. Each string
+    // will be considered individually, initially, for identification and will continually
+    // pull elements from the wordArray until there is no match. Then the last matched element
+    // will be returned.
     nextToken: function(wordArray) {
 
         var words = [];
@@ -67,10 +78,14 @@ Scheduler.Courses.QueryTokenizer = {
 Scheduler.Courses.QueryBuilder = {
 
 
+    // Takes in an array of processed tokens and builds a mongo search query
+    // The format of the tokens is described in the QueryTokenizer
     queryForTokens: function(tokens) {
 
-        var groupedTokens = _.groupBy(tokens, 'type');
-
+        // Group the tokens based on their type for the query processing
+        // to allow like tokens to be searched on an OR relationship
+        // while non-like tokens will be searched on an AND relationship
+        var groupedTokens =_.groupBy(tokens, 'type');
         _.each(groupedTokens, function(tokenGroup, type, obj) {
             obj[type] = _.pluck(tokenGroup, 'value');
         });
@@ -78,6 +93,9 @@ Scheduler.Courses.QueryBuilder = {
 
         var queryObject = {};
 
+        // Maps each token group to a mongo query structure
+        // queryValuesForValuesWithType will return a $in mongo
+        // structure if there are more than one value present
         _.each(groupedTokens, function(values, type) {
             var queryKey = Scheduler.Courses.QueryToken.KeyMapper.queryKeyForType(type);
             var queryValues = Scheduler.Courses.QueryToken.ValueMapper.queryValuesForValuesWithType(values, type);
@@ -95,6 +113,7 @@ Scheduler.Courses.QueryBuilder = {
 
 Scheduler.Courses.QuerySearcher = {
 
+    // Access point for the searcher and the Meteor mongo helper object
     resultsForQuery: function(query) {
         if (_.isEmpty(query)) return [];
         else return CoursesModel.find( query ).fetch();
@@ -121,6 +140,7 @@ Scheduler.Courses.QueryToken = {
     TypeChecker: {
 
 
+        // Returns the type value for a provided string
         stringMatchesTypes: function(str) {
             var outerThis = this;
 
@@ -135,8 +155,12 @@ Scheduler.Courses.QueryToken = {
 
         stringIsType: function(str, type) {
             switch (type) {
+                case Scheduler.Courses.QueryToken.Type.DIVISION:
+                    return this.isDivision(str);
+
                 case Scheduler.Courses.QueryToken.Type.PROFESSOR:
                     return this.isProfessor(str);
+
                 case Scheduler.Courses.QueryToken.Type.TITLE:
                     return this.isTitle(str);
                 case Scheduler.Courses.QueryToken.Type.DEPARTMENT:
@@ -170,6 +194,10 @@ Scheduler.Courses.QueryToken = {
             return (str.length > 2) && (CoursesModel.find( { "title": regx }, { "_id": 1 } ).fetch().length > 0);
         },
 
+        isDivision: function(str) {
+          return /^[L|U]D$/i.test( str )
+        },
+
         isSubject: function(str) {
             return (str.length > 1) && (CoursesModel.find( { "subject": str.toUpperCase() }, {"_id": 1} ).fetch().length > 0);
         },
@@ -187,10 +215,9 @@ Scheduler.Courses.QueryToken = {
         }
     },
 
-
     KeyMapper: {
 
-
+        // Returns the course object key that should be searched for the given type
         queryKeyForType: function(type) {
             switch (Number(type)) {
                 case Scheduler.Courses.QueryToken.Type.PROFESSOR:
@@ -209,6 +236,8 @@ Scheduler.Courses.QueryToken = {
                     return "units";
                 case Scheduler.Courses.QueryToken.Type.NUMBER:
                     return "subject_with_number";
+                case Scheduler.Courses.QueryToken.Type.DIVISION:
+                    return "subject_number";
                 default:
                     console.log("Unrecognized QueryToken.Type in queryKeyForType(): " + type);
                     return undefined;
@@ -221,6 +250,8 @@ Scheduler.Courses.QueryToken = {
     ValueMapper: {
 
 
+        // Will process a token-value and a token-type to the respective mongo
+        // structure. Each type has a defined conversion mapping below.
         queryValuesForValuesWithType: function(values, type) {
 
             var valueMapFunction;
@@ -250,6 +281,10 @@ Scheduler.Courses.QueryToken = {
                 case Scheduler.Courses.QueryToken.Type.NUMBER:
                     valueMapFunction = this.numberValueMap;
                     break;
+                case Scheduler.Courses.QueryToken.Type.DIVISION:
+                    valueMapFunction = this.divisionValueMap;
+                    break;
+
                 default:
                     console.log("Unrecognized QueryToken.Type in queryValuesForValuesWithType(): " + type);
                     return undefined;
@@ -303,7 +338,13 @@ Scheduler.Courses.QueryToken = {
 
         numberValueMap: function(str) {
             return RegExp( str.toUpperCase().replace(' ', '') );
-        }
+        },
+
+        divisionValueMap: function(str) {
+            // If the string is lower division then search for classes less than 300
+            // else search for classes 300 or greater
+            return /LD/i.test(str) ? { "$lt" : 300 } : { "$gte" : 300 };
+        },
     }
 
 
