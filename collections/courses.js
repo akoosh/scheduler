@@ -302,7 +302,7 @@ Scheduler.Courses.QueryToken = {
         },
 
         numberValueMap: function(str) {
-            return RegExp('[A-Z]{2,4}' + str.toUpperCase().replace(' ', '') );
+            return RegExp( str.toUpperCase().replace(' ', '') );
         }
     }
 
