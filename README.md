@@ -73,10 +73,10 @@ Update Database
 To update DB with new data:
 
 Get rid of old data:
-meteor
-meteor mongo
-db.Courses.remove()
+0. meteor
+1. meteor mongo
+2. db.Courses.remove()
 
 Import new data from json:
-mongoimport -h localhost:3002 --db meteor --collection Courses --type json --jsonArray --file courses.json
+3.mongoimport -h localhost:3002 --db meteor --collection Courses --type json --jsonArray --file courses.json
 
