@@ -1,7 +1,7 @@
 // Main.js
 // events and helpers for queryDisplay and courseDisplay templates
-Template.queryDisplay.helpers( 
-    {
+
+Template.queryDisplay.helpers( {
         "queryResults": function() {
             var queryResults = Session.get("queryResults");
             return queryResults || [];
@@ -9,8 +9,9 @@ Template.queryDisplay.helpers(
     }
 );
 
-Template.courseDisplay.helpers(
-    {
+Template.courseDisplay.helpers( {
+
+        // Adds the subject_with_number field to the classes objects
         "augmentedClasses": function() {
             var outerThis = this;
             return _.map( outerThis.classes, 
@@ -22,8 +23,7 @@ Template.courseDisplay.helpers(
     }
 );
 
-Template.planLayout.helpers( 
-    {
+Template.planLayout.helpers( {
 
         "slots": function() {
             var plan = Session.get("slots");
@@ -32,8 +32,8 @@ Template.planLayout.helpers(
     }
 );
 
-Template.slotDisplay.helpers(
-    {
+Template.slotDisplay.helpers( {
+        
         "slotNumber": function() {
             var slots = Session.get("slots") || [];
             var nextSlot = slots.length + 1;
@@ -41,24 +41,20 @@ Template.slotDisplay.helpers(
         },
 
         "selectedOrEmpty": function() {
+            var result = "";
             var slotSelected = Session.get("slotSelected");
             var slots = Session.get("slots") || [];
 
-            if (slotSelected === this.index ||
-                (this.index === undefined && 
-                 slotSelected === slots.length))
-            {
-                return "selected";
+            if (slotSelected === this.index || (this.index === undefined && slotSelected === slots.length)) {
+                result = "selected";
             }
-            else {
-                return "";
-            }
+
+            return result;
         }
     }
 );
 
-Template.queryPage.events (
-    {
+Template.queryPage.events ( {
         "keyup #query": function() {
             // Clear timout if there is a pending query
             var handler = Session.get("timeoutHander");
@@ -122,7 +118,7 @@ Template.queryPage.events (
 
             // recalculate slot number in case an upper slot was removed
             _.each(slots, function(slot, index) {
-                slot.index= index;
+                slot.index = index;
             });
 
             Session.set("slots", slots);

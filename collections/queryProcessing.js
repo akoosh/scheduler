@@ -90,6 +90,7 @@ Scheduler.Courses.QueryBuilder = {
             obj[type] = _.pluck(tokenGroup, 'value');
         });
 
+
         var queryObject = {};
 
         // Maps each token group to a mongo query structure
@@ -124,16 +125,15 @@ Scheduler.Courses.QuerySearcher = {
 Scheduler.Courses.QueryToken = {
 
     Type: {
-        SUBJECT: 0,
-        PROFESSOR: 1,
-        TITLE: 2,
+        SUBJECT:    0,
+        PROFESSOR:  1,
+        TITLE:      2,
         DEPARTMENT: 3,
-        TIME: 4,
-        DAY: 5,
-        GE: 6,
-        NUMBER: 7,
-        UNITS: 8,
-        DIVISION: 9,
+        TIME:       4,
+        DAY:        5,
+        GE:         6,
+        NUMBER:     7,
+        UNITS:      8
     },
 
 
@@ -143,6 +143,8 @@ Scheduler.Courses.QueryToken = {
         // Returns the type value for a provided string
         stringMatchesTypes: function(str) {
             var outerThis = this;
+
+            // Apply the types of each token
             return _.chain(Scheduler.Courses.QueryToken.Type)
                 .values()
                 .sortBy('valueOf')
@@ -209,7 +211,7 @@ Scheduler.Courses.QueryToken = {
         },
 
         isSubjectWithNumber: function(str) {
-            return /^[a-z]{2,4}\s?[0-9]{3}[a-z]*$/i.test(str);
+            return /^[a-z]{0,4}\s?[0-9]{3}[a-z]*$/i.test(str);
         }
     },
 
@@ -335,7 +337,7 @@ Scheduler.Courses.QueryToken = {
         },
 
         numberValueMap: function(str) {
-            return str.toUpperCase().replace(' ', '');
+            return RegExp( str.toUpperCase().replace(' ', '') );
         },
 
         divisionValueMap: function(str) {
