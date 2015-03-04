@@ -12,3 +12,6 @@ bootstrap
 d3
 underscore
 iron:router
+velocity:html-reporter
+sanjo:jasmine
+
