@@ -7,7 +7,11 @@ Scheduler.Schedules = {
 
   // renders a schedule using render packets
   "generateSchedules" : function( key ) {
-    Scheduler.Schedules.bucketIterator = new BucketIterator( Scheduler.ScheduleManager.get( key ) );
+    if( typeof key === "object" && key.length > 0 ) {
+      Scheduler.Schedules.bucketIterator = new BucketIterator( key );
+    } else {
+      Scheduler.Schedules.bucketIterator = new BucketIterator( Scheduler.ScheduleManager.get( key ) );
+    }
 
     Session.set( "scheduleCount", Scheduler.Schedules.bucketIterator.size );
     Scheduler.Schedules.renderSchedule();

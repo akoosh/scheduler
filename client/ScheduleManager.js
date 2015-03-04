@@ -6,8 +6,10 @@
 Scheduler.ScheduleManager = {
   tmpToken : "tmp_classes",
   schedulesKey : "saved_schedules",
-  prefix : "schmgr_",
+  favoriteKey: "__schedule_manager_favorite_schedules",
+  prefix : "_schedule_manager_",
   schedules : null,
+  self: null,
 
   "cacheSchedules" : function () {
     if( Scheduler.SchedulerManager.schedules == null ) {
@@ -41,7 +43,6 @@ Scheduler.ScheduleManager = {
 
     localStorage.setItem( Scheduler.ScheduleManager.prefix + token, JSON.stringify( courses ) );
 
-    Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
   },
 
   // Returns a listing of the schedules stored with the manager
@@ -59,10 +60,23 @@ Scheduler.ScheduleManager = {
 
     return result;
 
-  }
+  },
+
+  // Will take in an array of course identifers ( EX: [2846,1977,1677,1197] ) and save the schedule for future reference
+  "saveFavoriteSchedule" : function(classes) {
+    // Get the raw value of the favorites array
+    var favorites = localStorage.getItem( Scheduler.ScheduleManager.favoriteKey );
+    if( favorites != null ) {
+      favorites = JSON.parse( favorites );
+    } else {
+      favorites = [];
+    }
+
+    favorites.push( classes );
+
+    localStorage.setItem( Scheduler.ScheduleManager.favoriteKey, JSON.stringify( favorites ) );
+  },
 };
 
-// Mock schedule
-Scheduler.ScheduleManager.set( [ [ 2846, 2676, 2678 ], [ 1977, 1799 ], [ 1397, 1677 ], [ 1197, 3735, 1637 ] ], "mock" );
 
 // EOF

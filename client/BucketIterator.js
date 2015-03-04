@@ -24,7 +24,11 @@ BucketIterator.prototype.setBuckets = function( buckets ) {
   this.size = 1;
   this.valid = {};
 
-  for( bucket in this.buckets ) {
+  for( var bucket in this.buckets ) {
+    // Force the element into an array if it is a flat value
+    if( typeof this.buckets[bucket] !== "object" ) {
+      this.buckets[bucket] = [this.buckets[bucket]];
+    }
     this.size *= this.buckets[bucket].length;
   }
   

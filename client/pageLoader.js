@@ -2,6 +2,18 @@
 // PageLoader template allows us to change and template without a page refresh
 // Arthur Wuterich
 
+Template.pageLoader.rendered = function() {
+
+  // Mock schedule
+  Scheduler.ScheduleManager.set( [ [ 2846, 2676, 2678 ], [ 1977, 1799 ], [ 1397, 1677 ], [ 1197, 3735, 1637 ] ], "mock" );
+
+  // Setup the available schedules
+  Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
+
+  // Setup the available favorites
+
+}
+
 Template.pageLoader.helpers( {
   // Attempts to load the template provided by its name
   "loadPage" : function(name) {
