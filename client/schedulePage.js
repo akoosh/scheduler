@@ -29,7 +29,6 @@ Template.schedulePage.helpers( {
 
     return rows;
   },
-
 });
 
 Template.schedulePage.events( {
@@ -37,7 +36,6 @@ Template.schedulePage.events( {
     Scheduler.Schedules.nextSchedule(); 
   }
 });
-
 
 Template.sectionRow.helpers( {
 });

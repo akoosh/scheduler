@@ -241,7 +241,7 @@ Scheduler.Converter = {
         // is duplicated
         result.push(Scheduler.Converter.generateRow( course, section, dict ) );
       }
-      
+
     }
 
     return result;
