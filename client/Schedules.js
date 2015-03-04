@@ -1,4 +1,4 @@
-// Schedules page handler
+// Schedule generation controller
 // Arthur W
 // 10/27/2014
 
@@ -33,7 +33,6 @@ Scheduler.Schedules = {
 
   "renderSchedule" : function() {
     Session.set( "currentSchedule", Scheduler.Schedules.bucketIterator.position );
-    Session.set( "addCodes", Scheduler.Schedules.bucketIterator.getCourseArray() );
     Session.set( "scheduleCourses", Scheduler.Schedules.bucketIterator.getSchedule() );
     var schedule = Scheduler.Schedules.bucketIterator.getSchedule();
     var events = Scheduler.Converter.generateEvents( schedule );

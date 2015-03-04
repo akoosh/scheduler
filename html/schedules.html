@@ -15,11 +15,16 @@
       <tr class="header">
         <td>Subject</td>
         <td>Title</td>
+        <td>Type</td>
+        <td>Professor</td>
+        <td>Location</td>
+        <td>Time</td>
         <td>Units</td>
+        <td>Add Code</td>
       </tr>
-      {{#each courses}}
-        {{> courseRow}}
-      {{/each}}
+        {{#each formattedRow}}
+          {{> sectionRow }}
+        {{/each}}
     </table>
     <hr />
     <button id="next_schedule">Next Schedule</button>
@@ -29,11 +34,30 @@
   </div>
 </template>
 
+<template name="sectionRow">
+  <tr>
+    <td>{{subject_with_number}}</td>
+    <td>{{title}}</td>
+    <td>{{type}}</td>
+    <td>{{professor}}</td>
+    <td>{{location}}</td>
+    <td>{{times}}</td>
+    <td>{{units}}</td>
+    <td>{{id}}</td>
+
+  </tr>
+</template>
+
+<!--
 <template name="courseRow">
   <tr>
-    <td>{{course.subject_with_number}}</td>
-    <td>{{course.title}}</td>
-    <td>{{course.units}}</td>
+    <td>{{subject_with_number}}</td>
+    <td>{{title}}</td>
+    <td>{{units}}</td> 
+    <td>{{number}}</td>
+    <td>{{id}}</td>
+    <td>{{garbage}}</td>
+    <td>{{test}}</td>
   </tr>
 </template>
 
@@ -42,3 +66,4 @@
     {{this}}
   </td>
 </template>
+-->

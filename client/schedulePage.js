@@ -21,15 +21,14 @@ Template.schedulePage.helpers( {
   },
 
   // Returns an array with the currently displayed courses in raw form
-  "courses" : function() {
-    return Session.get( "scheduleCourses" );
+  "formattedRow" : function() {
+    var courses = Session.get( "scheduleCourses" );
+
+    // Get the rows for the current courses
+    var rows = Scheduler.Converter.coursesToRows( courses );
+
+    return rows;
   },
-
-  // Return an array of the add codes for the currently displayed corses
-  "addCodes" : function() {
-    return Session.get( "addCodes" ).join(" ");
-  }
-
 });
 
 Template.schedulePage.events( {
@@ -38,5 +37,7 @@ Template.schedulePage.events( {
   }
 });
 
+Template.sectionRow.helpers( {
+});
 
-// EOF
+
