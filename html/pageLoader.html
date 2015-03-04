@@ -7,14 +7,13 @@
       <input id="course_transition" type="button" value="Courses" />
       <div>
         <h3>Load Schedule</h3>
-        {{#each schedule}}
+        {{#each schedules}}
           <input class="setSchedule" type="button" key="{{this.key}}" value="{{this.name}}" />
         {{/each}}
       </div>
       <div>
-        <h3>Favorite Schedules</h3>
-        {{#each favorite}}
-        {{/each}}
+        <h3>Favorite Schedules({{numberOfFavorites}} saved)</h3>
+          <input class="viewFavorites" type="button" value="View Favorites" />
       </div>
     </div>
     <!-- /DEV CONTROLS -->

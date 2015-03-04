@@ -76,7 +76,56 @@ Scheduler.ScheduleManager = {
 
     localStorage.setItem( Scheduler.ScheduleManager.favoriteKey, JSON.stringify( favorites ) );
   },
+
+  // Will take in an array of course identifers ( EX: [2846,1977,1677,1197] ) and remove this array from the
+  // stored favorites
+  "removeFavoriteSchedule" : function(classes) {
+    // Get the raw value of the favorites array
+    var favorites = localStorage.getItem( Scheduler.ScheduleManager.favoriteKey );
+
+    // Only perform changes if the favorites array is defined
+    if( favorites != null ) {
+      favorites = JSON.parse( favorites );
+      
+      for( var s in favorites ) {
+        var found = true;
+        for( var c in favorites[s] ) {
+          if( favorites[s][c] != classes[c] ) {
+            found = false;
+            break;
+          }
+        }
+
+        // Remove the element
+        if( found ) {
+          favorites.splice( s, 1 ); 
+          localStorage.setItem( Scheduler.ScheduleManager.favoriteKey, JSON.stringify( favorites ) );
+          break;
+        }
+      }
+    }
+  },
+
+  // Returns a listing of the schedules stored with the manager
+  "listFavorites" : function() {
+    var results = [];
+    var favorites = localStorage.getItem( Scheduler.ScheduleManager.favoriteKey );
+    if( favorites != null ) {
+      favorites = JSON.parse( favorites );
+      results = favorites;
+    }
+
+    return results;
+  },
 };
 
 
-// EOF
+
+
+
+
+
+
+
+
+

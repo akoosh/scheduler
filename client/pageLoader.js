@@ -11,6 +11,7 @@ Template.pageLoader.rendered = function() {
   Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
 
   // Setup the available favorites
+  Session.set( "favoriteSchedules", Scheduler.ScheduleManager.listFavorites() );
 
 }
 
@@ -27,9 +28,17 @@ Template.pageLoader.helpers( {
   },
 
   // Returns the array of available schedules
-  "schedule" : function() {
+  "schedules" : function() {
     return Session.get( "availableSchedules" );
-  }
+  },
+
+  // Returns the array of available schedules
+  "numberOfFavorites" : function() {
+    var result = Session.get( "favoriteSchedules" ).length;
+
+    // Return the result if it exists
+    return result ? result : 0;
+  },
 });
 
 Template.pageLoader.events( {
@@ -47,10 +56,24 @@ Template.pageLoader.events( {
   // side-effect: Will change the current template to the schedule page
   "mouseup .setSchedule" : function( e, template ) {
     var id = $(e.target).attr("key");
+    if( id ) {
+      Session.set( "currentScheduleId", id );
+      Session.set( "current_page", "schedulePage" );
+      setTimeout( function() {
+        Scheduler.Schedules.generateSchedules( id );
+      }, 200 );
+    }
+  },
+
+  "mouseup .viewFavorites" : function( e, template ) {
+    console.log( "Load the favorites view" );
+    /*
+    var id = $(e.target).attr("key");
     Session.set( "currentScheduleId", id );
     Session.set( "current_page", "schedulePage" );
     setTimeout( function() {
       Scheduler.Schedules.generateSchedules( id );
     }, 200 );
+    */
   },
 });

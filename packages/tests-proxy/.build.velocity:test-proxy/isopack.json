@@ -1,0 +1,25 @@
+{
+  "isopack-1": {
+    "name": "velocity:test-proxy",
+    "summary": "Dynamically created package to expose test files to mirrors",
+    "version": "0.0.4+398848e314a13e842a62ff7aa55c20429899a1b8",
+    "earliestCompatibleVersion": "0.0.0",
+    "isTest": false,
+    "builds": [
+      {
+        "arch": "os",
+        "path": "os.json"
+      },
+      {
+        "arch": "web.browser",
+        "path": "web.browser.json"
+      },
+      {
+        "arch": "web.cordova",
+        "path": "web.cordova.json"
+      }
+    ],
+    "plugins": [],
+    "debugOnly": true
+  }
+}

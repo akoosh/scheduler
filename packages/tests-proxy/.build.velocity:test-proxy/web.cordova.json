@@ -1,0 +1,22 @@
+{
+  "format": "unipackage-unibuild-pre1",
+  "packageVariables": [],
+  "uses": [
+    {
+      "package": "meteor"
+    },
+    {
+      "package": "coffeescript"
+    }
+  ],
+  "resources": [
+    {
+      "type": "prelink",
+      "file": "web.cordova/packages/velocity:test-proxy.js",
+      "length": 0,
+      "offset": 0,
+      "servePath": "/packages/velocity:test-proxy.js",
+      "sourceMap": "web.cordova/packages/velocity:test-proxy.js.map"
+    }
+  ]
+}
