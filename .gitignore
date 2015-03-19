@@ -1,2 +1,3 @@
 *.swp
 .meteor/local
+.meteor/versions
