@@ -3,14 +3,22 @@
   <div id="page_loader">
     <!-- DEV CONTROLS -->
     <div id="page_controls">
-      <h3>Goto Page</h3>
-      <input id="course_transition" type="button" value="Courses" />
-      <div>
-        <h3>Load Schedule</h3>
-        {{#each schedule}}
-          <input class="setSchedule" type="button" key="{{this.key}}" value="{{this.name}}" />
-        {{/each}}
-      </div>
+      <table>
+        <tr>
+          <td>
+            <h3>Goto Page</h3>
+            <input id="course_transition" type="button" value="Courses" />
+          </td>
+          <td>
+            <div>
+              <h3>Load Schedule</h3>
+              {{#each schedule}}
+                <input class="setSchedule" type="button" key="{{this.key}}" value="{{this.name}}" />
+              {{/each}}
+            </div>
+          </td>
+        </tr>
+      </table>
     </div>
     <!-- /DEV CONTROLS -->
     <!-- Core page loader -->
