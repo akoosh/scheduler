@@ -52,6 +52,10 @@ Template.pageLoader.events( {
     Session.set( "current_page", "queryPage" );
   },
 
+  "mouseup #favorite_transition" : function() {
+    Session.set( "current_page", "favoritePage" );
+  },
+
   // Sets the current displayed schedule to the 'key' attr of the calling object
   // side-effect: Will change the current template to the schedule page
   "mouseup .setSchedule" : function( e, template ) {
@@ -63,17 +67,5 @@ Template.pageLoader.events( {
         Scheduler.Schedules.generateSchedules( id );
       }, 200 );
     }
-  },
-
-  "mouseup .viewFavorites" : function( e, template ) {
-    console.log( "Load the favorites view" );
-    /*
-    var id = $(e.target).attr("key");
-    Session.set( "currentScheduleId", id );
-    Session.set( "current_page", "schedulePage" );
-    setTimeout( function() {
-      Scheduler.Schedules.generateSchedules( id );
-    }, 200 );
-    */
   },
 });

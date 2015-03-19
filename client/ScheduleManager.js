@@ -63,7 +63,7 @@ Scheduler.ScheduleManager = {
   },
 
   // Will take in an array of course identifers ( EX: [2846,1977,1677,1197] ) and save the schedule for future reference
-  "saveFavoriteSchedule" : function(classes) {
+  "saveFavorite" : function(classes) {
     // Get the raw value of the favorites array
     var favorites = localStorage.getItem( Scheduler.ScheduleManager.favoriteKey );
     if( favorites != null ) {
@@ -79,7 +79,7 @@ Scheduler.ScheduleManager = {
 
   // Will take in an array of course identifers ( EX: [2846,1977,1677,1197] ) and remove this array from the
   // stored favorites
-  "removeFavoriteSchedule" : function(classes) {
+  "removeFavorite" : function(classes) {
     // Get the raw value of the favorites array
     var favorites = localStorage.getItem( Scheduler.ScheduleManager.favoriteKey );
 
@@ -87,6 +87,7 @@ Scheduler.ScheduleManager = {
     if( favorites != null ) {
       favorites = JSON.parse( favorites );
       
+      // Find the schedule that matches
       for( var s in favorites ) {
         var found = true;
         for( var c in favorites[s] ) {

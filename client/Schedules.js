@@ -35,9 +35,16 @@ Scheduler.Schedules = {
     Scheduler.Schedules.renderSchedule();
   },
 
+  // Take the current schedule and save it into the storage object as a 
+  // favorite schedule
+  "saveCurrentScheduleToFavorites" : function() {
+    if( Scheduler.Schedules.bucketIterator ) {
+      Scheduler.ScheduleManager.saveFavorite( Scheduler.Schedules.bucketIterator.getCourseArray() );
+    }
+  },
+
   "renderSchedule" : function() {
     Session.set( "currentSchedule", Scheduler.Schedules.bucketIterator.position );
-    Session.set( "addCodes", Scheduler.Schedules.bucketIterator.getCourseArray() );
     Session.set( "scheduleCourses", Scheduler.Schedules.bucketIterator.getSchedule() );
     var schedule = Scheduler.Schedules.bucketIterator.getSchedule();
     var events = Scheduler.Converter.generateEvents( schedule );

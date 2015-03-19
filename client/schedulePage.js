@@ -25,18 +25,20 @@ Template.schedulePage.helpers( {
     return Session.get( "scheduleCourses" );
   },
 
-  // Return an array of the add codes for the currently displayed corses
-  "addCodes" : function() {
-    return Session.get( "addCodes" ).join(" ");
-  }
-
 });
 
 Template.schedulePage.events( {
   "click #next_schedule" : function( e, template ) {
     Scheduler.Schedules.nextSchedule(); 
-  }
+  },
+
+  "click #save_schedule" : function(e,template) {
+    Scheduler.Schedules.saveCurrentScheduleToFavorites();
+    Session.set( "favoriteSchedules", Scheduler.ScheduleManager.listFavorites() );
+  },
 });
+
+
 
 
 // EOF
