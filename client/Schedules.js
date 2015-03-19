@@ -35,29 +35,43 @@ Scheduler.Schedules = {
     Scheduler.Schedules.renderSchedule();
   },
 
-  // Take the current schedule and save it into the storage object as a 
-  // favorite schedule
+  // Take the current schedule and save it into the storage object
   "saveCurrentScheduleToFavorites" : function() {
     if( Scheduler.Schedules.bucketIterator ) {
-      Scheduler.ScheduleManager.saveFavorite( Scheduler.Schedules.bucketIterator.getCourseArray() );
+      Scheduler.ScheduleManager.saveFavorite( Session.get( "currentSchedule" ) );
+      Session.set( "favoriteSchedules", Scheduler.ScheduleManager.listFavorites() );
+    }
+  },
+
+  // Take the current schedule and remove it from the storage object
+  "removeCurrentScheduleToFavorites" : function() {
+    if( Scheduler.Schedules.bucketIterator ) {
+      Scheduler.ScheduleManager.removeFavorite( Session.get( "currentSchedule"  ) );
+      Session.set( "favoriteSchedules", Scheduler.ScheduleManager.listFavorites() );
     }
   },
 
   "renderSchedule" : function() {
-    Session.set( "currentSchedule", Scheduler.Schedules.bucketIterator.position );
-    Session.set( "scheduleCourses", Scheduler.Schedules.bucketIterator.getSchedule() );
-    var schedule = Scheduler.Schedules.bucketIterator.getSchedule();
-    var events = Scheduler.Converter.generateEvents( schedule );
-    $('#calendar').fullCalendar( "destroy" );
-    $('#calendar').fullCalendar({
-      "defaultView"   : "agendaWeek",
-      "titleFormat"   : "",
-      "header"        : false,
-      "allDaySlot"    : false,
-      "height"        : 800,
-      "columnFormat"  : "dddd",
-      "events" : events,
-    });
+    var scheduleContainer = $("#calendar");
+    if( scheduleContainer.length ) {
+        Session.set( "currentScheduleIndex", Scheduler.Schedules.bucketIterator.position );
+        Session.set( "currentSchedule", Scheduler.Schedules.bucketIterator.getCourseArray() );
+        Session.set( "scheduleCourses", Scheduler.Schedules.bucketIterator.getSchedule() );
+
+        var schedule = Scheduler.Schedules.bucketIterator.getSchedule();
+        var events = Scheduler.Converter.generateEvents( schedule );
+
+        $(scheduleContainer).fullCalendar( "destroy" );
+        $(scheduleContainer).fullCalendar({
+          "defaultView"   : "agendaWeek",
+          "titleFormat"   : "",
+          "header"        : false,
+          "allDaySlot"    : false,
+          "height"        : 800,
+          "columnFormat"  : "dddd",
+          "events" : events,
+        });
+    }
   },
 };
 

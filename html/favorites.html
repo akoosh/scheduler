@@ -1,5 +1,6 @@
 <!-- Template for displaying favorite schedules -->
 <template name="favoritePage">
-  <button id="next_favorite_schedule">Next Schedule</button>
-  {{> schedulePage hideControls=true}}
+  <button id="next_favorite_schedule" class="btn btn-default">Next Schedule</button>
+  <button id="remove_favorite_schedule" class="btn btn-default">Remove Favorite Schedule</button>
+  {{> schedule}}
 </template>

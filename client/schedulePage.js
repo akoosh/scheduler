@@ -13,7 +13,7 @@ Template.schedulePage.helpers( {
 
   // Returns the index of the current schedule
   "currentSchedule" : function() {
-    var result = Session.get( "currentSchedule" );
+    var result = Session.get( "currentScheduleIndex" );
     if( Scheduler.Schedules.bucketIterator == null ) {
       result = 0;
     }
@@ -34,11 +34,9 @@ Template.schedulePage.events( {
 
   "click #save_schedule" : function(e,template) {
     Scheduler.Schedules.saveCurrentScheduleToFavorites();
-    Session.set( "favoriteSchedules", Scheduler.ScheduleManager.listFavorites() );
   },
 });
 
 
 
 
-// EOF

@@ -34,10 +34,10 @@ Template.pageLoader.helpers( {
 
   // Returns the array of available schedules
   "numberOfFavorites" : function() {
-    var result = Session.get( "favoriteSchedules" ).length;
+    var result = Session.get( "favoriteSchedules" );
 
     // Return the result if it exists
-    return result ? result : 0;
+    return result ? result.length : 0;
   },
 });
 

@@ -8,19 +8,20 @@ Template.favoritePage.events( {
       var index = Session.get( "favoritePosition" );
       var max = Session.get( "favoriteCount" );
 
-      console.log( index, max );
       if ( index >= max-1 ) {
         index = 0;
       } else {
         index++;
       }
 
-
-      console.log( index, max );
       Session.set( "favoritePosition", index );
-      Session.set( "currentSchedule", index+1 );
+      Session.set( "currentScheduleIndex", index+1 );
       Scheduler.Schedules.generateSchedules( schedules[index] );
-    }
+    },
+
+    "click #remove_favorite_schedule" : function(e,t) {
+      Scheduler.Schedules.removeCurrentScheduleToFavorites();
+    },
 });
 
 Template.favoritePage.rendered = function() {
