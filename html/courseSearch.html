@@ -72,7 +72,7 @@
                 <td class="courseSubject">{{subject_with_number}}</td>
                 <td class="courseTitle">{{title}}</td>
                 <td class="courseUnits">{{units}} units</td>
-                <td>{{> addButton }}</td>
+                <td title="Add all {{subject_with_number}} to current bucket">{{> addButton }}</td>
             </tr>
         </table>
         {{#each augmentedClasses}}
@@ -83,7 +83,7 @@
 
 <template name="classDisplay">
     <div class="classDisplay">
-        <div class="description">#{{number}} {{> addButton }}</div>
+        <div title="Add {{number}} to current bucket" >#{{number}} {{> addButton }}</div>
         <table>
             {{#each sections}}
                 {{> sectionDisplay }}
