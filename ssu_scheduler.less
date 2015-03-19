@@ -8,6 +8,7 @@ html {
   position: fixed;
   bottom: 0px;
   left: 0px;
+  z-index: 10;
 }
 
 
@@ -93,13 +94,16 @@ hr.clear {
     border: 1px solid;
 }
 
+.classRow:nth-child(even){
+    background-color: #ececec;
+}
+
 .courseDisplay .description td {
     font-size: 18px;
     padding: 10px 10px 10px 0;
 }
 
 .classDisplay {
-    border: 1px solid;
     padding: 5px;
     margin: 5px 0;
 }
@@ -108,13 +112,23 @@ hr.clear {
     float: right;
 }
 
+.description-table {
+  width: 100%;
+}
+
 .description {
     font-weight: bold;
+    padding-right: 6px;
+}
+
+.addButton {
+  float: right;
 }
 
 #planLayout {
     margin-top: 30px;
 }
+
 
 .slotDisplay {
     border: 1px solid black;

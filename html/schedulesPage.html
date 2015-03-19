@@ -17,9 +17,10 @@
         {{/each}}
     </table>
     <hr />
-    <button id="next_schedule">Next Schedule</button>
     <span>{{currentSchedule}}/{{scheduleCount}}</span>
-    <div id="calendar"></div>
+    <button id="next_schedule" class="btn btn-default">Next Schedule</button>
+    <button id="save_schedule" class="btn btn-default">Favorite Schedule</button>
+    {{> schedule}}
 
   </div>
 </template>

@@ -7,14 +7,20 @@
         <tr>
           <td>
             <h3>Goto Page</h3>
-            <input id="course_transition" type="button" value="Courses" />
+            <input id="course_transition" class="btn btn-default" type="button" value="Courses" />
           </td>
           <td>
             <div>
               <h3>Load Schedule</h3>
-              {{#each schedule}}
-                <input class="setSchedule" type="button" key="{{this.key}}" value="{{this.name}}" />
+              {{#each schedules}}
+                <input class="setSchedule btn btn-default" type="button" key="{{this.key}}" value="{{this.name}}" />
               {{/each}}
+            </div>
+          </td>
+          <td>
+            <div>
+              <h3>Favorite Schedules({{numberOfFavorites}} saved)</h3>
+                <input id="favorite_transition" class="btn btn-default" type="button" value="View Favorites" />
             </div>
           </td>
         </tr>

@@ -21,7 +21,7 @@
 </template>
 
 <template name="generateButton">
-    <button class="generateButton">Generate Schedules</button>
+    <button class="generateButton btn btn-default">Generate Schedules</button>
 </template>
 
 <template name="slotDisplay">
@@ -67,7 +67,7 @@
 
 <template name="courseDisplay">
     <div class="courseDisplay">
-        <table>
+        <table class="description-table">
             <tr class="description">
                 <td class="courseSubject">{{subject_with_number}}</td>
                 <td class="courseTitle">{{title}}</td>
@@ -76,7 +76,7 @@
             </tr>
         </table>
         {{#each augmentedClasses}}
-            <div>{{> classDisplay }}</div>
+            <div class="classRow">{{> classDisplay }}</div>
         {{/each}}
     </div>
 </template>
@@ -102,5 +102,5 @@
 </template>
 
 <template name="addButton">
-    <button class="addButton">+</button>
+    <button class="addButton btn btn-primary">+</button>
 </template>
