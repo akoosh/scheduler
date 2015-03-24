@@ -1,5 +1,34 @@
 import csv, sys, json, string
 
+def strip_whitespace(row):
+    for k in row.keys():
+        row[k] = row[k].strip()
+
+def generateSupplementaryData( supFile ):
+  result = {}
+  reader = csv.DictReader( supFile, delimiter=',', quotechar='"')
+  for row in reader:
+    strip_whitespace( row )
+    result[row['Subject']+row['Catalog']] = { "title" : getValue( row, ['Long Title']), "description" : getValue( row, ['Course Descr'] ) }
+    
+  return result
+
+# Returns the first matched key from a dict based on the passed values array
+def getValue( row, values ):
+
+  result = ''
+  if not isinstance( values, list ):
+    values = [values]
+
+  for value in values:
+    if value in row:
+      result = row[value]
+      break
+
+    
+  return result
+    
+
 def main():
     course_model= CourseModel()
 
@@ -7,8 +36,11 @@ def main():
 
         reader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
 
+        with open(sys.argv[2]) as supFile:
+          sup = generateSupplementaryData( supFile )
+
         for row in reader:
-            course = Course.to_dict(row)
+            course = Course.to_dict( row, sup )
             course_model.add(course)
 
     f = open('courses.json', 'w')
@@ -92,33 +124,43 @@ class CourseModel(object):
 class Course(object):
     
     @staticmethod
-    def to_dict(row):
+    def to_dict(row, sup):
 
-        Course.strip_whitespace(row)
+        strip_whitespace(row)
+
 
         course = {}
-        course['title'] = row['Descr']
-        course['subject'] = row['Sbjt']
-        course['subject_number'] = int("".join( [ x for x in row['Cat#'].lower() if x not in string.ascii_lowercase  ] ))
-        course['subject_with_number'] = row['Sbjt'] + row['Cat#']
-        course['units'] = row['SUV']
-        course['ge_code'] = row['Component']
+        course['department'] = getValue( row, ['Descr'] )
+        course['subject'] = getValue( row, ['Subject'] ) 
+        course['subject_number'] = int("".join( [ x for x in getValue( row, ['Catalog'] ) .lower() if x not in string.ascii_lowercase  ] ))
+        course['subject_with_number'] = getValue( row, ['Subject'] )  + getValue( row, ['Catalog'] ) 
+        course['units'] = getValue( row, ['Min Units'] ) 
+        course['ge_code'] = getValue( row, ['Designation'] ) 
+
+        supId = course['subject'] + getValue( row, ['Catalog'] ) 
+        if not supId in sup:
+          sup[supId] = {}
+          print "Attempted to find supplementary data for %s but was not available" % supId
+
+        course['description'] = getValue( sup[supId], ['description'] )
+        course['title'] = getValue( sup[supId], ['title'] )
+
         course['classes'] = [] 
 
         this_class = {}
-        this_class['number'] = row['Cls#']
+        this_class['number'] = getValue( row, ['Class Nbr'] ) 
         this_class['sections'] = []
 
         this_section = {}
-        this_section['professors'] = [ row['Last'] ]
-        this_section['type'] = row['AsnType']
-        this_section['locations'] = [ row['Facil ID'] ]
+        this_section['professors'] = [ getValue( row, ['Last'] )  ]
+        this_section['type'] = getValue( row, ['Component'] ) 
+        this_section['locations'] = [ getValue( row, ['Facil ID'] )  ]
         this_section['times'] = []
 
         this_time = {}
-        this_time['start_time'] = row['START TIME']
-        this_time['end_time'] = row['END TIME']
-        this_time['days'] = row['Pat']
+        this_time['start_time'] = getValue( row, ['START TIME'] ) 
+        this_time['end_time'] = getValue( row, ['END TIME'] ) 
+        this_time['days'] = getValue( row, ['Pat'] ) 
 
         this_section['times'].append(this_time)
         this_class['sections'].append(this_section)
@@ -126,10 +168,7 @@ class Course(object):
 
         return course
 
-    @staticmethod
-    def strip_whitespace(row):
-        for k in row.keys():
-            row[k] = row[k].strip()
+
 
 main()
 
