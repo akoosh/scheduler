@@ -4,7 +4,6 @@
 # but you can also edit it by hand.
 
 standard-app-packages
-autopublish
 insecure
 jquery
 less
@@ -12,6 +11,7 @@ bootstrap
 d3
 underscore
 iron:router
-velocity:html-reporter
 sanjo:jasmine
+velocity:html-reporter
+autopublish
 
