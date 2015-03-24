@@ -45,6 +45,9 @@ Scheduler.Classes = {
     result["id"] = classes.number;
     result["subject_with_number"] = course.subject_with_number;
     result["sections"] = classes.sections;
+    result["description"] = course.description;
+
+    console.log( course, classes );
 
     return result;
   },

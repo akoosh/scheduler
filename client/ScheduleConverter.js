@@ -199,6 +199,7 @@ Scheduler.Converter = {
       "times":Scheduler.Converter.formatTimes(section.times),
       "units":course.units,
       "id":course.id,
+      "description": course.description
     };
 
     // Removes duplicate row information
