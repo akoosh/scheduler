@@ -153,6 +153,8 @@ Template.queryPage.events ( {
             });
 
             Scheduler.ScheduleManager.set(classesArray, "plan");
+              
+            console.log( classesArray );
 
             // Setup the available schedules
             Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
