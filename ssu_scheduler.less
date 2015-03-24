@@ -1,6 +1,7 @@
 /* CSS declarations go here */
 
-@lightGrey: #a1a1a1;
+@lightGrey: #f4f4f4;
+@borderGrey: darken(@lightGrey, 20%);
 @ssuBlue: #0078DB;
 
 html {
@@ -98,12 +99,12 @@ hr.clear {
 .courseDisplay {
     margin: 10px 0;
     padding: 5px;
-    border: 1px solid @lightGrey;
+    border: 1px solid @borderGrey;
     border-radius: 4px;
 }
 
 .classRow:nth-child(even){
-    background-color: #ececec;
+    background-color: @lightGrey;
 }
 
 .courseDisplay .description td {
@@ -139,8 +140,8 @@ hr.clear {
 
 
 .slotDisplay {
-    border: 1px solid black;
-    padding: 10px;
+    border: 1px solid @borderGrey;
+    padding: 0px;
     margin-bottom: 15px;
 }
 
@@ -150,23 +151,32 @@ hr.clear {
 
 .slotDisplay h3 {
     width: 100%;
-    text-align: center;
+    text-align: left;
+    color: @ssuBlue;
+    font-size: 50px;
 }
 
 .classButton {
-    display: inline-block;
-    border: 1px solid black;
-    padding: 5px;
-    margin: 5px;
+  display: inline-block;
+  width: 100%;
+  padding: 4px 0px;
+
+  span {
+    margin-left: 3px;
+  }
+}
+
+
+.classButton:nth-child(even){
+  background-color: @lightGrey;
 }
 
 .removeButton {
-    border: none;
-    background: #FFF;
-    color: blue;
-    font-weight: bold;
-    font-size: 20px;
-    vertical-align: bottom;
+  font-size: 20px;
+  vertical-align: bottom;
+  float: right;
+  position: relative;
+  right: 4px;
 }
 
 .btn-small {

@@ -21,12 +21,12 @@
 </template>
 
 <template name="generateButton">
-    <button class="generateButton btn btn-default">Generate and View Schedules</button>
+    <button class="generateButton btn btn-default" {{generateButtonEnabled}} title="Generate the schedules for the current slots and view the results">Generate and View Schedules</button>
 </template>
 
 <template name="slotDisplay">
     <div class="slotDisplay {{selectedOrEmpty}}">
-        <h3>Slot #{{slotNumber}}</h3>
+        <h3>Slot {{slotNumber}}</h3>
         {{#each classes}}
             {{> classButton }}
         {{/each}}
@@ -35,8 +35,8 @@
 
 <template name="classButton">
     <div class="classButton">
-        <span>{{subject_with_number}} (#{{number}})</span>
-        <button class="removeButton">x</button>
+        <span title="{{description}}" class="classButtonText">{{subject_with_number}} (#{{number}})</span>
+        <button class="btn btn-danger btn-small removeButton" title="Remove {{subject_with_number}} from this slot">x</button>
     </div>
 </template>
 
@@ -70,16 +70,16 @@
         <table class="description-table">
             <tr class="description">
                 <td class="courseSubject">{{subject_with_number}}</td>
-                <td class="courseTitle" title="{{description}}">{{title}}</td>
+                <td class="courseTitle" title="{{title}}" description="{{description}}">{{title}}</td>
                 <td class="courseUnits">{{units}} units</td>
-                <td title="Add all {{subject_with_number}} to current bucket">{{> addButton }}</td>
+                <td title="Add all {{subject_with_number}} classes to current slot">{{> addButton }}</td>
             </tr>
         </table>
         {{#each augmentedClasses}}
             <div class="classRow">{{> classDisplay }}</div>
         {{/each}}
         <div>
-          <span title="{{description}}" class="btn btn-info btn-small">?</span>
+          <span title="{{title}}" description="{{description}}" class="btn btn-info btn-small">?</span>
         {{#each geCodes}}
           <span class="btn btn-info btn-small" title="This course fulfills the general education category {{this}}">GE {{this}}</span>
         {{/each}}
@@ -89,7 +89,7 @@
 
 <template name="classDisplay">
     <div class="classDisplay">
-        <div title="Add {{number}} to current bucket" >#{{number}} {{> addButton }}</div>
+        <div title="Add class {{number}} to current slot" >#{{number}} {{> addButton }}</div>
         <table>
             {{#each sections}}
                 {{> sectionDisplay }}

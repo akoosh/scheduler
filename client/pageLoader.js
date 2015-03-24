@@ -39,6 +39,10 @@ Template.pageLoader.helpers( {
     // Return the result if it exists
     return result ? result.length : 0;
   },
+
+  "debug" : function() {
+    return false;
+  }
 });
 
 Template.pageLoader.events( {

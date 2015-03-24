@@ -57,7 +57,7 @@ Template.sectionRow.rendered = function() {
     $('[title]').qtip({
       style : {
         classes : Scheduler.render.qTipClasses
-      }
+      },
     });
   }, 50 );
 }

@@ -5,9 +5,23 @@ Template.queryDisplay.helpers( {
         "queryResults": function() {
             var queryResults = Session.get("queryResults");
             return queryResults || [];
-        }
+        },
+
+
     }
 );
+
+Template.generateButton.helpers( {
+  "generateButtonEnabled" : function() {
+    var slots = Session.get("slots") || [], result = "disabled";
+  
+    if( slots.length ) {
+      result = "";
+    }
+
+    return result;
+  }
+});
 
 Template.courseDisplay.helpers( {
 
@@ -154,33 +168,48 @@ Template.queryPage.events ( {
 
             Scheduler.ScheduleManager.set(classesArray, "plan");
               
-            console.log( classesArray );
+            if( classesArray.length ) {
+              // Setup the available schedules
+              Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
 
-            // Setup the available schedules
-            Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
-
-            // Transition to the schedule view
-            Session.set( "currentScheduleId", "plan" );
-            Session.set( "current_page", "schedulePage" );
-            setTimeout( function() {
-              Scheduler.Schedules.generateSchedules( "plan" );
-            }, 200 );
+              // Transition to the schedule view
+              Session.set( "currentScheduleId", "plan" );
+              Session.set( "current_page", "schedulePage" );
+              setTimeout( function() {
+                Scheduler.Schedules.generateSchedules( "plan" );
+              }, 200 );
+            }
         }
     }
 );
 
 Template.courseDisplay.qTipTimeout = 0;
 Template.courseDisplay.rendered = function() {
+
   clearTimeout( Template.courseDisplay.qTipTimeout );
   Template.courseDisplay.qTipTimeout = setTimeout( function() {
-    $('[title]').qtip("destroy");
-    $('[title]').qtip({
-      style : {
-        classes : Scheduler.render.qTipClasses
+    $('[title]').each( function(index, obj) {
+      obj = $(obj);
+      obj.qtip("destroy");
+      var content = {}, description = obj.attr("description"), title = obj.attr("title");
+
+      if( description !== undefined ) {
+        content.title = title;
+        content.text = description;
+      } else {
+        content.text = title;
       }
+      
+      obj.qtip({
+        content : content,
+        style : {
+          classes : Scheduler.render.qTipClasses
+        },
+      });
     });
   }, 50 );
 }
+
 
 
 
