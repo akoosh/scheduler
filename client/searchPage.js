@@ -19,6 +19,18 @@ Template.courseDisplay.helpers( {
                     return _.extend(cl, { subject_with_number: outerThis.subject_with_number } ); 
                 }
             );
+        },
+
+        "geCodes": function() {
+          var result = [];
+
+          // TODO: split the GE codes to be displayed as individual icons
+          if( this.ge_code != "" ) {
+            var formattedGeCode = this.ge_code.replace( "GE", "" );
+            result.push( formattedGeCode );
+          }
+
+          return result;
         }
     }
 );
