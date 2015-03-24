@@ -156,6 +156,13 @@ Template.queryPage.events ( {
 
             // Setup the available schedules
             Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
+
+            // Transition to the schedule view
+            Session.set( "currentScheduleId", "plan" );
+            Session.set( "current_page", "schedulePage" );
+            setTimeout( function() {
+              Scheduler.Schedules.generateSchedules( "plan" );
+            }, 200 );
         }
     }
 );

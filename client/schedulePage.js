@@ -39,6 +39,10 @@ Template.schedulePage.events( {
   "click #save_schedule" : function(e,template) {
     Scheduler.Schedules.saveCurrentScheduleToFavorites();
   },
+
+  "click #back_to_search" : function(e,template) {
+    Session.set( "current_page", "queryPage" );
+  },
 });
 
 Template.sectionRow.helpers( {
