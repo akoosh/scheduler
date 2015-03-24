@@ -141,6 +141,9 @@ Template.queryPage.events ( {
             });
 
             Scheduler.ScheduleManager.set(classesArray, "plan");
+
+            // Setup the available schedules
+            Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
         }
     }
 );
