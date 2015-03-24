@@ -160,8 +160,17 @@ Template.queryPage.events ( {
     }
 );
 
-Template.queryPage.rendered = function() {
-  $('a[title]').qtip();
+Template.courseDisplay.qTipTimeout = 0;
+Template.courseDisplay.rendered = function() {
+  clearTimeout( Template.courseDisplay.qTipTimeout );
+  Template.courseDisplay.qTipTimeout = setTimeout( function() {
+    $('[title]').qtip("destroy");
+    $('[title]').qtip({
+      style : {
+        classes : Scheduler.render.qTipClasses
+      }
+    });
+  }, 50 );
 }
 
 

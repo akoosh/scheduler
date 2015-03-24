@@ -176,11 +176,13 @@ Scheduler.Converter = {
        packet = packets[packet];
       for( var block in packet.time_blocks ) {
         block = packet.time_blocks[block];
-
+        console.log( packet.info );
         result.push( {
-          "title" : packet.info.subject_with_number + " " + packet.info.title,
-          "start" : block.mStart,
-          "end"   : block.mEnd,
+          title : packet.info.subject_with_number + " " + packet.info.title,
+          start : block.mStart,
+          end   : block.mEnd,
+          description: packet.info.description,
+          code: "("+packet.info.id+")"
         });
       }
     }

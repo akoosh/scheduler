@@ -47,8 +47,6 @@ Scheduler.Classes = {
     result["sections"] = classes.sections;
     result["description"] = course.description;
 
-    console.log( course, classes );
-
     return result;
   },
 };

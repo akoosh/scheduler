@@ -63,13 +63,24 @@ Scheduler.Schedules = {
 
         $(scheduleContainer).fullCalendar( "destroy" );
         $(scheduleContainer).fullCalendar({
-          "defaultView"   : "agendaWeek",
-          "titleFormat"   : "",
-          "header"        : false,
-          "allDaySlot"    : false,
-          "height"        : 800,
-          "columnFormat"  : "dddd",
-          "events" : events,
+          defaultView   : "agendaWeek",
+          titleFormat   : "",
+          header        : false,
+          allDaySlot    : false,
+          height        : 800,
+          columnFormat  : "dddd",
+          events : events,
+          eventRender: function(event, element) {
+              element.qtip({
+                content: {
+                  text: event.description,
+                  title: event.title + " " + event.code
+                },
+                style : {
+                  classes : Scheduler.render.qTipClasses
+                }
+              });
+          }
         });
     }
   },
