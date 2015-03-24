@@ -7,11 +7,11 @@ standard-app-packages
 insecure
 jquery
 less
-bootstrap
 d3
 underscore
 iron:router
 sanjo:jasmine
 velocity:html-reporter
 autopublish
+bootstrap
 

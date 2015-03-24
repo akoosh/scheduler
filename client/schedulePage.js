@@ -52,7 +52,6 @@ Template.sectionRow.qTipTimeout = 0;
 Template.sectionRow.rendered = function() {
   clearTimeout( Template.sectionRow.qTipTimeout );
   Template.sectionRow.qTipTimeout = setTimeout( function() {
-      console.log("Qtips rerendered" );
     $('[title]').qtip("destroy");
     $('[title]').qtip({
       style : {

@@ -79,7 +79,7 @@
             <div class="classRow">{{> classDisplay }}</div>
         {{/each}}
         <div>
-          <span title="{{title}}" description="{{description}}" class="btn btn-info btn-small">?</span>
+          <span title="{{title}}" description="{{description}}" class="info-icon"></span>
         {{#each geCodes}}
           <span class="btn btn-info btn-small" title="This course fulfills the general education category {{this}}">GE {{this}}</span>
         {{/each}}
@@ -108,5 +108,5 @@
 </template>
 
 <template name="addButton">
-    <button class="addButton btn btn-primary">+</button>
+    <button class="addButton btn btn-primary">Add</button>
 </template>
