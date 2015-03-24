@@ -48,17 +48,8 @@ Template.schedulePage.events( {
 Template.sectionRow.helpers( {
 });
 
-Template.sectionRow.qTipTimeout = 0;
 Template.sectionRow.rendered = function() {
-  clearTimeout( Template.sectionRow.qTipTimeout );
-  Template.sectionRow.qTipTimeout = setTimeout( function() {
-    $('[title]').qtip("destroy");
-    $('[title]').qtip({
-      style : {
-        classes : Scheduler.render.qTipClasses
-      },
-    });
-  }, 50 );
+  Scheduler.qTipHelper.updateTips( '[title]', Scheduler.render.qTipStyles.defaultStyle );
 }
 
 

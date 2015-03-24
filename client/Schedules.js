@@ -76,9 +76,7 @@ Scheduler.Schedules = {
                   text: event.description,
                   title: event.title + " " + event.code
                 },
-                style : {
-                  classes : Scheduler.render.qTipClasses
-                }
+                style : Scheduler.render.qTipStyles.defaultStyle,
               });
           }
         });

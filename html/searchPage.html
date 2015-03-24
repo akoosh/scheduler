@@ -72,7 +72,9 @@
                 <td class="courseSubject">{{subject_with_number}}</td>
                 <td class="courseTitle" title="{{title}}" description="{{description}}">{{title}}</td>
                 <td class="courseUnits">{{units}} units</td>
-                <td title="Add all {{subject_with_number}} classes to current slot">{{> addButton }}</td>
+                <td>
+                  <button class="addButton btn btn-primary" title="Add all classes for this course to the current slot">Add All</button>
+                </td>
             </tr>
         </table>
         {{#each augmentedClasses}}
@@ -81,7 +83,7 @@
         <div>
           <span title="{{title}}" description="{{description}}" class="info-icon"></span>
         {{#each geCodes}}
-          <span class="btn btn-info btn-small" title="This course fulfills the general education category {{this}}">GE {{this}}</span>
+          <span class="btn btn-info btn-small ge-icon" title="This course fulfills the general education category {{this}}">GE {{this}}</span>
         {{/each}}
         </div>
     </div>
@@ -89,7 +91,9 @@
 
 <template name="classDisplay">
     <div class="classDisplay">
-        <div title="Add class {{number}} to current slot" >#{{number}} {{> addButton }}</div>
+        <div>#{{number}}
+          <button class="addButton btn btn-primary" title="Add this class to the current slot">Add</button>
+        </div>
         <table>
             {{#each sections}}
                 {{> sectionDisplay }}
@@ -108,5 +112,4 @@
 </template>
 
 <template name="addButton">
-    <button class="addButton btn btn-primary">Add</button>
 </template>

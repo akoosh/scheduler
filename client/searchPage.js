@@ -147,6 +147,7 @@ Template.queryPage.events ( {
                 slot.index = index;
             });
 
+            Scheduler.qTipHelper.hideTips();
             Session.set("slots", slots);
         },
 
@@ -173,6 +174,7 @@ Template.queryPage.events ( {
               Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
 
               // Transition to the schedule view
+              Scheduler.qTipHelper.clearTips();
               Session.set( "currentScheduleId", "plan" );
               Session.set( "current_page", "schedulePage" );
               setTimeout( function() {
@@ -183,33 +185,17 @@ Template.queryPage.events ( {
     }
 );
 
-Template.courseDisplay.qTipTimeout = 0;
-Template.courseDisplay.rendered = function() {
-
-  clearTimeout( Template.courseDisplay.qTipTimeout );
-  Template.courseDisplay.qTipTimeout = setTimeout( function() {
-    $('[title]').each( function(index, obj) {
-      obj = $(obj);
-      obj.qtip("destroy");
-      var content = {}, description = obj.attr("description"), title = obj.attr("title");
-
-      if( description !== undefined ) {
-        content.title = title;
-        content.text = description;
-      } else {
-        content.text = title;
-      }
-      
-      obj.qtip({
-        content : content,
-        style : {
-          classes : Scheduler.render.qTipClasses
-        },
-      });
-    });
-  }, 50 );
+Template.classButton.rendered = function() {
+  Scheduler.qTipHelper.updateTips( '.removeButton', Scheduler.render.qTipStyles.defaultStyle );
 }
 
+Template.classDisplay.rendered = function() {
+  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton', Scheduler.render.qTipStyles.defaultStyle );
+}
+
+Template.courseDisplay.rendered = function() {
+  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon, .ge-icon, .courseDisplay * .addButton, .generateButton', Scheduler.render.qTipStyles.defaultStyle );
+}
 
 
 

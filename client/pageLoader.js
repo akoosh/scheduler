@@ -24,8 +24,6 @@ Template.pageLoader.helpers( {
       Session.set( "current_page", page );
     }
 
-    $(".qtip").qtip("destroy");
-
     return { template: Template[page] };
   },
 
