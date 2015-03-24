@@ -147,3 +147,18 @@ Template.queryPage.events ( {
         }
     }
 );
+
+Template.queryPage.rendered = function() {
+  $('a[title]').qtip();
+}
+
+
+
+
+
+
+
+
+
+
+
