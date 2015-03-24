@@ -1,5 +1,8 @@
 /* CSS declarations go here */
 
+@lightGrey: #a1a1a1;
+@ssuBlue: #0078DB;
+
 html {
     overflow-y: scroll;
 }
@@ -49,6 +52,7 @@ h3.header {
   margin-top: 0px;
   height: 100px;
 }
+
 .add-code-row {
   border: 1px solid #DDD;
   background-color: #EEE;
@@ -85,13 +89,14 @@ hr.clear {
 }
 
 #results td {
-    padding-right: 10px;
+    padding-right: 5px;
 }
 
 .courseDisplay {
     margin: 10px 0;
     padding: 5px;
-    border: 1px solid;
+    border: 1px solid @lightGrey;
+    border-radius: 4px;
 }
 
 .classRow:nth-child(even){
@@ -137,7 +142,7 @@ hr.clear {
 }
 
 .slotDisplay.selected {
-    border: 5px solid green;
+    border: 3px solid @ssuBlue;
 }
 
 .slotDisplay h3 {
