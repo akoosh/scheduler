@@ -4,7 +4,8 @@
 Template.queryDisplay.helpers( {
         "queryResults": function() {
             var queryResults = Session.get("queryResults");
-            return queryResults || [];
+            var minValue = Session.get("searchMinValue") || 30;
+            return queryResults.slice(0,minValue) || [];
         },
 
 
@@ -93,6 +94,7 @@ Template.queryPage.events ( {
                 Meteor.call('coursesForQuery', input, function(err, results) {
                     if (err === undefined) {
                         Session.set("queryResults", results);
+                        Session.set("searchMinValue", 10 );
                     }
                 });
 
