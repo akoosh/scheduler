@@ -14,9 +14,9 @@ def generateSupplementaryData( supFile ):
   return result
 
 # Returns the first matched key from a dict based on the passed values array
-def getValue( row, values ):
+def getValue( row, values, default='' ):
 
-  result = ''
+  result = default
   if not isinstance( values, list ):
     values = [values]
 
