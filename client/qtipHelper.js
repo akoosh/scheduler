@@ -14,13 +14,13 @@ Scheduler.qTipHelper = {
       var content = {}, description = obj.attr("description"), title = obj.attr("title");
 
       // If both description and title are available for the element create a qTip with a title and description; else we only want the title
-      if( description !== undefined ) {
+      if( description !== undefined && description != "" ) {
         content.title = title;
         content.text = description;
-      } else if ( title !== undefined ) {
+      } else if ( title !== undefined && title != "" ) {
         content.text = title;
       } else {
-        console.log( "Nope!" );
+        console.log( "Attempted to create qTip for element with inproper tags or null length fields" );
       }
 
       // Only setup a qTip if we have content

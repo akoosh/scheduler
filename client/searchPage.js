@@ -3,7 +3,7 @@
 
 Template.queryDisplay.helpers( {
         "queryResults": function() {
-            var queryResults = Session.get("queryResults"),
+            var queryResults = Session.get("queryResults") || [],
                 minValue = Session.get("searchMinValue") || 100;
             return queryResults.slice(0,minValue) || [];
         },

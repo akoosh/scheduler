@@ -29,6 +29,7 @@ html {
   top: 0px;
   left: 0px;
   width: 33%;
+  max-width: 450px;
 }
 
 #searchLayout {
@@ -187,14 +188,16 @@ hr.clear {
   right: 4px;
 }
 
+.icon-border {
+  border: 2px solid;
+}
+
 .info-icon {
-  background-image: url("/image/info.png");
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-size: 100%;
-  position: relative;
-  top: 6px;
+  .icon-border;
+  padding: 1px 7px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-style: italic;
 }
 
 .btn-small {
@@ -213,6 +216,13 @@ hr.clear {
   margin-bottom: 300px;
 }
 
+.ge-icon {
+  .icon-border;
+  padding: 1px;
+  border-radius: 5px;
+  margin-left: 6px;
+  font-weight: bold;
+}
 
 
 

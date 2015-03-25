@@ -1,7 +1,7 @@
 // schedulePage.js: Events and helpers for the schedulePage
 // Arthur Wuterich
 
-Template.schedulePage.helpers( {
+Template.schedulePageControls.helpers( {
   // Returns the number of schedules that have been generated
   "scheduleCount" : function() {
     var result = Session.get( "scheduleCount" );
@@ -18,17 +18,8 @@ Template.schedulePage.helpers( {
       result = 0;
     }
     return result;
-  },
+  }
 
-  // Returns an array with the currently displayed courses in raw form
-  "formattedRow" : function() {
-    var courses = Session.get( "scheduleCourses" );
-
-    // Get the rows for the current courses
-    var rows = Scheduler.Converter.coursesToRows( courses );
-
-    return rows;
-  },
 });
 
 Template.schedulePage.events( {
@@ -45,11 +36,22 @@ Template.schedulePage.events( {
   },
 });
 
-Template.sectionRow.helpers( {
+Template.schedulePageTable.helpers( {
+
+  // Returns an array with the currently displayed courses in raw form
+  "formattedRow" : function() {
+    var courses = Session.get( "scheduleCourses" );
+
+    // Get the rows for the current courses
+    var rows = Scheduler.Converter.coursesToRows( courses );
+
+    return rows;
+  }
+
 });
 
 Template.sectionRow.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '[title]', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '.sectionRow', Scheduler.render.qTipStyles.defaultStyle );
 }
 
 
