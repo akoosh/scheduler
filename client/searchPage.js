@@ -4,15 +4,26 @@
 Template.queryDisplay.helpers( {
         "queryResults": function() {
             var queryResults = Session.get("queryResults") || [],
-                minValue = Session.get("searchMinValue") || 100;
-            return queryResults.slice(0,minValue) || [];
+                renderOptions = Session.get("searchViewRenderOptions");
+
+            if( renderOptions ) {
+              queryResults = queryResults.slice(0,renderOptions.max);
+            }
+
+            return queryResults;
         },
 
         // Returns true if the current searchMinValue is lower than the total number of results
         moreResults : function() {
-            var queryResults = Session.get("queryResults"),
-                minValue = Session.get("searchMinValue");
-          return minValue && queryResults.length>minValue;
+          var queryResults = Session.get("queryResults"),
+              renderOptions = Session.get("searchViewRenderOptions"),
+              result = false;
+
+          if( renderOptions && queryResults ) {
+            result = queryResults.length>renderOptions.max;
+          }
+
+          return result;
         },
 
     }
@@ -34,12 +45,41 @@ Template.courseDisplay.helpers( {
 
         // Adds the subject_with_number field to the classes objects
         "augmentedClasses": function() {
-            var outerThis = this;
-            return _.map( outerThis.classes, 
-                function(cl) { 
-                    return _.extend(cl, { subject_with_number: outerThis.subject_with_number } ); 
-                }
-            );
+          var result = this.classes,
+              renderOptions = Session.get( "searchViewRenderOptions" ),
+              subjectWithNumber = this.subject_with_number;
+          
+          if( renderOptions ) {
+            var max = 4;
+            if( renderOptions.courses[this.subject_with_number] !== undefined ) {
+              max = renderOptions.courses[this.subject_with_number].max;
+            }
+
+            result = result.slice( 0, max );
+          }
+
+          return _.map( result, 
+            function(cl) { 
+              return _.extend(cl, { subject_with_number: subjectWithNumber } ); 
+          });
+        },
+
+        "moreResults" : function() {
+
+          var result = this.classes.length > 4,
+              renderOptions = Session.get( "searchViewRenderOptions" );
+
+          if( renderOptions ) {
+            var max = 4;
+            if( renderOptions.courses[this.subject_with_number] !== undefined ){
+              max = renderOptions.courses[this.subject_with_number].max;
+            }
+
+            result = this.classes.length > max;
+          }
+
+          return result;
+
         },
 
         "geCodes": function() {
@@ -99,8 +139,16 @@ Template.searchPage.events ( {
 
                 Meteor.call('coursesForQuery', input, function(err, results) {
                     if (err === undefined) {
-                        Session.set("queryResults", results);
-                        Session.set("searchMinValue", 10 );
+                        Session.set( "queryResults", results );
+
+                        var renderOptions = Session.get( "searchViewRenderOptions" );
+
+                        // Reset the search view render options
+                        if( renderOptions ) {
+                          renderOptions.max = 10;
+                          renderOptions.courses = {};
+                          Session.set( "searchViewRenderOptions", renderOptions );
+                        }
                     }
                 });
 
@@ -169,8 +217,25 @@ Template.searchPage.events ( {
         },
 
         "click .loadMoreResults": function() {
-          var minValue = Session.get("searchMinValue") || 0;
-          Session.set("searchMinValue", minValue+10);
+          var renderOptions = Session.get("searchViewRenderOptions");
+          if( renderOptions ) {
+            renderOptions.max += 10;
+            Session.set("searchViewRenderOptions", renderOptions );
+          }
+        },
+
+        "click .loadMoreClasses": function(e, template) {
+          var courseId = $(e.target).attr("course"),
+              renderOptions = Session.get("searchViewRenderOptions");
+
+          if( renderOptions && courseId ) {
+            if( renderOptions.courses[courseId] === undefined ) {
+              renderOptions.courses[courseId] = { max : 4 };
+            }
+
+            renderOptions.courses[courseId].max += 4;
+            Session.set("searchViewRenderOptions", renderOptions );
+          }
         },
 
         "click .generateButton": function() {
@@ -195,6 +260,15 @@ Template.searchPage.events ( {
     }
 );
 
+Template.searchPage.rendered = function() {
+  // Setup the default view render options
+  var searchViewRenderOptions = {
+    max : 10,
+    courses: { }
+  };
+  Session.set( "searchViewRenderOptions", searchViewRenderOptions );
+}
+
 Template.classButton.rendered = function() {
   Scheduler.qTipHelper.updateTips( '.removeButton', Scheduler.render.qTipStyles.defaultStyle );
 }
@@ -204,7 +278,7 @@ Template.classDisplay.rendered = function() {
 }
 
 Template.courseDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon.info-i, .ge-icon, .courseDisplay * .addButton, .generateButton', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon.info-i, .ge-icon, .courseDisplay * .addButton, .generateButton, .loadMoreClasses', Scheduler.render.qTipStyles.defaultStyle );
 }
 
 Template.planLayout.rendered = function() {

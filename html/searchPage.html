@@ -57,7 +57,7 @@
 
 
 <template name="searchBar">
-    <input type="text" id="query" />
+    <input type="text" id="query" placeholder="Search for classes" />
 </template>
 
 <template name="queryDisplay">
@@ -86,11 +86,14 @@
         {{#each augmentedClasses}}
             <div class="classRow">{{> classDisplay }}</div>
         {{/each}}
-        <div>
+        <div class="courseInfo">
           <span title="{{title}}" description="{{description}}" class="info-icon info-i">i</span>
         {{#each geCodes}}
           <span class="ge-icon" title="This course fulfills the general education category {{this}}">GE {{this}}</span>
         {{/each}}
+        {{#if moreResults}}
+          <button class="btn btn-default loadMoreClasses" course="{{subject_with_number}}" title="Load more classes for this course">Load More</button>
+        {{/if}}
         </div>
     </div>
 </template>
