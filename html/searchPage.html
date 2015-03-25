@@ -1,10 +1,12 @@
 <!-- Course search page -->
 <template name="queryPage">
+
     <div class="row">
         <div class="span4">
-            {{> planLayout }}
+          <div id="planContainer">{{> planLayout }}</div>
         </div>
-        <div class="span8">
+
+        <div class="span8 searchLayoutContainer">
             {{> searchLayout }}
         </div>
     </div>
@@ -62,6 +64,9 @@
         {{#each queryResults}}
             {{> courseDisplay }}
         {{/each}}
+        {{#if moreResults}}
+          <button class="btn btn-default loadMoreResults">Load More Results</button>
+        {{/if}}
     </div>
 </template>
 

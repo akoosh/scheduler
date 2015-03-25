@@ -3,11 +3,17 @@
 
 Template.queryDisplay.helpers( {
         "queryResults": function() {
-            var queryResults = Session.get("queryResults");
-            var minValue = Session.get("searchMinValue") || 30;
+            var queryResults = Session.get("queryResults"),
+                minValue = Session.get("searchMinValue") || 100;
             return queryResults.slice(0,minValue) || [];
         },
 
+        // Returns true if the current searchMinValue is lower than the total number of results
+        moreResults : function() {
+            var queryResults = Session.get("queryResults"),
+                minValue = Session.get("searchMinValue");
+          return minValue && queryResults.length>minValue;
+        },
 
     }
 );
@@ -161,6 +167,11 @@ Template.queryPage.events ( {
                 var slots = Session.get("slots") || [];
                 Session.set("slotSelected", slots.length);
             }
+        },
+
+        "click .loadMoreResults": function() {
+          var minValue = Session.get("searchMinValue") || 0;
+          Session.set("searchMinValue", minValue+10);
         },
 
         "click .generateButton": function() {
