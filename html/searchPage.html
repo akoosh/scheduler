@@ -37,9 +37,17 @@
 </template>
 
 <template name="classButton">
-    <div class="classButton">
-        <span title="{{description}}" class="classButtonText">{{subject_with_number}} (#{{number}})</span>
-        <button class="btn btn-danger btn-small removeButton" title="Remove {{subject_with_number}} from this slot">x</button>
+    <div class="classButton" title="{{description}}">
+        <table class="classButtonRowTable">
+          <tr>
+            <td>{{subject_with_number}}</td>
+            <td>{{title}}</td>
+            <!-- <td>(#{{number}})</td> -->
+            <td>
+              <button class="btn btn-danger btn-small removeButton" title="Remove {{subject_with_number}} from this slot">x</button>
+            </td>
+          </tr>
+        </table>
     </div>
 </template>
 

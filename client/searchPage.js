@@ -47,7 +47,8 @@ Template.courseDisplay.helpers( {
         "augmentedClasses": function() {
           var result = this.classes,
               renderOptions = Session.get( "searchViewRenderOptions" ),
-              subjectWithNumber = this.subject_with_number;
+              subjectWithNumber = this.subject_with_number,
+              title = this.title;
           
           if( renderOptions ) {
             var max = 4;
@@ -60,7 +61,7 @@ Template.courseDisplay.helpers( {
 
           return _.map( result, 
             function(cl) { 
-              return _.extend(cl, { subject_with_number: subjectWithNumber } ); 
+              return _.extend(cl, { subject_with_number: subjectWithNumber, title:title } ); 
           });
         },
 
