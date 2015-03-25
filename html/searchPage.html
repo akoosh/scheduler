@@ -2,7 +2,9 @@
 <template name="searchPage">
 
     <div class="row">
-        <div id="planContainer">{{> planLayout }}</div>
+        <div id="planContainer">
+          {{> planLayout }}
+        </div>
 
         <div class="searchLayoutContainer">
             {{> searchLayout }}
@@ -19,6 +21,17 @@
         {{> slotDisplay}}
         {{> generateButton }}
     </div>
+    <div>
+      {{> searchInfoPanel}}
+    </div>
+</template>
+
+<template name="searchInfoPanel">
+  {{#if isValid}}
+    <div id="infoContent">
+      {{infoText}}
+    </div>
+  {{/if}}
 </template>
 
 <template name="generateButton">

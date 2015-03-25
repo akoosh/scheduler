@@ -29,6 +29,18 @@ Template.queryDisplay.helpers( {
     }
 );
 
+Template.searchInfoPanel.helpers( {
+  "isValid" : function() {
+    return Session.get("ShowSearchInfo") || false;
+  },
+
+  "infoText" : function() {
+    return "Hello Dude >:D!";
+  }
+ 
+});
+
+
 Template.generateButton.helpers( {
   "generateButtonEnabled" : function() {
     var slots = Session.get("slots") || [], result = "disabled";
@@ -274,6 +286,7 @@ Template.searchPage.rendered = function() {
   Session.set( "searchViewRenderOptions", searchViewRenderOptions );
 }
 
+
 Template.classButton.rendered = function() {
   Scheduler.qTipHelper.updateTips( '.removeButton', Scheduler.render.qTipStyles.defaultStyle );
 }
@@ -289,7 +302,6 @@ Template.courseDisplay.rendered = function() {
 Template.planLayout.rendered = function() {
   Scheduler.qTipHelper.updateTips( '#planLayout .info-icon.info-question', Scheduler.render.qTipStyles.defaultStyle );
 }
-
 
 
 
