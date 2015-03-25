@@ -83,12 +83,11 @@
     <div class="courseDisplay" >
         <table class="description-table">
             <tr class="description">
-                <td class="courseSubject">{{subject_with_number}}</td>
                 <td class="courseTitle" title="{{title}}" description="{{description}}">{{title}}</td>
-                <td class="courseUnits">{{units}} units</td>
-                <td>
-                  <button class="addButton btn btn-primary" title="Add all classes for this course to the current slot">Add All</button>
-                </td>
+                <td><button class="addButton btn btn-primary" title="Add all classes for this course to the current slot">Add All</button></td>
+              </tr>
+              <tr>
+                <td class="courseSubject">{{subject_with_number}}, {{units}} units</td>
             </tr>
         </table>
         {{#each augmentedClasses}}
@@ -108,7 +107,7 @@
 
 <template name="classDisplay">
     <div class="classDisplay">
-        <div>#{{number}}
+        <div>Section {{number}}
           <button class="addButton btn btn-primary" title="Add this class to the current slot">Add</button>
         </div>
         <table>
