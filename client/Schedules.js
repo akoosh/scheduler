@@ -29,6 +29,18 @@ Scheduler.Schedules = {
     Scheduler.Schedules.renderSchedule();
   },
 
+  // Goes to the prev available schedule
+  "prevSchedule" : function() {
+   var cPos = Scheduler.Schedules.bucketIterator.position;
+    do { 
+      Scheduler.Schedules.bucketIterator.dec();
+      if( Scheduler.Schedules.bucketIterator.position == cPos ) {
+        break;
+      }
+    } while( !Scheduler.Schedules.bucketIterator.isValid() );
+    Scheduler.Schedules.renderSchedule();
+  },
+
   // Goes to the requsted schedule
   "gotoSchedule" : function(pos) {
     Scheduler.Schedules.bucketIterator.setPosition( pos );

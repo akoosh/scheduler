@@ -45,6 +45,15 @@ BucketIterator.prototype.reset = function() {
 
 }
 
+BucketIterator.prototype.maxReset = function() {
+  this.position = this.size-1;
+  this.bucketPositions = [];
+  for( bucket in this.buckets ) {
+    bucket = this.buckets[bucket]; 
+    this.bucketPositions.push( [ bucket.length-1 ] );
+  }
+}
+
 // *** REFACTOR ***
 // Sets the position of the iterator to the provided position
 BucketIterator.prototype.setPosition = function(pos) {
@@ -148,6 +157,27 @@ BucketIterator.prototype.inc = function(pos) {
 
   if( this.bucketPositions[pos] >= this.buckets[pos].length ) {
     this.bucketPositions[pos] = 0;
+    this.inc( pos-1 );
+  }
+}
+
+BucketIterator.prototype.dec = function(pos) {
+  if( this.buckets.length == 0 ) {
+    return;
+  }
+
+  if( typeof pos === "undefined" ) {
+    pos = this.buckets.length-1;
+    this.position--;
+  } else if( pos < 0 ) {
+    this.maxReset();
+    return;
+  }
+
+  this.bucketPositions[pos]--;
+
+  if( this.bucketPositions[pos] < 0 ) {
+    this.bucketPositions[pos] = this.buckets[pos].length-1;
     this.inc( pos-1 );
   }
 }

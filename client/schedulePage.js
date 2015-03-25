@@ -27,6 +27,10 @@ Template.schedulePage.events( {
     Scheduler.Schedules.nextSchedule(); 
   },
 
+  "click #prev_schedule" : function( e, template ) {
+    Scheduler.Schedules.prevSchedule(); 
+  },
+
   "click #save_schedule" : function(e,template) {
     Scheduler.Schedules.saveCurrentScheduleToFavorites();
   },
