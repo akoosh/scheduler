@@ -221,6 +221,8 @@ Template.searchPage.events ( {
           var renderOptions = Session.get("searchViewRenderOptions");
           if( renderOptions ) {
             renderOptions.max += 10;
+
+            Scheduler.qTipHelper.clearTips();
             Session.set("searchViewRenderOptions", renderOptions );
           }
         },
@@ -235,6 +237,8 @@ Template.searchPage.events ( {
             }
 
             renderOptions.courses[courseId].max += 4;
+
+            Scheduler.qTipHelper.clearTips();
             Session.set("searchViewRenderOptions", renderOptions );
           }
         },
@@ -279,14 +283,12 @@ Template.classDisplay.rendered = function() {
 }
 
 Template.courseDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon.info-i, .ge-icon, .courseDisplay * .addButton, .generateButton, .loadMoreClasses', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon.info-i, .ge-icon, .courseDisplay * .addButton, .generateButton, .loadMoreClasses, .loadMoreResults', Scheduler.render.qTipStyles.defaultStyle );
 }
 
 Template.planLayout.rendered = function() {
   Scheduler.qTipHelper.updateTips( '#planLayout .info-icon.info-question', Scheduler.render.qTipStyles.defaultStyle );
 }
-
-
 
 
 
