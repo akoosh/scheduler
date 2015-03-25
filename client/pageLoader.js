@@ -20,7 +20,7 @@ Template.pageLoader.helpers( {
   "loadPage" : function(name) {
     var page = Session.get("current_page");
     if( typeof page === "undefined" ) {
-      page = "queryPage";
+      page = "searchPage";
       Session.set( "current_page", page );
     }
 
@@ -53,7 +53,7 @@ Template.pageLoader.events( {
   },
 
   "mouseup #course_transition" : function() {
-    Session.set( "current_page", "queryPage" );
+    Session.set( "current_page", "searchPage" );
   },
 
   "mouseup #favorite_transition" : function() {

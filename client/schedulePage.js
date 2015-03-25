@@ -32,7 +32,8 @@ Template.schedulePage.events( {
   },
 
   "click #back_to_search" : function(e,template) {
-    Session.set( "current_page", "queryPage" );
+    Scheduler.qTipHelper.clearTips();
+    Session.set( "current_page", "searchPage" );
   },
 });
 
@@ -49,6 +50,19 @@ Template.schedulePageTable.helpers( {
   }
 
 });
+
+Template.schedulePage.rendered = function() {
+  var scheduleId = Session.get( "currentScheduleId" );
+  if( scheduleId ) {
+    Scheduler.Schedules.generateSchedules( scheduleId );
+  } else {
+    Session.set( "current_page", "searchPage" );
+  }
+}
+
+Template.schedulePageControls.rendered = function() {
+  Scheduler.qTipHelper.updateTips( '#schedulePageControls button', Scheduler.render.qTipStyles.defaultStyle );
+}
 
 Template.sectionRow.rendered = function() {
   Scheduler.qTipHelper.updateTips( '.sectionRow', Scheduler.render.qTipStyles.defaultStyle );

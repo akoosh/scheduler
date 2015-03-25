@@ -20,7 +20,7 @@ Scheduler.qTipHelper = {
       } else if ( title !== undefined && title != "" ) {
         content.text = title;
       } else {
-        console.log( "Attempted to create qTip for element with inproper tags or null length fields" );
+        //console.log( "Attempted to create qTip for element with inproper tags or null length fields" );
       }
 
       // Only setup a qTip if we have content

@@ -87,13 +87,13 @@ Template.slotDisplay.helpers( {
     }
 );
 
-Template.queryPage.events ( {
+Template.searchPage.events ( {
         "keyup #query": function() {
             // Clear timout if there is a pending query
-            Template.queryPage.searchTimeoutHandler;
-            clearTimeout( Template.queryPage.searchTimeoutHandler );
+            Template.searchPage.searchTimeoutHandler;
+            clearTimeout( Template.searchPage.searchTimeoutHandler );
 
-            Template.queryPage.searchTimeoutHandler = setTimeout( function() {
+            Template.searchPage.searchTimeoutHandler = setTimeout( function() {
 
                 var input = $("#query").val();
 
@@ -179,8 +179,9 @@ Template.queryPage.events ( {
                 return _.pluck(slot.classes, 'number');
             });
 
-            Scheduler.ScheduleManager.set(classesArray, "plan");
+            Scheduler.ScheduleManager.set( classesArray, "plan");
               
+
             if( classesArray.length ) {
               // Setup the available schedules
               Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
@@ -189,9 +190,6 @@ Template.queryPage.events ( {
               Scheduler.qTipHelper.clearTips();
               Session.set( "currentScheduleId", "plan" );
               Session.set( "current_page", "schedulePage" );
-              setTimeout( function() {
-                Scheduler.Schedules.generateSchedules( "plan" );
-              }, 200 );
             }
         }
     }
