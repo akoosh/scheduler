@@ -204,7 +204,11 @@ Template.classDisplay.rendered = function() {
 }
 
 Template.courseDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon, .ge-icon, .courseDisplay * .addButton, .generateButton', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon.info-i, .ge-icon, .courseDisplay * .addButton, .generateButton', Scheduler.render.qTipStyles.defaultStyle );
+}
+
+Template.planLayout.rendered = function() {
+  Scheduler.qTipHelper.updateTips( '#planLayout .info-icon.info-question', Scheduler.render.qTipStyles.defaultStyle );
 }
 
 

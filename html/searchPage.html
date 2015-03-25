@@ -14,6 +14,7 @@
 
 <template name="planLayout">
     <div id="planLayout">
+      <div class="info-icon info-question plan-info" title="Slots allow you to build a schedule by requiring a class from each slot. For example if you have 3 slots this will generate schedules with 3 classes where 1 class from each slot is selected." >?</div>
         {{#each slots}}
             {{> slotDisplay }}
         {{/each}}
@@ -28,7 +29,7 @@
 
 <template name="slotDisplay">
     <div class="slotDisplay {{selectedOrEmpty}}">
-        <h3>Slot {{slotNumber}}</h3>
+        <h3 class="slotInfo" >Slot {{slotNumber}}</h3>
         {{#each classes}}
             {{> classButton }}
         {{/each}}
@@ -86,7 +87,7 @@
             <div class="classRow">{{> classDisplay }}</div>
         {{/each}}
         <div>
-          <span title="{{title}}" description="{{description}}" class="info-icon">i</span>
+          <span title="{{title}}" description="{{description}}" class="info-icon info-i">i</span>
         {{#each geCodes}}
           <span class="ge-icon" title="This course fulfills the general education category {{this}}">GE {{this}}</span>
         {{/each}}

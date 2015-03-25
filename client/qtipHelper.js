@@ -28,6 +28,13 @@ Scheduler.qTipHelper = {
         obj.qtip({
           content : content,
           style : style,
+          show : {
+            solo : true
+          },
+          position: {
+            target: 'mouse', // Track the mouse as the positioning target
+            adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+          }
         });
       }
     });
