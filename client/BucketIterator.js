@@ -178,7 +178,7 @@ BucketIterator.prototype.dec = function(pos) {
 
   if( this.bucketPositions[pos] < 0 ) {
     this.bucketPositions[pos] = this.buckets[pos].length-1;
-    this.inc( pos-1 );
+    this.dec( pos-1 );
   }
 }
 
