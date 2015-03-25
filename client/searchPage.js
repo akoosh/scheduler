@@ -90,10 +90,10 @@ Template.slotDisplay.helpers( {
 Template.queryPage.events ( {
         "keyup #query": function() {
             // Clear timout if there is a pending query
-            var handler = Session.get("timeoutHander");
-            if (typeof handler !== 'undefined') clearTimeout(handler);
+            Template.queryPage.searchTimeoutHandler;
+            clearTimeout( Template.queryPage.searchTimeoutHandler );
 
-            var new_hander = setTimeout( function() {
+            Template.queryPage.searchTimeoutHandler = setTimeout( function() {
 
                 var input = $("#query").val();
 
@@ -104,9 +104,8 @@ Template.queryPage.events ( {
                     }
                 });
 
-            }, 500 );
+            }, 200 );
  
-            Session.set("timeoutHander", new_hander);
         },
 
         "click .addButton": function(e) {
