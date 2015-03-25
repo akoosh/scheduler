@@ -79,7 +79,7 @@ Scheduler.Schedules = {
           titleFormat   : "",
           header        : false,
           allDaySlot    : false,
-          height        : 800,
+          height        : 400,
           columnFormat  : "dddd",
           events : events,
           eventRender: function(event, element) {
@@ -89,6 +89,13 @@ Scheduler.Schedules = {
                   title: event.title + " " + event.code
                 },
                 style : Scheduler.render.qTipStyles.defaultStyle,
+                show : {
+                  solo : true
+                },
+                position: {
+                  target: 'mouse', // Track the mouse as the positioning target
+                  adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+                }
               });
           }
         });
