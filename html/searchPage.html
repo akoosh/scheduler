@@ -72,7 +72,7 @@
             {{> courseDisplay }}
         {{/each}}
         {{#if moreResults}}
-          <button class="btn btn-default loadMoreResults" title="There are additional courses for your search query">Load More Results</button>
+          <button class="btn btn-default loadMoreResults" title="There are additional courses for your search query"> &#9660; Load More Results </button>
         {{/if}}
     </div>
 </template>
@@ -97,7 +97,7 @@
           <span class="ge-icon" title="This course fulfills the general education category {{this}}">GE {{this}}</span>
         {{/each}}
         {{#if moreResults}}
-          <button class="btn btn-default loadMoreClasses" course="{{subject_with_number}}" title="Load more classes for this course">Load More</button>
+          <button class="btn btn-default loadMoreClasses" course="{{subject_with_number}}" title="Load more classes for this course"> &#9660; Load More </button>
         {{/if}}
         </div>
     </div>
