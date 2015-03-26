@@ -14,8 +14,13 @@ Scheduler.qTipHelper = {
   // Updates elements in the dom after a delay ( to allow batching multiple update calls ). 
   updateTips : function( selector, style ) {
 
-    clearTimeout( Scheduler.qTipHelper.updateHandles[selector] );
-    Scheduler.qTipHelper.updateHandles[selector] = setTimeout( function() {
+    clearTimeout( this.updateHandles[selector] );
+    this.updateHandles[selector] = setTimeout( function() {
+
+    if( style === undefined ) {
+      style = Scheduler.qTipHelper.styles.defaultStyle;
+    }
+
     $(selector).each( function(index, obj) {
       obj = $(obj);
       var content = {}, description = obj.attr("description"), title = obj.attr("title");
