@@ -41,9 +41,10 @@ Template.planLayoutControls.helpers( {
   }, 
 
   "favoritesButtonEnabled" : function() {
-    var condition = true, result = "disabled";
+    var favorites = Scheduler.ScheduleManager.listFavorites(), 
+        result = "disabled";
   
-    if( condition ) {
+    if( favorites.length ) {
       result = "";
     }
 
@@ -258,6 +259,7 @@ Template.searchPage.events ( {
           var haveFavorites = true;
 
           if( haveFavorites ) {
+            Scheduler.qTipHelper.hideTips();
             Session.set( "current_page", "favoritePage" );
           }
         },

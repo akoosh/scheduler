@@ -47,6 +47,7 @@ Scheduler.Schedules = {
     Scheduler.Schedules.renderSchedule();
   },
 
+/* 
   // Take the current schedule and save it into the storage object
   "saveCurrentScheduleToFavorites" : function() {
     if( Scheduler.Schedules.bucketIterator ) {
@@ -63,6 +64,7 @@ Scheduler.Schedules = {
     }
   },
 
+*/
   "renderSchedule" : function() {
     var scheduleContainer = $("#calendar");
     if( scheduleContainer.length ) {

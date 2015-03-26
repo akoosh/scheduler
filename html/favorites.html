@@ -1,6 +1,35 @@
 <!-- Template for displaying favorite schedules -->
 <template name="favoritePage">
-  <button id="next_favorite_schedule" class="btn btn-default">Next Schedule</button>
-  <button id="remove_favorite_schedule" class="btn btn-default">Remove Favorite Schedule</button>
+  {{> favoritePageControls}}
+  {{#if hasSchedule}}
+    {{> favoriteScheduleView}}
+  {{/if}}
+  {{> favoriteLoader}}
+</template>
+
+<template name="favoriteScheduleView">
+  {{> schedulePageTable}}
   {{> schedule}}
+</template>
+
+<template name="favoritePageControls">
+  <div id="favoritePageControls">
+    <button class="btn btn-default returnToSearch" title="Return to the search view.">Return to search</button>
+  </div>
+</template>
+
+<template name="favoriteSchedule">
+  <div class="favoriteScheduleEntry">
+    {{this.name}} 
+    <button class="btn btn-default loadFavoriteSchedule" title="View this schedule">Load</button>
+    <button class="btn btn-default editFavoriteSchedule" title="Edit the classes for this schedule">Edit</button>
+    <button class="btn btn-default renameFavoriteSchedule" >Rename</button>
+    <button class="btn btn-danger deleteFavoriteSchedule" >Delete</button>
+  </div>
+</template>
+
+<template name="favoriteLoader">
+  {{#each favoriteSchedules}}
+    {{> favoriteSchedule}}
+  {{/each}}
 </template>
