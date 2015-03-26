@@ -29,19 +29,7 @@ Template.queryDisplay.helpers( {
     }
 );
 
-Template.searchInfoPanel.helpers( {
-  "isValid" : function() {
-    return Session.get("ShowSearchInfo") || false;
-  },
-
-  "infoText" : function() {
-    return "Hello Dude >:D!";
-  }
- 
-});
-
-
-Template.generateButton.helpers( {
+Template.planLayoutControls.helpers( {
   "generateButtonEnabled" : function() {
     var slots = Session.get("slots") || [], result = "disabled";
   
@@ -50,7 +38,18 @@ Template.generateButton.helpers( {
     }
 
     return result;
+  }, 
+
+  "favoritesButtonEnabled" : function() {
+    var condition = true, result = "disabled";
+  
+    if( condition ) {
+      result = "";
+    }
+
+    return result;
   }
+
 });
 
 Template.courseDisplay.helpers( {
@@ -255,6 +254,14 @@ Template.searchPage.events ( {
           }
         },
 
+        "click .viewFavorites": function() {
+          var haveFavorites = true;
+
+          if( haveFavorites ) {
+            Session.set( "current_page", "favoritePage" );
+          }
+        },
+
         "click .generateButton": function() {
             var slots = Session.get("slots") || [];
             var classesArray = _.map(slots, function(slot) {
@@ -296,11 +303,15 @@ Template.classDisplay.rendered = function() {
 }
 
 Template.courseDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon.info-i, .ge-icon, .courseDisplay * .addButton, .generateButton, .loadMoreClasses, .loadMoreResults', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon.info-i, .ge-icon, .courseDisplay * .addButton, .loadMoreClasses, .loadMoreResults', Scheduler.render.qTipStyles.defaultStyle );
 }
 
 Template.planLayout.rendered = function() {
   Scheduler.qTipHelper.updateTips( '#planLayout .info-icon.info-question', Scheduler.render.qTipStyles.defaultStyle );
+}
+
+Template.planLayoutControls.rendered = function() {
+  Scheduler.qTipHelper.updateTips( '.generateButton, .viewFavorites', Scheduler.render.qTipStyles.defaultStyle );
 }
 
 
