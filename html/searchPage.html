@@ -1,15 +1,17 @@
 <!-- Course search page -->
 <template name="searchPage">
-  <div class="searchTopBar">
-    {{> ssuLogo }}
-  </div>
-  <div class="row header">
-    <div class="col-md-8 searchLayoutHeader"> {{> searchBar }} </div>
-    <div class="col-md-4 planLayoutHeader"> {{> planLayoutControls}} </div>
-  </div>
-  <div class="row">
-    <div class="col-md-8 searchLayout"> {{> searchLayout }} </div>
-    <div class="col-md-4 planLayout"> {{> planLayout }} </div>
+  <div id="searchPageContainer">
+    <div class="searchTopBar">
+      {{> ssuLogo }}
+    </div>
+    <div class="row header">
+      <div class="col-md-8 searchLayoutHeader"> {{> searchBar }} </div>
+      <div class="col-md-4 planLayoutHeader"> {{> planLayoutControls}} </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8 searchLayout"> {{> searchLayout }} </div>
+      <div class="col-md-4 planLayout"> {{> planLayout }} </div>
+    </div>
   </div>
 </template>
 

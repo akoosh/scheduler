@@ -6,7 +6,7 @@
 @ssuBlueBorder: lighten(@ssuBlue, 10%);
 
 body {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 #page_controls {
@@ -247,6 +247,7 @@ hr.clear {
 
 .searchLayout, .planLayout {
   overflow-y: scroll;
+  height:100%;
   padding-bottom: 200px;
 }
 
@@ -275,4 +276,17 @@ hr.clear {
 
 .scheduleButton {
   margin: 3px;
+}
+
+.favoriteScheduleName {
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 23px;
+}
+
+#searchPageContainer {
+  overflow: hidden;
+  width:100%;
 }
