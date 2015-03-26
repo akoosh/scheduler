@@ -67,7 +67,11 @@ Template.schedulePage.rendered = function() {
 }
 
 Template.schedulePageControls.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '#schedulePageControls button' );
+  Scheduler.qTipHelper.updateTips( 'button' );
+}
+
+Template.schedulePageInteractionControls.rendered = function() {
+  Scheduler.qTipHelper.updateTips( 'button' );
 }
 
 Template.sectionRow.rendered = function() {

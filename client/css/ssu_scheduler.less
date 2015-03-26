@@ -75,15 +75,17 @@ hr.clear {
   clear: both;
 }
 
+#results  {
+  padding-bottom:200px;
+}
+
 #results td {
-    padding-right: 5px;
+  padding-right: 5px;
 }
 
 .courseDisplay {
   margin: 0px 0px 10px 5px;
-  padding: 5px;
-  border: 1px solid @borderGrey;
-  border-radius: 4px;
+  border-bottom: 1px solid @borderGrey;
 }
 
 .classRow:nth-child(even){
@@ -211,7 +213,7 @@ hr.clear {
 }
 
 .courseInfo {
-  height: 30px;
+  height: 36px;
 }
 
 .loadMoreClasses {
@@ -245,6 +247,7 @@ hr.clear {
 
 .searchLayout, .planLayout {
   overflow-y: scroll;
+  padding-bottom: 200px;
 }
 
 .planLayout, .planLayoutHeader {
@@ -255,4 +258,21 @@ hr.clear {
 .searchBarContainer {
   width: 100%;
   padding: 0px 0px 10px 5px;
+}
+
+.right {
+  float: right;
+}
+
+.scheduleCount {
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.scheduleButton {
+  margin: 3px;
 }
