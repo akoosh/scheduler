@@ -6,11 +6,11 @@
     </div>
     <div class="row header">
       <div class="col-md-8 searchLayoutHeader"> {{> searchBar }} </div>
-      <div class="col-md-4 planLayoutHeader"> {{> planLayoutControls}} </div>
+      <div class="col-md-4 planLayoutHeader visible-md visible-lg"> {{> planLayoutControls}} </div>
     </div>
     <div class="row">
       <div class="col-md-8 searchLayout"> {{> searchLayout }} </div>
-      <div class="col-md-4 planLayout"> {{> planLayout }} </div>
+      <div class="col-md-4 planLayout visible-md visible-lg"> {{> planLayout }} </div>
     </div>
   </div>
 </template>
@@ -81,7 +81,7 @@
         <table class="description-table">
             <tr class="description">
                 <td class="courseTitle" title="{{title}}" description="{{description}}">{{title}}</td>
-                <td><button class="addButton btn btn-primary" title="Add all classes for this course to the current slot">Add All</button></td>
+                <td><button class="addButton btn btn-primary visible-md visible-lg" title="Add all classes for this course to the current slot">Add All</button></td>
               </tr>
               <tr>
                 <td class="courseSubject">{{subject_with_number}}, {{units}} units</td>
@@ -105,7 +105,7 @@
 <template name="classDisplay">
     <div class="classDisplay">
         <div>Section {{number}}
-          <button class="addButton btn btn-primary" title="Add this class to the current slot">Add</button>
+          <button class="addButton btn btn-primary visible-md visible-lg" title="Add this class to the current slot">Add</button>
         </div>
         <table>
             {{#each sections}}
