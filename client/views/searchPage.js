@@ -62,6 +62,12 @@ Template.courseDisplay.helpers( {
               subjectWithNumber = this.subject_with_number,
               title = this.title;
           
+          result = _.map( result, 
+            function(cl) { 
+              return _.extend(cl, { subject_with_number: subjectWithNumber, title:title } ); 
+          });
+
+
           if( renderOptions ) {
             var max = 4;
             if( renderOptions.courses[this.subject_with_number] !== undefined ) {
@@ -71,10 +77,7 @@ Template.courseDisplay.helpers( {
             result = result.slice( 0, max );
           }
 
-          return _.map( result, 
-            function(cl) { 
-              return _.extend(cl, { subject_with_number: subjectWithNumber, title:title } ); 
-          });
+          return result;
         },
 
         "moreResults" : function() {
@@ -287,17 +290,13 @@ Template.searchPage.events ( {
 );
 
 Template.searchPage.rendered = function() {
+  $(".searchLayout, .planLayout").css( "height", $(window).height()-110 );
   // Setup the default view render options
   var searchViewRenderOptions = {
     max : 10,
     courses: { }
   };
   Session.set( "searchViewRenderOptions", searchViewRenderOptions );
-}
-
-
-Template.searchPage.rendered = function() {
-  $(".searchLayout, .planLayout").css( "height", $(window).height()-110 );
 }
 
 Template.classButton.rendered = function() {
