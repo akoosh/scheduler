@@ -288,19 +288,19 @@ Template.searchPage.rendered = function() {
 
 
 Template.classButton.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.removeButton', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '.removeButton', Scheduler.qTipHelper.styles.defaultStyle );
 }
 
 Template.classDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton', Scheduler.qTipHelper.styles.defaultStyle );
 }
 
 Template.courseDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon.info-i, .ge-icon, .courseDisplay * .addButton, .generateButton, .loadMoreClasses, .loadMoreResults', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon.info-i, .ge-icon, .courseDisplay * .addButton, .generateButton, .loadMoreClasses, .loadMoreResults', Scheduler.qTipHelper.styles.defaultStyle );
 }
 
 Template.planLayout.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '#planLayout .info-icon.info-question', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '#planLayout .info-icon.info-question', Scheduler.qTipHelper.styles.defaultStyle );
 }
 
 

@@ -88,7 +88,7 @@ Scheduler.Schedules = {
                   text: event.description,
                   title: event.title + " " + event.code
                 },
-                style : Scheduler.render.qTipStyles.defaultStyle,
+                style : Scheduler.qTipHelper.styles.defaultStyle,
                 show : {
                   solo : true
                 },

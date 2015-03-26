@@ -1,6 +1,13 @@
 // qTipHelper: Helper methods for interacting with the qtip plugin
 
 Scheduler.qTipHelper = {
+  // qTip styles for application
+  styles: {
+    defaultStyle : {
+      classes: "qtip-bootstrap qtip-shadow"
+    }
+  },
+
   // Timeout handles for the update functions
   updateHandles : {},
 
