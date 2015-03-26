@@ -9,20 +9,24 @@
 </template>
 
 <template name="schedulePageTable">
-  <table id="scheduleTable">
-    <tr class="header">
-      <td>Subject</td>
-      <td>Title</td>
-      <td>Type</td>
-      <td>Professor</td>
-      <td>Location</td>
-      <td>Time</td>
-      <td>Units</td>
-      <td>Add Code</td>
-    </tr>
+  <table id="scheduleTable" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Professor</th>
+        <th>Location</th>
+        <th>Time</th>
+        <th>Units</th>
+        <th>Add Code</th>
+      </tr>
+    </thead>
+    <tbody>
       {{#each formattedRow}}
         {{> sectionRow}}
       {{/each}}
+    </tbody>
   </table>
 </template>
 

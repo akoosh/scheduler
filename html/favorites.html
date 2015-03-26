@@ -18,18 +18,32 @@
   </div>
 </template>
 
+
 <template name="favoriteSchedule">
-  <div class="favoriteScheduleEntry">
-    {{this.name}} 
-    <button class="btn btn-default loadFavoriteSchedule" title="View this schedule">Load</button>
-    <button class="btn btn-default editFavoriteSchedule" title="Edit the classes for this schedule">Edit</button>
-    <button class="btn btn-default renameFavoriteSchedule" >Rename</button>
-    <button class="btn btn-danger deleteFavoriteSchedule" >Delete</button>
-  </div>
+  <tr class="favoriteScheduleEntry">
+    <td> {{this.name}} </td>
+    <td> <button class="btn btn-default loadFavoriteSchedule" title="View this schedule">Load</button> </td>
+    <td> <button class="btn btn-default editFavoriteSchedule" title="Edit the classes for this schedule">Edit</button> </td>
+    <td> <button class="btn btn-default renameFavoriteSchedule" >Rename</button> </td>
+    <td> <button class="btn btn-danger deleteFavoriteSchedule" >Delete</button> </td>
+  </tr>
 </template>
 
 <template name="favoriteLoader">
-  {{#each favoriteSchedules}}
-    {{> favoriteSchedule}}
-  {{/each}}
+  <table id="favoriteLoaderTable" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each favoriteSchedules}}
+        {{> favoriteSchedule}}
+      {{/each}}
+    </tbody>
+  </table>
 </template>

@@ -46,6 +46,7 @@ body {
 
 #logo {
     padding: 30px 0;
+    width: 98%;
 }
 
 #query {
@@ -53,7 +54,6 @@ body {
     margin-bottom: 30px;
     height: 40px;
     font-size: 25px;
-    padding-top: 10px;
 }
 
 #query:hover {
@@ -96,12 +96,6 @@ hr {
 
 hr.clear {
   clear: both;
-}
-
-#addCodes, #scheduleTable {
-  display: inline-block;
-  height: 120px;
-  margin: 5px;
 }
 
 #results td {
@@ -218,7 +212,7 @@ hr.clear {
 }
 
 .btn-small {
-  padding: 0px 4px;
+  padding: 0px 8px;
   margin-left: 10px;
   cursor: default;
 }
@@ -268,4 +262,8 @@ hr.clear {
 
 .generateButton, .viewFavorites {
   display: inline-block;
+}
+
+.table-striped > tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
