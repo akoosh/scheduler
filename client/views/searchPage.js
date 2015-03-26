@@ -297,23 +297,23 @@ Template.searchPage.rendered = function() {
 
 
 Template.classButton.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.removeButton', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '.removeButton' );
 }
 
 Template.classDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton' );
 }
 
 Template.courseDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon.info-i, .ge-icon, .courseDisplay * .addButton, .loadMoreClasses, .loadMoreResults', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon.info-i, .ge-icon, .courseDisplay * .addButton, .generateButton, .loadMoreClasses, .loadMoreResults' );
 }
 
 Template.planLayout.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '#planLayout .info-icon.info-question', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '#planLayout .info-icon.info-question' );
 }
 
 Template.planLayoutControls.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.generateButton, .viewFavorites', Scheduler.render.qTipStyles.defaultStyle );
+  Scheduler.qTipHelper.updateTips( '.generateButton, .viewFavorites' );
 }
 
 
