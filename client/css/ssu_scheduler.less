@@ -2,13 +2,11 @@
 
 @lightGrey: #f4f4f4;
 @borderGrey: darken(@lightGrey, 20%);
-@ssuBlue: #0078DB;
-
-html {
-    overflow-y: scroll;
-}
+@ssuBlue: #0069AA;
+@ssuBlueBorder: lighten(@ssuBlue, 10%);
 
 body {
+  overflow: hidden;
 }
 
 #page_controls {
@@ -21,39 +19,18 @@ body {
   border-top: 1px solid #EEE;
 }
 
-
-#planLayout {
-    width: 95%;
-    margin: auto;
-}
-
-#planContainer {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 33%;
-  max-width: 450px;
-}
-
-#searchLayout {
-    width: 75%;
-    margin: auto;
-}
-
-#logo, #query {
-    display: block;
+#query {
+  display: block;
+  width: 100%;
 }
 
 #logo {
-    padding: 30px 0;
-    width: 98%;
+  height: 100px;
 }
 
 #query {
-    width: 98%;
-    margin-bottom: 30px;
-    height: 40px;
-    font-size: 25px;
+  height: 35px;
+  font-size: 25px;
 }
 
 #query:hover {
@@ -103,10 +80,10 @@ hr.clear {
 }
 
 .courseDisplay {
-    margin: 10px 0;
-    padding: 5px;
-    border: 1px solid @borderGrey;
-    border-radius: 4px;
+  margin: 0px 0px 10px 5px;
+  padding: 5px;
+  border: 1px solid @borderGrey;
+  border-radius: 4px;
 }
 
 .classRow:nth-child(even){
@@ -160,7 +137,7 @@ hr.clear {
     width: 100%;
     text-align: left;
     color: @ssuBlue;
-    font-size: 50px;
+    font-size: 30px;
 }
 
 .classButton {
@@ -218,12 +195,6 @@ hr.clear {
   margin: 3px 0px 10px 0px;
 }
 
-.searchLayoutContainer {
-  margin-bottom: 300px;
-  position: absolute;
-  left: 34%;
-}
-
 .ge-icon {
   .icon-border;
   .icon-offset;
@@ -236,7 +207,7 @@ hr.clear {
 .plan-info {
   position: absolute;
   top: 5px;
-  left: 5px;
+  right: 5px;
 }
 
 .courseInfo {
@@ -261,4 +232,27 @@ hr.clear {
 
 .table-striped > tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+.searchTopBar {
+  background-color: @ssuBlue;
+  margin-bottom:10px;
+  border-bottom: 2px solid @ssuBlueBorder;
+}
+.searchLayout::-webkit-scrollbar, .planLayout::-webkit-scrollbar {
+  display: none;
+}
+
+.searchLayout, .planLayout {
+  overflow-y: scroll;
+}
+
+.planLayout, .planLayoutHeader {
+  position:relative;
+  right:10px;
+}
+
+.searchBarContainer {
+  width: 100%;
+  padding: 0px 0px 10px 5px;
 }

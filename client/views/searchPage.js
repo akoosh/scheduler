@@ -296,6 +296,10 @@ Template.searchPage.rendered = function() {
 }
 
 
+Template.searchPage.rendered = function() {
+  $(".searchLayout, .planLayout").css( "height", $(window).height()-110 );
+}
+
 Template.classButton.rendered = function() {
   Scheduler.qTipHelper.updateTips( '.removeButton' );
 }
