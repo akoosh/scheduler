@@ -15,27 +15,17 @@
 <template name="planLayout">
     <div id="planLayout">
       <div class="info-icon info-question plan-info" title="Slots allow you to build a schedule by requiring a class from each slot. For example if you have 3 slots this will generate schedules with 3 classes where 1 class from each slot is selected." >?</div>
-        {{#each slots}}
-            {{> slotDisplay }}
-        {{/each}}
-        {{> slotDisplay}}
-        {{> generateButton }}
-    </div>
-    <div>
-      {{> searchInfoPanel}}
+      {{#each slots}}
+          {{> slotDisplay }}
+      {{/each}}
+      {{> slotDisplay}}
+      {{> planLayoutControls}}
     </div>
 </template>
 
-<template name="searchInfoPanel">
-  {{#if isValid}}
-    <div id="infoContent">
-      {{infoText}}
-    </div>
-  {{/if}}
-</template>
-
-<template name="generateButton">
-    <button class="generateButton btn btn-default" {{generateButtonEnabled}} title="Generate the schedules for the current slots and view the results">Generate and View Schedules</button>
+<template name="planLayoutControls">
+  <button class="generateButton btn btn-default" {{generateButtonEnabled}} title="Generate the schedules for the current slots and view the results">Generate and View Schedules</button>
+  <button class="viewFavorites btn btn-default" {{favoritesButtonEnabled}} title="View and modify your favorite schedules.">View Favorites</button>
 </template>
 
 <template name="slotDisplay">

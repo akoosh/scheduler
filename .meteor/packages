@@ -13,5 +13,5 @@ iron:router
 sanjo:jasmine
 velocity:html-reporter
 autopublish
-bootstrap
 
+mizzao:bootstrap-3

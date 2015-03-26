@@ -10,8 +10,6 @@ Template.pageLoader.rendered = function() {
   // Setup the available schedules
   Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
 
-  // Setup the available favorites
-  Session.set( "favoriteSchedules", Scheduler.ScheduleManager.listFavorites() );
 
 }
 

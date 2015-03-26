@@ -32,7 +32,9 @@ Template.schedulePage.events( {
   },
 
   "click #save_schedule" : function(e,template) {
-    Scheduler.Schedules.saveCurrentScheduleToFavorites();
+    var name = prompt( "Please enter favorite schedule name", "Favorite Schedule " + new Date() );
+    Scheduler.ScheduleManager.setFavorite( name, Session.get( "currentSchedule" ), Session.get("slots") );
+    Session.set( "favoriteSchedules", Scheduler.ScheduleManager.listFavorites() );
   },
 
   "click #back_to_search" : function(e,template) {

@@ -9,20 +9,24 @@
 </template>
 
 <template name="schedulePageTable">
-  <table id="scheduleTable">
-    <tr class="header">
-      <td>Subject</td>
-      <td>Title</td>
-      <td>Type</td>
-      <td>Professor</td>
-      <td>Location</td>
-      <td>Time</td>
-      <td>Units</td>
-      <td>Add Code</td>
-    </tr>
+  <table id="scheduleTable" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Professor</th>
+        <th>Location</th>
+        <th>Time</th>
+        <th>Units</th>
+        <th>Add Code</th>
+      </tr>
+    </thead>
+    <tbody>
       {{#each formattedRow}}
         {{> sectionRow}}
       {{/each}}
+    </tbody>
   </table>
 </template>
 
@@ -30,7 +34,7 @@
   <div id="schedulePageControls">
     <button id="next_schedule" class="btn btn-default" title="Goto the next valid schedule">Next Schedule</button>
     <button id="prev_schedule" class="btn btn-default" title="Goto the previous valid schedule">Prev Schedule</button>
-    <!--  <button id="save_schedule" class="btn btn-default" title="Save the current schedule as a favorite schedule">Favorite Schedule</button> -->
+    <button id="save_schedule" class="btn btn-default" title="Save the current schedule as a favorite schedule">Favorite Schedule</button>
     <button id="back_to_search" class="btn btn-default" title="Return to the search page to refine your slots">Search for more classes</button>
     <span>{{currentSchedule}}/{{scheduleCount}}</span>
   </div>
