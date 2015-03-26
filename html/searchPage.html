@@ -1,26 +1,25 @@
 <!-- Course search page -->
 <template name="searchPage">
-
-    <div class="row">
-        <div id="planContainer">
-          {{> planLayout }}
-        </div>
-
-        <div class="searchLayoutContainer">
-            {{> searchLayout }}
-        </div>
-    </div>
+  <div class="searchTopBar">
+    {{> ssuLogo }}
+  </div>
+  <div class="row header">
+    <div class="col-md-8 searchLayoutHeader"> {{> searchBar }} </div>
+    <div class="col-md-4 planLayoutHeader"> {{> planLayoutControls}} </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 searchLayout"> {{> searchLayout }} </div>
+    <div class="col-md-4 planLayout"> {{> planLayout }} </div>
+  </div>
 </template>
 
 <template name="planLayout">
-    <div id="planLayout">
-      <div class="info-icon info-question plan-info" title="Slots allow you to build a schedule by requiring a class from each slot. For example if you have 3 slots this will generate schedules with 3 classes where 1 class from each slot is selected." >?</div>
-      {{#each slots}}
-          {{> slotDisplay }}
-      {{/each}}
-      {{> slotDisplay}}
-      {{> planLayoutControls}}
-    </div>
+  <!-- <div class="info-icon info-question plan-info" title="Slots allow you to build a schedule by requiring a class from each slot. For example if you have 3 slots this will generate schedules with 3 classes where 1 class from each slot is selected." >?</div> -->
+  {{#each slots}}
+      {{> slotDisplay }}
+  {{/each}}
+  {{> slotDisplay}}
+  
 </template>
 
 <template name="planLayoutControls">
@@ -50,11 +49,7 @@
 </template>
 
 <template name="searchLayout">
-    <div id="searchLayout">
-        {{> ssuLogo }}
-        {{> searchBar }}
-        {{> queryDisplay }}
-    </div>
+  {{> queryDisplay }}
 </template>
 
 <template name="ssuLogo">
@@ -63,7 +58,9 @@
 
 
 <template name="searchBar">
+  <div class="searchBarContainer">
     <input type="text" id="query" placeholder="Search for classes" />
+  </div>
 </template>
 
 <template name="queryDisplay">
