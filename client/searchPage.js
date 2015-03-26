@@ -29,18 +29,6 @@ Template.queryDisplay.helpers( {
     }
 );
 
-Template.searchInfoPanel.helpers( {
-  "isValid" : function() {
-    return Session.get("ShowSearchInfo") || false;
-  },
-
-  "infoText" : function() {
-    return "Hello Dude >:D!";
-  }
- 
-});
-
-
 Template.generateButton.helpers( {
   "generateButtonEnabled" : function() {
     var slots = Session.get("slots") || [], result = "disabled";

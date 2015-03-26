@@ -2,6 +2,7 @@
 // PageLoader template allows us to change and template without a page refresh
 // Arthur Wuterich
 
+// Effective entry point for the templates
 Template.pageLoader.rendered = function() {
 
   // Mock schedule
@@ -12,6 +13,9 @@ Template.pageLoader.rendered = function() {
 
   // Setup the available favorites
   Session.set( "favoriteSchedules", Scheduler.ScheduleManager.listFavorites() );
+
+  // The state of the info panel
+  Session.set( "infoPanelState", 0 );
 
 }
 
