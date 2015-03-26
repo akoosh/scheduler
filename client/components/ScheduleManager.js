@@ -8,8 +8,8 @@ Scheduler.ScheduleManager = {
   schedulesKey : "saved_schedules",
   favoriteKey: "__schedule_manager_favorite_schedules",
   prefix : "_schedule_manager_",
+  storageObject : localStorage,
   schedules : null,
-  self: null,
 
   "cacheSchedules" : function () {
     if( Scheduler.SchedulerManager.schedules == null ) {
@@ -21,11 +21,11 @@ Scheduler.ScheduleManager = {
   //  [token]: If not defined will assume to be the tmp token
   "get" : function( token ) {
     if( typeof token === "undefined" ) {
-      token = Scheduler.ScheduleManager.tmpToken
+      token = this.tmpToken
     }
 
     var result = null;
-    var raw = localStorage.getItem( Scheduler.ScheduleManager.prefix + token );
+    var raw = localStorage.getItem( this.prefix + token );
 
     if( raw != null ) {
       result = JSON.parse ( raw );
@@ -38,10 +38,10 @@ Scheduler.ScheduleManager = {
   //  [token]: If not defined will assume to be the tmp token
   "set" : function( courses, token ) {
     if( typeof token === "undefined" ) {
-      token = Scheduler.ScheduleManager.tmpToken;
+      token = this.tmpToken;
     }
 
-    localStorage.setItem( Scheduler.ScheduleManager.prefix + token, JSON.stringify( courses ) );
+    localStorage.setItem( this.prefix + token, JSON.stringify( courses ) );
 
   },
 
@@ -50,10 +50,10 @@ Scheduler.ScheduleManager = {
     var result = [];
 
     for( k in localStorage ) {
-      if( k.indexOf( Scheduler.ScheduleManager.prefix ) == 0 ) {
+      if( k.indexOf( this.prefix ) == 0 ) {
         result.push( {
-          "key"  : k.substr(Scheduler.ScheduleManager.prefix.length),
-          "name"  : k.substr(Scheduler.ScheduleManager.prefix.length)
+          "key"  : k.substr(this.prefix.length),
+          "name"  : k.substr(this.prefix.length)
         });
       }
     }
@@ -63,60 +63,86 @@ Scheduler.ScheduleManager = {
   },
 
   // Will take in an array of course identifers ( EX: [2846,1977,1677,1197] ) and save the schedule for future reference
-  "saveFavorite" : function(classes) {
+  "setFavorite" : function(name, classes, slots ) {
     // Get the raw value of the favorites array
-    var favorites = localStorage.getItem( Scheduler.ScheduleManager.favoriteKey );
+    var favorites = localStorage.getItem( this.favoriteKey ),
+        favoriteSchedule = {
+          name : name,
+          classes : classes,
+          slots : slots
+        };
     if( favorites != null ) {
       favorites = JSON.parse( favorites );
     } else {
       favorites = [];
     }
 
-    favorites.push( classes );
+    favorites.push( favoriteSchedule );
 
-    localStorage.setItem( Scheduler.ScheduleManager.favoriteKey, JSON.stringify( favorites ) );
+    localStorage.setItem( this.favoriteKey, JSON.stringify( favorites ) );
   },
 
   // Will take in an array of course identifers ( EX: [2846,1977,1677,1197] ) and remove this array from the
   // stored favorites
-  "removeFavorite" : function(classes) {
+  "removeFavorite" : function( name ) {
     // Get the raw value of the favorites array
-    var favorites = localStorage.getItem( Scheduler.ScheduleManager.favoriteKey );
+    var favorites = localStorage.getItem( this.favoriteKey );
 
     // Only perform changes if the favorites array is defined
     if( favorites != null ) {
       favorites = JSON.parse( favorites );
       
-      // Find the schedule that matches
-      for( var s in favorites ) {
-        var found = true;
-        for( var c in favorites[s] ) {
-          if( favorites[s][c] != classes[c] ) {
-            found = false;
-            break;
-          }
-        }
-
-        // Remove the element
-        if( found ) {
-          favorites.splice( s, 1 ); 
-          localStorage.setItem( Scheduler.ScheduleManager.favoriteKey, JSON.stringify( favorites ) );
+      for( var favorite in favorites ) {
+        if( favorites[favorite].name == name ) {
+          favorites.splice( favorite, 1 );
+          localStorage.setItem( this.favoriteKey, JSON.stringify( favorites ) );
           break;
         }
       }
+
     }
+  },
+
+  "getFavorite" : function( name ) {
+    var favorites = this.getAllFavorites(),
+        result = [];
+
+    for( var favorite in favorites ) {
+      if( favorites[favorite].name == name ) {
+        result = favorites[favorite];
+        break;
+      }
+    }
+
+    return result;
+  },
+
+  "getAllFavorites" : function() {
+    var result = [];
+
+    if( localStorage ) {
+      var favorites = localStorage.getItem( this.favoriteKey );
+
+      if( favorites ) {
+        result = JSON.parse( favorites );
+      }
+    }
+
+    return result;
   },
 
   // Returns a listing of the schedules stored with the manager
   "listFavorites" : function() {
-    var results = [];
-    var favorites = localStorage.getItem( Scheduler.ScheduleManager.favoriteKey );
+    var result = [];
+    var favorites = localStorage.getItem( this.favoriteKey );
     if( favorites != null ) {
       favorites = JSON.parse( favorites );
-      results = favorites;
+      for( var favorite in favorites ) {
+        result.push( favorites[favorite].name );
+      }
     }
 
-    return results;
+    return result;
   },
 };
 
