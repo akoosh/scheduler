@@ -1,0 +1,202 @@
+@lightGrey: #f4f4f4;
+@borderGrey: darken(@lightGrey, 20%);
+@ssuBlue: #0069AA;
+@ssuBlueBorder: lighten(@ssuBlue, 10%);
+
+
+#query {
+  display: block;
+  width: 100%;
+  height: 35px;
+  font-size: 25px;
+}
+
+#logo {
+  height: 100px;
+}
+
+#query:hover {
+    border: 1px solid #43759C;
+}
+
+#results  {
+  padding-bottom:200px;
+}
+
+#results td {
+  padding-right: 5px;
+}
+
+.courseDisplay {
+  margin: 0px 0px 10px 5px;
+  border-bottom: 1px solid @borderGrey;
+}
+
+.classRow:nth-child(even){
+    background-color: @lightGrey;
+}
+
+.courseDisplay .description td {
+    font-size: 18px;
+    padding: 10px 10px 10px 0;
+}
+
+.classDisplay {
+    padding: 5px;
+    margin: 5px 0;
+}
+
+.classDisplay .description button {
+    float: right;
+}
+
+.description-table {
+  width: 100%;
+}
+
+.addButton {
+  float: right;
+  min-width: 72px;
+}
+
+#planLayout {
+    margin-top: 30px;
+}
+
+
+.slotDisplay {
+    border: 1px solid @borderGrey;
+    padding: 0px;
+    margin-bottom: 15px;
+}
+
+.slotDisplay.selected {
+    border: 3px solid @ssuBlue;
+}
+
+.slotDisplay h3 {
+    width: 100%;
+    text-align: left;
+    color: @ssuBlue;
+    font-size: 30px;
+}
+
+.classButton {
+  display: inline-block;
+  width: 100%;
+  padding: 4px 0px;
+
+  span {
+    margin-left: 3px;
+  }
+}
+
+.removeButton {
+  font-size: 20px;
+  vertical-align: bottom;
+  float: right;
+  position: relative;
+  right: 4px;
+}
+
+.icon-border {
+  border: 2px solid;
+}
+
+.icon-offset {
+  position: relative;
+  top: 5px;
+}
+
+.info-icon {
+  .icon-border;
+  .icon-offset;
+  border-radius: 50%;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.info-i {
+  padding: 1px 7px;
+}
+
+.info-question {
+  padding: 0px 5px;
+}
+
+.btn-small {
+  padding: 0px 8px;
+  margin-left: 10px;
+  cursor: default;
+}
+
+.loadMoreResults {
+  width: 100%;
+  padding: 10px;
+  margin: 3px 0px 10px 0px;
+}
+
+.ge-icon {
+  .icon-border;
+  .icon-offset;
+  padding: 1px;
+  border-radius: 5px;
+  margin-left: 6px;
+  font-weight: bold;
+}
+
+.plan-info {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.courseInfo {
+  height: 36px;
+}
+
+.loadMoreClasses {
+  float: right;
+}
+
+.classButtonRowTable {
+  width: 100%;
+}
+
+.courseUnits {
+  text-align: right;
+}
+
+.generateButton, .viewFavorites {
+  display: inline-block;
+}
+
+.searchTopBar {
+  background-color: @ssuBlue;
+  margin-bottom:10px;
+  border-bottom: 2px solid @ssuBlueBorder;
+}
+.searchLayout::-webkit-scrollbar, .planLayout::-webkit-scrollbar {
+  display: none;
+}
+
+.searchLayout, .planLayout {
+  overflow-y: scroll;
+  height:100%;
+  padding-bottom: 200px;
+}
+
+.planLayout, .planLayoutHeader {
+  position:relative;
+  right:10px;
+}
+
+.searchBarContainer {
+  width: 100%;
+  padding: 0px 5px 10px 5px;
+}
+
+#searchPageContainer {
+  overflow: hidden;
+  width:100%;
+}
