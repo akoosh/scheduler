@@ -1,0 +1,30 @@
+@ssuBlue: #0069AA;
+
+.capacity-meter {
+  width: 100px;
+  height: 20px;
+  background-color: #EEE;
+  position:relative;
+  z-index: 0;
+  float:right;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #214A64;
+
+  .fillLabel {
+    text-align: center;
+    position:relative;
+    width: 100%;
+    z-index: 2;
+    display:inline-block;
+  }
+
+  .fill {
+    background-color: @ssuBlue;
+    height:100%;
+    position: absolute;
+    z-index: 1;
+    top:0px;
+    left:0px;
+  }
+}

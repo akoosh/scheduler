@@ -78,18 +78,22 @@
 
 <template name="courseDisplay">
     <div class="courseDisplay" >
-        <table class="description-table">
+        <table class="description-table table">
+          <tbody>
             <tr class="description">
-                <td class="courseTitle" title="{{title}}" description="{{description}}">{{title}}</td>
-                <td><button class="addButton btn btn-primary visible-md visible-lg" title="Add all classes for this course to the current slot">Add All</button></td>
-              </tr>
-              <tr>
-                <td class="courseSubject">{{subject_with_number}}, {{units}} units</td>
+                <th class="courseTitle" title="{{title}}" description="{{description}}">{{title}}</th>
+                <th class="courseSubject">{{subject_with_number}}</th>
+                <th class="courseSubject">{{units}} units</th>
+                <th><button class="addButton btn btn-primary visible-md visible-lg" title="Add all classes for this course to the current slot">Add All</button></th>
             </tr>
+            {{#each augmentedClasses}}
+            <tr>
+              {{> classDisplay }}
+            </tr>
+            {{/each}}
+          </tbody>
         </table>
-        {{#each augmentedClasses}}
-            <div class="classRow">{{> classDisplay }}</div>
-        {{/each}}
+
         <div class="courseInfo">
           <span title="{{title}}" description="{{description}}" class="info-icon info-i">i</span>
         {{#each geCodes}}
@@ -103,26 +107,36 @@
 </template>
 
 <template name="classDisplay">
-    <div class="classDisplay">
-        <div>Section {{number}}
-          <button class="addButton btn btn-primary visible-md visible-lg" title="Add this class to the current slot">Add</button>
-        </div>
-        <table>
-            {{#each sections}}
-                {{> sectionDisplay }}
-            {{/each}}
-        </table>
-    </div>
+  <td> Section {{number}} </td>
+  <td colspan=2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Times</th>
+          <th>Location</th>
+          <th>Professor</th>
+          <th>Capacity</th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each sections}}
+        {{> sectionDisplay }}
+      {{/each}}
+      </tbody>
+    </table>
+  </td>
+  <td> <button class="addButton btn btn-primary visible-md visible-lg" title="Add this class to the current slot">Add</button> </td>
 </template>
 
 <template name="sectionDisplay">
-    <tr>
-        <td>{{#each times}} {{days}} {{start_time}}-{{end_time}} {{/each}}</td>
-        <td>{{#each locations}} {{this}} {{/each}}</td>
-        <td>{{#each professors}} {{this}} {{/each}}</td>
-        <td>{{type}}</td>
-    </tr>
+  <tr>
+    <td>{{#each times}} {{days}} {{start_time}}-{{end_time}} {{/each}}</td>
+    <td>{{#each locations}} {{this}} {{/each}}</td>
+    <td>{{#each professors}} {{this}} {{/each}}</td>
+    <td>{{> capacityMeter value=totalEnrolled.[0] capacity=capacity.[0] }}</td>
+  </tr>
 </template>
+
 
 <template name="addButton">
 </template>
