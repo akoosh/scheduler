@@ -199,6 +199,9 @@ BucketIterator.prototype.getSchedule = function() {
   var result = [];
   var classes = this.getCourseArray();
 
+
+//  Meteor.call('coursesForQuery', input, function(err, results) {
+
   for( number in classes) {
     number = classes[number];
     var c = Scheduler.Classes.classForNumber( number );

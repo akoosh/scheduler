@@ -5,7 +5,7 @@
 Scheduler.Classes = {
   // Returns a class object for the provided number
   // returns object with null classes and courses if not found
-  "classForNumber" : function(number) {
+  classForNumber : function(number) {
     var result = {};
 
     // Get the course object/s that have a class that contains the 
@@ -27,7 +27,7 @@ Scheduler.Classes = {
 
         if( c["number"] == number ) {
           // Wrap the information we want to carry over into the class object from the course object
-          result = Scheduler.Classes.mergeCourseClass( course, c );
+          result = this.mergeCourseClass( course, c );
           break;
         }
       }

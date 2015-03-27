@@ -30,7 +30,7 @@ def getValue( row, values, default='' ):
     
 
 def main():
-    course_model= CourseModel()
+    course_model = CourseModel()
 
     with open(sys.argv[1]) as csvfile:
 
