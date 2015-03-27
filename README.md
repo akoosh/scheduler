@@ -35,10 +35,9 @@ Installation is pretty simple
   ```
 
   This will run the meteor package manager ( similar to doing a apt-get update ) then spin up the scheduler application.
-  The app should build and start without any problem; however, there will be no course data yet. Run the following commands to insert the data
+  The app should build and start without any problem; however, there will be no course data yet. Run the following commands to insert the data from the scripts folder. Make sure you have meteor running to allow access to the mongo database.
   ```
-  cd scripts
-  mongoimport -h localhost:3001 --db meteor --collection Courses --type json --jsonArray --file courses.json
+  python updateDatabase.py
   ```
 Installation(osx)
 ============
@@ -66,17 +65,3 @@ Installation(osx)
 
   4. Same as Ubuntu
   5. Same as Ubuntu
-
-Update Database
-===============
-
-To update DB with new data:
-
-Get rid of old data:
-  0. meteor
-  1. meteor mongo
-  2. db.Courses.remove()
-
-Import new data from json:
-  4. mongoimport -h localhost:3002 --db meteor --collection Courses --type json --jsonArray --file courses.json
-
