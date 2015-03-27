@@ -16,7 +16,7 @@ def main():
         print "Done."
 
         print "Importing student data into mongo..."
-        os.system( "mongoimport -h localhost:3001 --drop --db meteor --collection Courses --type json --jsonArray --file courses.json && mv courses.json bkup/courses.%s.json" % int(time.time()) )
+        os.system( "mongoimport -h %s:%s --drop --db %s --collection Courses --type json --jsonArray --file courses.json && mv courses.json bkup/courses.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorPort"], cfg["MeteorDB"], str(time.time()) ) )
         print "Done."
         # Import
 
@@ -28,7 +28,7 @@ def main():
         print "Done."
 
         print "Importing student data into mongo..."
-        os.system( "mongoimport -h localhost:3001 --drop --db meteor --collection Students --type json --jsonArray --file students.json && mv students.json bkup/students.%s.json" % int(time.time()) )
+        os.system( "mongoimport -h %s:%s --drop --db %s --collection Students --type json --jsonArray --file students.json && mv students.json bkup/students.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorPort"], cfg["MeteorDB"], int(time.time()) ) )
         print "Done."
         # Import
     
