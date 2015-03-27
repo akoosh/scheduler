@@ -161,6 +161,8 @@ class Course(object):
         this_section['professors'] = [ getValue( row, ['Last'] )  ]
         this_section['type'] = getValue( row, ['Component'] ) 
         this_section['locations'] = [ getValue( row, ['Facil ID'] )  ]
+        this_section['capacity'] = [ getValue( row, ['Capacity'] )  ]
+        this_section['availableSeats'] = [ getValue( row, ['Avail Seats'] )  ]
         this_section['times'] = []
 
         this_time = {}
