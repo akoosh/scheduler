@@ -14,9 +14,11 @@ Meteor.startup( function() {
           section = c.sections[section];
           for( time in section.times ) {
             time = section.times[time];
+            var valid = time.start_time != "" && time.end_time != "";
             result.push( {
               "info" : c,
               "time" : time,
+              "valid" : valid,
               "time_blocks": Scheduler.Converter.generateTimeBlocks( time ),
             });
           }
@@ -176,6 +178,11 @@ Meteor.startup( function() {
       var packets = Scheduler.Converter.generateRenderPackage( schedule );
       for(var packet in packets ) {
          packet = packets[packet];
+
+         if( !packet.valid ) {
+          continue;
+         }
+
         for( var block in packet.time_blocks ) {
           block = packet.time_blocks[block];
           result.push( {
