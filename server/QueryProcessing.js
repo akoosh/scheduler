@@ -2,8 +2,7 @@
 // Zack Thompson
 // Arthur Wuterich
 
-Scheduler.Courses = {
-
+QueryProcessing = {
 
     // Main interface for accessing the query processing. This is used withing the application
     // through Meteor's call() syntax.
@@ -14,13 +13,12 @@ Scheduler.Courses = {
         return result;
     }
 
-
 };
 
 // Converts raw query data into tokens of the following form:
 // { "type":type, "value":value }
 // Token types are defined in the QueryToken object
-Scheduler.Courses.QueryTokenizer = {
+QueryProcessing.QueryTokenizer = {
 
     // Returns an array of token objects for the provided string.
     // The search tokens are broken up by spaces as a natural delimiter
@@ -56,7 +54,7 @@ Scheduler.Courses.QueryTokenizer = {
         while (!_.isEmpty(wordArray)) {
 
             words.push(_.first(wordArray));
-            var curToken = Scheduler.Courses.QueryToken.TypeChecker.stringMatchesTypes(words.join(" "));
+            var curToken = QueryProcessing.QueryToken.TypeChecker.stringMatchesTypes(words.join(" "));
             words.pop();
 
             if (curToken === undefined && foundToken) break;
@@ -75,7 +73,7 @@ Scheduler.Courses.QueryTokenizer = {
 
 };
 
-Scheduler.Courses.QueryBuilder = {
+QueryProcessing.QueryBuilder = {
 
 
     // Takes in an array of processed tokens and builds a mongo search query
@@ -97,8 +95,8 @@ Scheduler.Courses.QueryBuilder = {
         // queryValuesForValuesWithType will return a $in mongo
         // structure if there are more than one value present
         _.each(groupedTokens, function(values, type) {
-            var queryKey = Scheduler.Courses.QueryToken.KeyMapper.queryKeyForType(type);
-            var queryValues = Scheduler.Courses.QueryToken.ValueMapper.queryValuesForValuesWithType(values, type);
+            var queryKey = QueryProcessing.QueryToken.KeyMapper.queryKeyForType(type);
+            var queryValues = QueryProcessing.QueryToken.ValueMapper.queryValuesForValuesWithType(values, type);
 
             if (queryKey !== undefined && queryValues !== undefined) {
                 queryObject[queryKey] = queryValues;
@@ -111,7 +109,7 @@ Scheduler.Courses.QueryBuilder = {
 
 };
 
-Scheduler.Courses.QuerySearcher = {
+QueryProcessing.QuerySearcher = {
 
     // Access point for the searcher and the Meteor mongo helper object
     resultsForQuery: function(query) {
@@ -122,7 +120,7 @@ Scheduler.Courses.QuerySearcher = {
 
 };
 
-Scheduler.Courses.QueryToken = {
+QueryProcessing.QueryToken = {
 
     Type: {
         SUBJECT:    0,
@@ -145,7 +143,7 @@ Scheduler.Courses.QueryToken = {
             var outerThis = this;
 
             // Apply the types of each token
-            return _.chain(Scheduler.Courses.QueryToken.Type)
+            return _.chain(QueryProcessing.QueryToken.Type)
                 .values()
                 .sortBy('valueOf')
                 .find( function(type) { return outerThis.stringIsType(str, type); } )
@@ -155,27 +153,27 @@ Scheduler.Courses.QueryToken = {
 
         stringIsType: function(str, type) {
             switch (type) {
-                case Scheduler.Courses.QueryToken.Type.DIVISION:
+                case QueryProcessing.QueryToken.Type.DIVISION:
                     return this.isDivision(str);
 
-                case Scheduler.Courses.QueryToken.Type.PROFESSOR:
+                case QueryProcessing.QueryToken.Type.PROFESSOR:
                     return this.isProfessor(str);
 
-                case Scheduler.Courses.QueryToken.Type.TITLE:
+                case QueryProcessing.QueryToken.Type.TITLE:
                     return this.isTitle(str);
-                case Scheduler.Courses.QueryToken.Type.DEPARTMENT:
+                case QueryProcessing.QueryToken.Type.DEPARTMENT:
                     return false;
-                case Scheduler.Courses.QueryToken.Type.TIME:
+                case QueryProcessing.QueryToken.Type.TIME:
                     return false;
-                case Scheduler.Courses.QueryToken.Type.DAY:
+                case QueryProcessing.QueryToken.Type.DAY:
                     return false;
-                case Scheduler.Courses.QueryToken.Type.GE:
+                case QueryProcessing.QueryToken.Type.GE:
                     return this.isGE(str);
-                case Scheduler.Courses.QueryToken.Type.NUMBER:
+                case QueryProcessing.QueryToken.Type.NUMBER:
                     return this.isSubjectWithNumber(str);
-                case Scheduler.Courses.QueryToken.Type.SUBJECT:
+                case QueryProcessing.QueryToken.Type.SUBJECT:
                     return this.isSubject(str);
-                case Scheduler.Courses.QueryToken.Type.UNITS:
+                case QueryProcessing.QueryToken.Type.UNITS:
                     return this.isUnits(str);
                 default:
                     console.log("Unrecognized QueryToken.Type in stringIsType(): " + type);
@@ -220,23 +218,23 @@ Scheduler.Courses.QueryToken = {
         // Returns the course object key that should be searched for the given type
         queryKeyForType: function(type) {
             switch (Number(type)) {
-                case Scheduler.Courses.QueryToken.Type.PROFESSOR:
+                case QueryProcessing.QueryToken.Type.PROFESSOR:
                     return "classes.sections.professors";
-                case Scheduler.Courses.QueryToken.Type.TITLE:
+                case QueryProcessing.QueryToken.Type.TITLE:
                     return "title";
-                case Scheduler.Courses.QueryToken.Type.TIME:
+                case QueryProcessing.QueryToken.Type.TIME:
                     return "classes.sections.times.start_time";
-                case Scheduler.Courses.QueryToken.Type.DAY:
+                case QueryProcessing.QueryToken.Type.DAY:
                     return "classes.sections.times.days";
-                case Scheduler.Courses.QueryToken.Type.GE:
+                case QueryProcessing.QueryToken.Type.GE:
                     return "ge_code";
-                case Scheduler.Courses.QueryToken.Type.SUBJECT:
+                case QueryProcessing.QueryToken.Type.SUBJECT:
                     return "subject";
-                case Scheduler.Courses.QueryToken.Type.UNITS:
+                case QueryProcessing.QueryToken.Type.UNITS:
                     return "units";
-                case Scheduler.Courses.QueryToken.Type.NUMBER:
+                case QueryProcessing.QueryToken.Type.NUMBER:
                     return "subject_with_number";
-                case Scheduler.Courses.QueryToken.Type.DIVISION:
+                case QueryProcessing.QueryToken.Type.DIVISION:
                     return "subject_number";
                 default:
                     console.log("Unrecognized QueryToken.Type in queryKeyForType(): " + type);
@@ -257,31 +255,31 @@ Scheduler.Courses.QueryToken = {
             var valueMapFunction;
 
             switch (Number(type)) {
-                case Scheduler.Courses.QueryToken.Type.PROFESSOR:
+                case QueryProcessing.QueryToken.Type.PROFESSOR:
                     valueMapFunction = this.professorValueMap;
                     break;
-                case Scheduler.Courses.QueryToken.Type.TITLE:
+                case QueryProcessing.QueryToken.Type.TITLE:
                     valueMapFunction = this.titleValueMap;
                     break;
-                case Scheduler.Courses.QueryToken.Type.TIME:
+                case QueryProcessing.QueryToken.Type.TIME:
                     valueMapFunction = this.timeValueMap;
                     break;
-                case Scheduler.Courses.QueryToken.Type.DAY:
+                case QueryProcessing.QueryToken.Type.DAY:
                     valueMapFunction = this.dayValueMap;
                     break;
-                case Scheduler.Courses.QueryToken.Type.GE:
+                case QueryProcessing.QueryToken.Type.GE:
                     valueMapFunction = this.geValueMap;
                     break;
-                case Scheduler.Courses.QueryToken.Type.SUBJECT:
+                case QueryProcessing.QueryToken.Type.SUBJECT:
                     valueMapFunction = this.subjectValueMap;
                     break;
-                case Scheduler.Courses.QueryToken.Type.UNITS:
+                case QueryProcessing.QueryToken.Type.UNITS:
                     valueMapFunction = this.unitsValueMap;
                     break;
-                case Scheduler.Courses.QueryToken.Type.NUMBER:
+                case QueryProcessing.QueryToken.Type.NUMBER:
                     valueMapFunction = this.numberValueMap;
                     break;
-                case Scheduler.Courses.QueryToken.Type.DIVISION:
+                case QueryProcessing.QueryToken.Type.DIVISION:
                     valueMapFunction = this.divisionValueMap;
                     break;
 
