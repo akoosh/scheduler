@@ -19,25 +19,26 @@ def getValue( row, values, default='' ):
     
   return result
 
-def main():
-  if len(sys.argv) > 1:
-    with open(sys.argv[1]) as csvfile:
-      result = []
-      reader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
+def main( arg1 ):
 
-      for row in reader:
-        strip_whitespace( row )
-        
-        hasher = hashlib.md5(getValue(row, ["StudentId"] ) )
-        result.append( {
-          "access" : True,
-          "id"     : hasher.hexdigest()
-        })
+  if arg1 == None:
+    arg1 = sys.argv[1]
 
-      with open("students.json", "w" ) as f:
-        f.write( json.dumps(result) ) 
-  else:
-    print "You need to pass the .csv file in as a parameter"
+  with open(arg1) as csvfile:
+    result = []
+    reader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
+
+    for row in reader:
+      strip_whitespace( row )
+      
+      hasher = hashlib.md5(getValue(row, ["StudentId"] ) )
+      result.append( {
+        "access" : True,
+        "id"     : hasher.hexdigest()
+      })
+
+    with open("students.json", "w" ) as f:
+      f.write( json.dumps(result) ) 
 
 if __name__ == "__main__":
   main()
