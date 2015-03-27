@@ -75,3 +75,14 @@ Storage.prototype.fromString = function( raw ) {
     } 
   }
 }
+
+Storage.prototype.clear = function() {
+  this.length = 0;
+  this.keys = {};
+  this.values = {};
+  this.saveToCollection();
+
+  if( typeof this.updateCallback === "function" ) {
+    this.updateCallback();
+  }
+}
