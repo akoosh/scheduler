@@ -35,6 +35,9 @@ Template.schedulePage.events( {
     var name = prompt( "Please enter favorite schedule name", "Favorite Schedule " + new Date() );
     Scheduler.ScheduleManager.setFavorite( name, Session.get( "currentSchedule" ), Session.get("slots") );
     Session.set( "favoriteSchedules", Scheduler.ScheduleManager.listFavorites() );
+
+    var numberOfFavoriteSchedules = Scheduler.ScheduleManager.listFavorites().length;
+    Session.set( "numberOfFavoriteSchedules", numberOfFavoriteSchedules );
   },
 
   "click #back_to_search" : function(e,template) {
