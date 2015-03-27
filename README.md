@@ -65,3 +65,10 @@ Installation(osx)
 
   - Importing the data
     This is the same for osx and ubuntu. Use the script updateDatabase.py within the scripts folder.
+
+
+Installation(windows)
+============
+Seems like the windows version of Meteor is getting off its feet:
+
+https://github.com/meteor/meteor/wiki/Preview-of-Meteor-on-Windows
