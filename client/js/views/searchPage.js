@@ -155,16 +155,17 @@ Template.searchPage.events ( {
 
                 Meteor.call('coursesForQuery', input, function(err, results) {
                     if (err === undefined) {
-                        Session.set( "queryResults", results );
+                      $(".searchLayout").animate({ scrollTop: 0 }, "fast");
+                      Session.set( "queryResults", results );
 
-                        var renderOptions = Session.get( "searchViewRenderOptions" );
+                      var renderOptions = Session.get( "searchViewRenderOptions" );
 
-                        // Reset the search view render options
-                        if( renderOptions ) {
-                          renderOptions.max = 10;
-                          renderOptions.courses = {};
-                          Session.set( "searchViewRenderOptions", renderOptions );
-                        }
+                      // Reset the search view render options
+                      if( renderOptions ) {
+                        renderOptions.max = 10;
+                        renderOptions.courses = {};
+                        Session.set( "searchViewRenderOptions", renderOptions );
+                      }
                     }
                 });
 
