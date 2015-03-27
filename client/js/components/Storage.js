@@ -80,6 +80,7 @@ Storage.prototype.clear = function() {
   this.length = 0;
   this.keys = {};
   this.values = {};
+  this.userId = undefined;
   this.saveToCollection();
 
   if( typeof this.updateCallback === "function" ) {

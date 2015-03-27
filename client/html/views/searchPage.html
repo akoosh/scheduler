@@ -3,6 +3,7 @@
   <div id="searchPageContainer">
     <div class="searchTopBar">
       {{> ssuLogo }}
+      {{> searchTopBarControls}}
     </div>
     <div class="row header">
       <div class="col-md-8 searchLayoutHeader"> {{> searchBar }} </div>
@@ -13,6 +14,10 @@
       <div class="col-md-4 planLayout visible-md visible-lg"> {{> planLayout }} </div>
     </div>
   </div>
+</template>
+
+<template name="searchTopBarControls">
+  <button class="btn btn-default btn-xs logoutButton">Logout</button>
 </template>
 
 <template name="planLayout">

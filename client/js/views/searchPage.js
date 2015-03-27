@@ -259,6 +259,13 @@ Template.searchPage.events ( {
           }
         },
 
+        "click .logoutButton": function() {
+          Scheduler.storageObject.clear();
+          Scheduler.userStorage.saveToCollection();
+          Scheduler.userStorage.clear();
+          Session.set( "current_page", "ssuGatePage" );
+        },
+
         "click .viewFavorites": function() {
           var haveFavorites = true;
 
