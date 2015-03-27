@@ -29,14 +29,20 @@ def getValue( row, values, default='' ):
   return result
     
 
-def main():
+def main( arg1, arg2 ):
     course_model = CourseModel()
 
-    with open(sys.argv[1]) as csvfile:
+    if arg1 == None:
+      arg1 = sys.argv[1]
+
+    if arg2 == None:
+      arg2 = sys.argv[2]
+
+    with open(arg1) as csvfile:
 
         reader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
 
-        with open(sys.argv[2]) as supFile:
+        with open(arg2) as supFile:
           sup = generateSupplementaryData( supFile )
 
         for row in reader:
@@ -170,5 +176,6 @@ class Course(object):
 
 
 
-main()
+if __name__ == "__main__":
+  main()
 
