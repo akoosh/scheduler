@@ -6,29 +6,29 @@ Installation(ubuntu)
 
 Installation is pretty simple
 
-  1. Get nodejs:
+  - Get nodejs:
   ```
     sudo apt-get update
     sudo apt-get install nodejs
   ```
 
-  2. Get meteor:
+  - Get meteor:
   ```
     curl https://install.meteor.com/ | sh
   ```
     This will install meteor and the meteor package manager on your machine.
 
-  3. Get Mongodb
+  - Get Mongodb
   ```
     sudo apt-get install mongodb
   ```
 
-  4. Download the scheduler app
+  - Download the scheduler app
     ```
     git clone https://github.com/Alfwich/ssu_scheduler.git
     ```
 
-  5. Insert classes into the mongodb database
+  - Import the data
   First you need to have the meteor application to access the mongo database. So from the root of the project repo run the following command
   ```
     meteor
@@ -43,25 +43,25 @@ Installation(osx)
 ============
   Installation is similar to ubuntu
 
-  0. Get Brew:
+  - Get Brew:
     https://github.com/Homebrew/homebrew
     Package manager for osx.
 
-  1. Get nodejs:
+  - Get nodejs:
   ```
     brew install node
   ```
 
-  2. Get meteor:
+  - Get meteor:
   ```
     curl https://install.meteor.com/ | sh
   ```
     This will install meteor and the meteor package manager on your machine.
 
-  3. Get Mongodb
+  - Get Mongodb
   ```
     brew install mongodb
   ```
 
-  4. Same as Ubuntu
-  5. Same as Ubuntu
+  - Importing the data
+    This is the same for osx and ubuntu. Use the script updateDatabase.py within the scripts folder.
