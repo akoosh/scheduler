@@ -10,7 +10,6 @@ Meteor.startup( function() {
     schedulesKey : "saved_schedules",
     favoriteKey: "__schedule_manager_favorite_schedules",
     prefix : "_schedule_manager_",
-    storageObject : localStorage,
     schedules : null,
 
     "cacheSchedules" : function () {
@@ -27,7 +26,7 @@ Meteor.startup( function() {
       }
 
       var result = null;
-      var raw = localStorage.getItem( this.prefix + token );
+      var raw = Scheduler.userStorage.getItem( this.prefix + token );
 
       if( raw != null ) {
         result = JSON.parse ( raw );
@@ -43,7 +42,7 @@ Meteor.startup( function() {
         token = this.tmpToken;
       }
 
-      localStorage.setItem( this.prefix + token, JSON.stringify( courses ) );
+      Scheduler.userStorage.setItem( this.prefix + token, JSON.stringify( courses ) );
 
     },
 
@@ -51,7 +50,7 @@ Meteor.startup( function() {
     "list" : function() {
       var result = [];
 
-      for( k in localStorage ) {
+      for( k in Scheduler.userStorage ) {
         if( k.indexOf( this.prefix ) == 0 ) {
           result.push( {
             "key"  : k.substr(this.prefix.length),
@@ -67,7 +66,7 @@ Meteor.startup( function() {
     // Will take in an array of course identifers ( EX: [2846,1977,1677,1197] ) and save the schedule for future reference
     "setFavorite" : function(name, classes, slots ) {
       // Get the raw value of the favorites array
-      var favorites = localStorage.getItem( this.favoriteKey ),
+      var favorites = Scheduler.userStorage.getItem( this.favoriteKey ),
           favoriteSchedule = {
             name : name,
             classes : classes,
@@ -81,14 +80,14 @@ Meteor.startup( function() {
 
       favorites.push( favoriteSchedule );
 
-      localStorage.setItem( this.favoriteKey, JSON.stringify( favorites ) );
+      Scheduler.userStorage.setItem( this.favoriteKey, JSON.stringify( favorites ) );
     },
 
     // Will take in an array of course identifers ( EX: [2846,1977,1677,1197] ) and remove this array from the
     // stored favorites
     "removeFavorite" : function( name ) {
       // Get the raw value of the favorites array
-      var favorites = localStorage.getItem( this.favoriteKey );
+      var favorites = Scheduler.userStorage.getItem( this.favoriteKey );
 
       // Only perform changes if the favorites array is defined
       if( favorites != null ) {
@@ -97,7 +96,7 @@ Meteor.startup( function() {
         for( var favorite in favorites ) {
           if( favorites[favorite].name == name ) {
             favorites.splice( favorite, 1 );
-            localStorage.setItem( this.favoriteKey, JSON.stringify( favorites ) );
+            Scheduler.userStorage.setItem( this.favoriteKey, JSON.stringify( favorites ) );
             break;
           }
         }
@@ -122,8 +121,8 @@ Meteor.startup( function() {
     "getAllFavorites" : function() {
       var result = [];
 
-      if( localStorage ) {
-        var favorites = localStorage.getItem( this.favoriteKey );
+      if( Scheduler.userStorage ) {
+        var favorites = Scheduler.userStorage.getItem( this.favoriteKey );
 
         if( favorites ) {
           result = JSON.parse( favorites );
@@ -136,7 +135,7 @@ Meteor.startup( function() {
     // Returns a listing of the schedules stored with the manager
     "listFavorites" : function() {
       var result = [];
-      var favorites = localStorage.getItem( this.favoriteKey );
+      var favorites = Scheduler.userStorage.getItem( this.favoriteKey );
       if( favorites != null ) {
         favorites = JSON.parse( favorites );
         for( var favorite in favorites ) {

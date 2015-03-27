@@ -41,10 +41,10 @@ Template.planLayoutControls.helpers( {
   }, 
 
   "favoritesButtonEnabled" : function() {
-    var favorites = Scheduler.ScheduleManager.listFavorites(), 
+    var condition = Session.get( "numberOfFavoriteSchedules" ) != 0, 
         result = "disabled";
   
-    if( favorites.length ) {
+    if( condition ) {
       result = "";
     }
 

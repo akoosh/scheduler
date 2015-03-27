@@ -18,6 +18,29 @@ Meteor.startup(function () {
           }
 
           return result;
+        },
+
+        loadUserData : function( accessKey ) {
+          var data = UserData.find( { id : accessKey } ).fetch();
+          if( data.length ) {
+            return data[0].data;
+          }
+        },
+
+        saveUserData : function( accessKey, data ) {
+          var save = { 
+            id : accessKey, 
+            data : data
+          };
+
+          var databaseEntry = UserData.find( { id : save.id } ).fetch();
+
+          if( databaseEntry.length ) {
+            UserData.update( { _id : databaseEntry[0]._id }, save );
+          } else {
+            UserData.insert( save );
+          }
+
         }
     });
 });

@@ -4,4 +4,5 @@
 
 CoursesModel = new Meteor.Collection( "Courses" );
 Students = new Meteor.Collection( "Students" );
+UserData = new Meteor.Collection( "UserData" );
 
