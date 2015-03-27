@@ -5,14 +5,11 @@ Template.ssuGatePage.events( {
 
     if( accessKey && accessKey != "" ) {
       Meteor.call('userHasAccess', accessKey, function(err, result) {
-          if (err === undefined) {
-            if( result ) {
-              Session.set( "current_page", "searchPage" );
-            } else {
-            }
-          } else {
-            console.log( err );
-          }
+        if (err === undefined && result ) {
+          // Store the access time to allow caching valid access
+          localStorage.setItem("_user_access_token", new Date().getTime() );
+          Session.set( "current_page", "searchPage" );
+        }
       });
       
     }
