@@ -5,7 +5,7 @@
 Template.favoritePage.events( {
 
     "click .loadFavoriteSchedule" : function(e,t) {
-      Session.set( "currentFavoriteSchedule", this._id );
+      Session.set( "Scheduler.currentFavoriteScheduleId", this._id );
       Scheduler.Schedules.generateSchedules( this.classes );
       Scheduler.Schedules.renderSchedule();
     },
@@ -28,7 +28,7 @@ Template.favoritePage.events( {
 
     "click .returnToSearch" : function(e,t) {
       Scheduler.qTipHelper.clearTips();
-      Session.set( "currentFavoriteSchedule", undefined );
+      Session.set( "Scheduler.currentFavoriteScheduleId", undefined );
       Session.set( "Scheduler.currentPage", "searchPage" );
     },
 
@@ -36,7 +36,7 @@ Template.favoritePage.events( {
 
 Template.favoritePage.helpers({
   "hasSchedule" : function() {
-    var result = Session.get( "currentFavoriteSchedule" );
+    var result = Session.get( "Scheduler.currentFavoriteScheduleId" );
 
     return result;
   }
