@@ -13,7 +13,7 @@ Template.favoritePage.events( {
     "click .editFavoriteSchedule" : function(e,t) {
       Scheduler.qTipHelper.clearTips();
       Session.set( "Scheduler.slotSelected", 0 );
-      Session.set( "slots", this.slots );
+      Session.set( "Scheduler.slots", this.slots );
       Session.set( "Scheduler.currentPage", "searchPage" );
     },
 

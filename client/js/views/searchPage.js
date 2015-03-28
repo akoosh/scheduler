@@ -150,11 +150,11 @@ Template.slotDisplay.helpers( {
 
 Template.slotCollapse.events( {
   "click .slot-collapse, click .slot-expand" : function(e, t) {
-    var slots = Session.get( "slots" );
+    var slots = Session.get( "Scheduler.slots" );
     if( slots ) {
       if( slots[t.data.index] ) {
         slots[t.data.index].isCollapsed = !slots[t.data.index].isCollapsed;
-        Session.set( "slots", slots );
+        Session.set( "Scheduler.slots", slots );
       }
     }
   }
@@ -162,12 +162,12 @@ Template.slotCollapse.events( {
 
 Template.slotRemove.events( {
   "click .slot-remove" : function( e, t) {
-   var slots = Session.get( "slots" );
+   var slots = Session.get( "Scheduler.slots" );
     if( slots ) {
       if( slots[t.data.index] ) {
         slots[t.data.index].classes = [];
         slots[t.data.index].selectedClasses = {};
-        Session.set( "slots", slots );
+        Session.set( "Scheduler.slots", slots );
       }
     }   
   }
@@ -248,7 +248,7 @@ Template.searchPage.events ( {
 
             slots[slotSelected] = curSlot;
 
-            Session.set("slots", slots);
+            Session.set("Scheduler.slots", slots);
         },
 
         "click .removeButton": function() {
@@ -273,7 +273,7 @@ Template.searchPage.events ( {
             });
 
             Scheduler.qTipHelper.hideTips();
-            Session.set("slots", slots);
+            Session.set("Scheduler.slots", slots);
         },
 
         "click .slotDisplay": function() {
@@ -353,12 +353,14 @@ Template.searchPage.rendered = function() {
   var containerHeight = $(window).height();
   $( "#searchPageContainer" ).css( "height", containerHeight );
   $( ".searchLayout, .planLayout" ).css( "height", containerHeight-110 );
+
   // Setup the default view render options
-  var Scheduler.searchRenderOptions = {
+  var searchRenderOptions = {
     max : 10,
     courses: { }
   };
-  Session.set( "Scheduler.searchRenderOptions", searchViewRenderOptions );
+
+  Session.set( "Scheduler.searchRenderOptions", searchRenderOptions );
 }
 
 Template.classButton.rendered = function() {
