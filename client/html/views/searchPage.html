@@ -39,7 +39,12 @@
         <thead>
           <th class="name"> Slot {{slotNumber}} </th>
           <th class="classes"> {{numberOfClasses}} classes</th>
-          <th> {{> slotCollapse}} </th>
+          <th class="slot-controls">
+            {{> slotCollapse}} 
+            {{#if numberOfClasses}}
+              {{> slotRemove}}
+            {{/if}}
+          </th>
         </thead>
         <tbody>
           {{#each modifiedClasses}}
@@ -55,10 +60,12 @@
   </div>
 </template>
 
+<template name="slotRemove">
+  <span class="glyphicon glyphicon-remove slot-remove" title="Remove all of the classes from this slot"></span>
+</template>
+
 <template name="slotCollapse">
-  <div class="slotcollapse">
-    <span class="{{isCollapsedClass}} {{collapsedGlyph}}"></span>
-  </div>
+  <span class="{{isCollapsedClass}} {{collapsedGlyph}}"></span>
 </template>
 
 <template name="moreClassButton">
@@ -71,7 +78,7 @@
   <tr>
     <td>{{subject_with_number}}</td>
     <td>{{title}}</td>
-    <td> <button class="btn btn-danger btn-small removeButton" title="Remove {{subject_with_number}} from this slot">x</button> </td>
+    <td><span class="glyphicon glyphicon-remove removeButton" title="Remove {{subject_with_number}} from this slot"></span></td>
   </tr>
 </template>
 
@@ -92,12 +99,15 @@
 
 <template name="queryDisplay">
     <div id="results">
-        {{#each queryResults}}
-            {{> classDisplay }}
-        {{/each}}
-        {{#if moreResults}}
-          <button class="btn btn-default loadMoreResults" title="There are additional courses for your search query"> &#9660; Load More Results </button>
-        {{/if}}
+      {{#if hasResults}}
+        <button class="btn btn-primary visible-md visible-lg addButton" title="Add all classes for this query to the current slot">Add All</button>
+      {{/if}}
+      {{#each queryResults}}
+          {{> classDisplay }}
+      {{/each}}
+      {{#if moreResults}}
+        <button class="btn btn-default loadMoreResults" title="There are additional courses for your search query"> &#9660; Load More Results </button>
+      {{/if}}
     </div>
 </template>
 
@@ -112,9 +122,7 @@
                 <th><button class="addButton btn btn-primary visible-md visible-lg" title="Add all classes for this course to the current slot">Add All</button></th>
             </tr>
             {{#each augmentedClasses}}
-            <tr>
-              {{> classDisplay }}
-            </tr>
+            <tr> {{> classDisplay }} </tr>
             {{/each}}
           </tbody>
         </table>
