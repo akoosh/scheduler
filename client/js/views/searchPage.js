@@ -42,7 +42,7 @@ Template.queryDisplay.helpers( {
 
 Template.planLayoutControls.helpers( {
   "generateButtonEnabled" : function() {
-    var slots = Session.get("slots") || [], result = "disabled";
+    var slots = Session.get("Scheduler.slots") || [], result = "disabled";
   
     if( slots.length ) {
       result = "";
@@ -83,7 +83,7 @@ Template.classDisplay.helpers( {
 Template.planLayout.helpers( {
 
         "slots": function() {
-            var plan = Session.get("slots");
+            var plan = Session.get("Scheduler.slots");
             return plan || [];
         }
     }
@@ -92,7 +92,7 @@ Template.planLayout.helpers( {
 Template.slotDisplay.helpers( {
         
         "slotNumber": function() {
-            var slots = Session.get("slots") || [];
+            var slots = Session.get("Scheduler.slots") || [];
             var nextSlot = slots.length + 1;
             return this.index !== undefined ? this.index + 1 : nextSlot;
         },
@@ -100,7 +100,7 @@ Template.slotDisplay.helpers( {
         "selectedOrEmpty": function() {
             var result = "";
             var slotSelected = Session.get("Scheduler.slotSelected");
-            var slots = Session.get("slots") || [];
+            var slots = Session.get("Scheduler.slots") || [];
 
             if (slotSelected === this.index || (this.index === undefined && slotSelected === slots.length)) {
                 result = "selected";
@@ -233,7 +233,7 @@ Template.searchPage.events ( {
                 Session.set("Scheduler.slotSelected", slotSelected);
             }
 
-            var slots = Session.get("slots") || [];
+            var slots = Session.get("Scheduler.slots") || [];
 
             var curSlot = slots[slotSelected] || { index: slotSelected, classes: [], selectedClasses: {}, isCollapsed : false };
 
@@ -253,7 +253,7 @@ Template.searchPage.events ( {
 
         "click .removeButton": function() {
             var slotSelected = Session.get("Scheduler.slotSelected") || 0;
-            var slots = Session.get("slots") || [];
+            var slots = Session.get("Scheduler.slots") || [];
             var curSlot = slots[slotSelected] || { index: slotSelected, classes: [], selectedClasses: {} };
 
             // find and remove the appropriate class
@@ -281,7 +281,7 @@ Template.searchPage.events ( {
                 Session.set("Scheduler.slotSelected", this.index);
             }
             else {
-                var slots = Session.get("slots") || [];
+                var slots = Session.get("Scheduler.slots") || [];
                 Session.set("Scheduler.slotSelected", slots.length);
             }
         },
@@ -326,7 +326,7 @@ Template.searchPage.events ( {
         },
 
         "click .generateButton": function() {
-            var slots = Session.get("slots") || [];
+            var slots = Session.get("Scheduler.slots") || [];
             var classesArray = _.map(slots, function(slot) {
                 return _.pluck(slot.classes, 'number');
             });
