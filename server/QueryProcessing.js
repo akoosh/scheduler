@@ -116,7 +116,6 @@ QueryProcessing.QuerySearcher = {
       var result = []
 
       if (!_.isEmpty(query)) {
-        console.log( query  );
         result = ClassesModel.find( query, {sort: { subject_number: 1 } } ).fetch();
       }
 

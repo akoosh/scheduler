@@ -37,12 +37,20 @@
   <div class="slotDisplay {{selectedOrEmpty}}">
       <table class="table table-striped classButtonRowTable">
         <thead>
-          <th class="name"> Slot {{slotNumber}} </th>
-          <th class="classes"> {{numberOfClasses}} classes</th>
+          <th class="name"> {{slotName}} </th>
+          <th class="classes"> 
+            {{#if numberOfClasses }}
+              {{numberOfClasses}} classes
+            {{/if}}
+          </th>
           <th class="slot-controls">
-            {{> slotCollapse}} 
-            {{#if numberOfClasses}}
-              {{> slotRemove}}
+            {{#if numberOfClasses }}
+              {{> slotCollapse}} 
+              {{#if numberOfClasses}}
+                {{> slotRemove}}
+              {{/if}}
+            {{else}}
+              <span class="glyphicon glyphicon-plus slot-add" title="Add classes to this slot if you want another class for your schedule"></span>
             {{/if}}
           </th>
         </thead>

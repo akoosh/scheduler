@@ -91,10 +91,14 @@ Template.planLayout.helpers( {
 
 Template.slotDisplay.helpers( {
         
-        "slotNumber": function() {
-            var slots = Session.get("Scheduler.slots") || [];
-            var nextSlot = slots.length + 1;
-            return this.index !== undefined ? this.index + 1 : nextSlot;
+        "slotName": function() {
+          var result = "New Slot";
+          
+          if( this.name && this.index != undefined ) {
+            result = this.name ;
+          }
+
+          return result;
         },
 
         "selectedOrEmpty": function() {
@@ -161,14 +165,20 @@ Template.slotCollapse.events( {
 });
 
 Template.slotRemove.events( {
-  "click .slot-remove" : function( e, t) {
-   var slots = Session.get( "Scheduler.slots" );
-    if( slots ) {
-      if( slots[t.data.index] ) {
-        slots[t.data.index].classes = [];
-        slots[t.data.index].selectedClasses = {};
-        Session.set( "Scheduler.slots", slots );
-      }
+  "click .slot-remove" : function( e, t ) {
+    var slots = Session.get( "Scheduler.slots" );
+
+    if( slots && t.data && t.data.index != undefined ) {
+
+      // Remove the slot
+      slots.splice( t.data.index, 1 );
+
+      // Recalc indicies
+      _.each(slots, function(slot, index) {
+      slot.index = index;
+      });
+
+      Session.set( "Scheduler.slots", slots );
     }   
   }
 });
@@ -233,9 +243,10 @@ Template.searchPage.events ( {
                 Session.set("Scheduler.slotSelected", slotSelected);
             }
 
-            var slots = Session.get("Scheduler.slots") || [];
+            var slots = Session.get("Scheduler.slots") || [],
+                query = $("#query").val();
 
-            var curSlot = slots[slotSelected] || { index: slotSelected, classes: [], selectedClasses: {}, isCollapsed : false };
+            var curSlot = slots[slotSelected] || { index: slotSelected, name: query, classes: [], selectedClasses: {}, isCollapsed : false };
 
 
             var classesToAdd = this.id !== undefined ? [this] : Session.get( "Scheduler.searchResults" );
@@ -252,9 +263,11 @@ Template.searchPage.events ( {
         },
 
         "click .removeButton": function() {
-            var slotSelected = Session.get("Scheduler.slotSelected") || 0;
-            var slots = Session.get("Scheduler.slots") || [];
-            var curSlot = slots[slotSelected] || { index: slotSelected, classes: [], selectedClasses: {} };
+            var slotSelected = Session.get("Scheduler.slotSelected") || 0,
+                slots = Session.get("Scheduler.slots") || [],
+                query = $("#query").val();
+
+            var curSlot = slots[slotSelected] || { index: slotSelected, name: "slot", classes: [], selectedClasses: {}, isCollapsed : false };
 
             // find and remove the appropriate class
             var outerThis = this;
@@ -376,7 +389,7 @@ Template.planLayout.rendered = function() {
 }
 
 Template.slotDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( ".slot-remove" );
+  Scheduler.qTipHelper.updateTips( ".slot-remove, .slot-add" );
 }
 
 Template.planLayoutControls.rendered = function() {
