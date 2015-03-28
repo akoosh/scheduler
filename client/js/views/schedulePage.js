@@ -15,7 +15,7 @@ Template.schedulePageControls.helpers( {
 
   // Returns the index of the current schedule
   "currentSchedule" : function() {
-    var result = Session.get( "currentScheduleIndex" );
+    var result = Session.get( "Scheduler.currentScheduleIndex" );
 
     if( Scheduler.Schedules.bucketIterator == null ) {
       result = 0;
