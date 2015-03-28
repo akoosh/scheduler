@@ -3,7 +3,7 @@
 import csv, sys, json, string, hashlib, os, subprocess, time
 from coursesToJson import main as cTJ
 from studentsToJson import main as sTJ
-# mongoimport -h localhost:3001 --drop --db meteor --collection UserData --type json --jsonArray --file userData.json
+from coursesToClassesJson import main as cTCJ
 
 def main():
   with open( "config.json", "r" ) as config:
@@ -15,10 +15,17 @@ def main():
         cTJ( cfg["CourseData"], cfg["SupCourseData"] )
         print "Done."
 
-        print "Importing student data into mongo..."
+        print "Generating class data..."
+        cTCJ()
+        print "Done."
+
+        print "Importing course data into mongo..."
         os.system( "mongoimport -h %s:%s --drop --db %s --collection Courses --type json --jsonArray --file courses.json && mv courses.json bkup/courses.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorPort"], cfg["MeteorDB"], str(time.time()) ) )
         print "Done."
-        # Import
+
+        print "Importing class data into mongo..."
+        os.system( "mongoimport -h %s:%s --drop --db %s --collection Classes --type json --jsonArray --file classes.json && mv classes.json bkup/classes.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorPort"], cfg["MeteorDB"], str(time.time()) ) )
+        print "Done."
 
 
     if "StudentData" in cfg:
@@ -30,12 +37,7 @@ def main():
         print "Importing student data into mongo..."
         os.system( "mongoimport -h %s:%s --drop --db %s --collection Students --type json --jsonArray --file students.json && mv students.json bkup/students.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorPort"], cfg["MeteorDB"], int(time.time()) ) )
         print "Done."
-        # Import
     
-  # Load the config file
-  # Generate the json files if available
-  # Insert the new json files into the database
-  # Destroy the generated json files ( place in a backup folder? )
 
 if __name__ == "__main__":
   main()

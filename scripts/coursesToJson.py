@@ -29,7 +29,7 @@ def getValue( row, values, default='' ):
   return result
     
 
-def main( arg1, arg2 ):
+def main( arg1=None, arg2=None ):
     course_model = CourseModel()
 
     if arg1 == None:

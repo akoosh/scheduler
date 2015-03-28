@@ -199,15 +199,12 @@ BucketIterator.prototype.getSchedule = function() {
   var result = [];
   var classes = this.getCourseArray();
 
-
-//  Meteor.call('coursesForQuery', input, function(err, results) {
-
   for( number in classes) {
     number = classes[number];
-    var c = Scheduler.Classes.classForNumber( number );
+    var c = ClassesModel.findOne( { id : number } );
 
     // Make sure that the sections has some data for display
-    if( typeof c.sections == "object" && c.sections.length > 0 ) {
+    if( c && c.sections ) {
       result.push( c );
     }
   }
