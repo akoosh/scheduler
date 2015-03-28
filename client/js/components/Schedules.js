@@ -16,7 +16,7 @@ Meteor.startup( function() {
         }
 
         this.bucketIterator = new BucketIterator( classes );
-        Session.set( "scheduleCount", this.bucketIterator.size );
+        Session.set( "Scheduler.scheduleCount", this.bucketIterator.size );
       }
     },
 

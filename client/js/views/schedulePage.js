@@ -4,7 +4,7 @@
 Template.schedulePageControls.helpers( {
   // Returns the number of schedules that have been generated
   "scheduleCount" : function() {
-    var result = Session.get( "scheduleCount" );
+    var result = Session.get( "Scheduler.scheduleCount" );
 
     if( Scheduler.Schedules.bucketIterator == null ) {
       result = 0;
