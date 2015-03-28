@@ -3,7 +3,7 @@
 
 Template.queryDisplay.helpers( {
         "queryResults": function() {
-            var queryResults = Session.get("queryResults") || [],
+            var queryResults = Session.get("Scheduler.searchResults") || [],
                 renderOptions = Session.get("Scheduler.searchRenderOptions");
 
             if( renderOptions ) {
@@ -15,7 +15,7 @@ Template.queryDisplay.helpers( {
 
         // Returns true if the current searchMinValue is lower than the total number of results
         moreResults : function() {
-          var queryResults = Session.get("queryResults"),
+          var queryResults = Session.get("Scheduler.searchResults"),
               renderOptions = Session.get("Scheduler.searchRenderOptions"),
               result = false;
 
@@ -28,7 +28,7 @@ Template.queryDisplay.helpers( {
 
         hasResults : function() {
           var result = false,
-              queryResults = Session.get("queryResults");
+              queryResults = Session.get("Scheduler.searchResults");
 
           if( queryResults && queryResults.length ) {
             result = true;
@@ -208,7 +208,7 @@ Template.searchPage.events ( {
                 Meteor.call('coursesForQuery', input, function(err, results) {
                     if (err === undefined) {
                       $(".searchLayout").animate({ scrollTop: 0 }, "fast");
-                      Session.set( "queryResults", results );
+                      Session.set( "Scheduler.searchResults", results );
 
                       var renderOptions = Session.get( "Scheduler.searchRenderOptions" );
 
@@ -238,7 +238,7 @@ Template.searchPage.events ( {
             var curSlot = slots[slotSelected] || { index: slotSelected, classes: [], selectedClasses: {}, isCollapsed : false };
 
 
-            var classesToAdd = this.id !== undefined ? [this] : Session.get( "queryResults" );
+            var classesToAdd = this.id !== undefined ? [this] : Session.get( "Scheduler.searchResults" );
             _.each(classesToAdd, function (cl) {
                 if (curSlot.selectedClasses[cl.number] === undefined) {
                     curSlot.selectedClasses[cl.number] = true;

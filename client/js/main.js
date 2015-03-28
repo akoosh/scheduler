@@ -20,7 +20,7 @@ Meteor.startup( function() {
 Tracker.autorun(function() {
   if ( Meteor.userId() ) {
     Session.set( "slots", undefined );
-    Session.set( "queryResults", undefined );
+    Session.set( "Scheduler.searchResults", undefined );
   }
 });
 
