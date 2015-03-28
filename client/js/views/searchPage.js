@@ -333,7 +333,7 @@ Template.searchPage.events ( {
             
             Meteor.call("saveSchedule", { name : "generated-"+new Date(), classes : classesArray }, function(err, result) {
               if( result ) {
-                Session.set( "currentSchedule", result );
+                Session.set( "Scheduler.currentScheduleId", result );
 
                 if( classesArray.length ) {
                   // Setup the available schedules
