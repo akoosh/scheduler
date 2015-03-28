@@ -12,15 +12,15 @@ Accounts.ui.config({
 Meteor.startup( function() {
 
   var entryPage = "searchPage";
-  Session.set( "current_page", entryPage );
+  Session.set( "Scheduler.currentPage", entryPage );
 
 });
 
 // Resets session variables when the user changes
 Tracker.autorun(function() {
   if ( Meteor.userId() ) {
-    Session.set( "slots", undefined );
-    Session.set( "queryResults", undefined );
+    Session.set( "Scheduler.slots", undefined );
+    Session.set( "Scheduler.searchResults", undefined );
   }
 });
 

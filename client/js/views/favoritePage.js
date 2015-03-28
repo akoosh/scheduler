@@ -5,16 +5,16 @@
 Template.favoritePage.events( {
 
     "click .loadFavoriteSchedule" : function(e,t) {
-      Session.set( "currentFavoriteSchedule", this._id );
+      Session.set( "Scheduler.currentFavoriteScheduleId", this._id );
       Scheduler.Schedules.generateSchedules( this.classes );
       Scheduler.Schedules.renderSchedule();
     },
 
     "click .editFavoriteSchedule" : function(e,t) {
       Scheduler.qTipHelper.clearTips();
-      Session.set( "slotSelected", 0 );
-      Session.set( "slots", this.slots );
-      Session.set( "current_page", "searchPage" );
+      Session.set( "Scheduler.slotSelected", 0 );
+      Session.set( "Scheduler.slots", this.slots );
+      Session.set( "Scheduler.currentPage", "searchPage" );
     },
 
     "click .renameFavoriteSchedule" : function(e,t) {
@@ -28,15 +28,15 @@ Template.favoritePage.events( {
 
     "click .returnToSearch" : function(e,t) {
       Scheduler.qTipHelper.clearTips();
-      Session.set( "currentFavoriteSchedule", undefined );
-      Session.set( "current_page", "searchPage" );
+      Session.set( "Scheduler.currentFavoriteScheduleId", undefined );
+      Session.set( "Scheduler.currentPage", "searchPage" );
     },
 
 });
 
 Template.favoritePage.helpers({
   "hasSchedule" : function() {
-    var result = Session.get( "currentFavoriteSchedule" );
+    var result = Session.get( "Scheduler.currentFavoriteScheduleId" );
 
     return result;
   }

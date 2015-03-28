@@ -5,7 +5,7 @@
 Template.pageLoader.helpers( {
   // Attempts to load the template provided by its name
   "loadPage" : function(name) {
-    var page = Session.get("current_page");
+    var page = Session.get("Scheduler.currentPage");
 
     return { template: Template[page] };
   },

@@ -3,8 +3,8 @@
 
 Template.queryDisplay.helpers( {
         "queryResults": function() {
-            var queryResults = Session.get("queryResults") || [],
-                renderOptions = Session.get("searchViewRenderOptions");
+            var queryResults = Session.get("Scheduler.searchResults") || [],
+                renderOptions = Session.get("Scheduler.searchRenderOptions");
 
             if( renderOptions ) {
               queryResults = queryResults.slice(0,renderOptions.max);
@@ -15,8 +15,8 @@ Template.queryDisplay.helpers( {
 
         // Returns true if the current searchMinValue is lower than the total number of results
         moreResults : function() {
-          var queryResults = Session.get("queryResults"),
-              renderOptions = Session.get("searchViewRenderOptions"),
+          var queryResults = Session.get("Scheduler.searchResults"),
+              renderOptions = Session.get("Scheduler.searchRenderOptions"),
               result = false;
 
           if( renderOptions && queryResults ) {
@@ -28,7 +28,7 @@ Template.queryDisplay.helpers( {
 
         hasResults : function() {
           var result = false,
-              queryResults = Session.get("queryResults");
+              queryResults = Session.get("Scheduler.searchResults");
 
           if( queryResults && queryResults.length ) {
             result = true;
@@ -42,7 +42,7 @@ Template.queryDisplay.helpers( {
 
 Template.planLayoutControls.helpers( {
   "generateButtonEnabled" : function() {
-    var slots = Session.get("slots") || [], result = "disabled";
+    var slots = Session.get("Scheduler.slots") || [], result = "disabled";
   
     if( slots.length ) {
       result = "";
@@ -83,7 +83,7 @@ Template.classDisplay.helpers( {
 Template.planLayout.helpers( {
 
         "slots": function() {
-            var plan = Session.get("slots");
+            var plan = Session.get("Scheduler.slots");
             return plan || [];
         }
     }
@@ -92,15 +92,15 @@ Template.planLayout.helpers( {
 Template.slotDisplay.helpers( {
         
         "slotNumber": function() {
-            var slots = Session.get("slots") || [];
+            var slots = Session.get("Scheduler.slots") || [];
             var nextSlot = slots.length + 1;
             return this.index !== undefined ? this.index + 1 : nextSlot;
         },
 
         "selectedOrEmpty": function() {
             var result = "";
-            var slotSelected = Session.get("slotSelected");
-            var slots = Session.get("slots") || [];
+            var slotSelected = Session.get("Scheduler.slotSelected");
+            var slots = Session.get("Scheduler.slots") || [];
 
             if (slotSelected === this.index || (this.index === undefined && slotSelected === slots.length)) {
                 result = "selected";
@@ -150,11 +150,11 @@ Template.slotDisplay.helpers( {
 
 Template.slotCollapse.events( {
   "click .slot-collapse, click .slot-expand" : function(e, t) {
-    var slots = Session.get( "slots" );
+    var slots = Session.get( "Scheduler.slots" );
     if( slots ) {
       if( slots[t.data.index] ) {
         slots[t.data.index].isCollapsed = !slots[t.data.index].isCollapsed;
-        Session.set( "slots", slots );
+        Session.set( "Scheduler.slots", slots );
       }
     }
   }
@@ -162,12 +162,12 @@ Template.slotCollapse.events( {
 
 Template.slotRemove.events( {
   "click .slot-remove" : function( e, t) {
-   var slots = Session.get( "slots" );
+   var slots = Session.get( "Scheduler.slots" );
     if( slots ) {
       if( slots[t.data.index] ) {
         slots[t.data.index].classes = [];
         slots[t.data.index].selectedClasses = {};
-        Session.set( "slots", slots );
+        Session.set( "Scheduler.slots", slots );
       }
     }   
   }
@@ -208,15 +208,15 @@ Template.searchPage.events ( {
                 Meteor.call('coursesForQuery', input, function(err, results) {
                     if (err === undefined) {
                       $(".searchLayout").animate({ scrollTop: 0 }, "fast");
-                      Session.set( "queryResults", results );
+                      Session.set( "Scheduler.searchResults", results );
 
-                      var renderOptions = Session.get( "searchViewRenderOptions" );
+                      var renderOptions = Session.get( "Scheduler.searchRenderOptions" );
 
                       // Reset the search view render options
                       if( renderOptions ) {
                         renderOptions.max = 10;
                         renderOptions.courses = {};
-                        Session.set( "searchViewRenderOptions", renderOptions );
+                        Session.set( "Scheduler.searchRenderOptions", renderOptions );
                       }
                     }
                 });
@@ -226,19 +226,19 @@ Template.searchPage.events ( {
         },
 
         "click .addButton": function(e) {
-            var slotSelected = Session.get("slotSelected");
+            var slotSelected = Session.get("Scheduler.slotSelected");
             // first time adding class
             if (slotSelected === undefined) {
                 slotSelected = 0;
-                Session.set("slotSelected", slotSelected);
+                Session.set("Scheduler.slotSelected", slotSelected);
             }
 
-            var slots = Session.get("slots") || [];
+            var slots = Session.get("Scheduler.slots") || [];
 
             var curSlot = slots[slotSelected] || { index: slotSelected, classes: [], selectedClasses: {}, isCollapsed : false };
 
 
-            var classesToAdd = this.id !== undefined ? [this] : Session.get( "queryResults" );
+            var classesToAdd = this.id !== undefined ? [this] : Session.get( "Scheduler.searchResults" );
             _.each(classesToAdd, function (cl) {
                 if (curSlot.selectedClasses[cl.number] === undefined) {
                     curSlot.selectedClasses[cl.number] = true;
@@ -248,12 +248,12 @@ Template.searchPage.events ( {
 
             slots[slotSelected] = curSlot;
 
-            Session.set("slots", slots);
+            Session.set("Scheduler.slots", slots);
         },
 
         "click .removeButton": function() {
-            var slotSelected = Session.get("slotSelected") || 0;
-            var slots = Session.get("slots") || [];
+            var slotSelected = Session.get("Scheduler.slotSelected") || 0;
+            var slots = Session.get("Scheduler.slots") || [];
             var curSlot = slots[slotSelected] || { index: slotSelected, classes: [], selectedClasses: {} };
 
             // find and remove the appropriate class
@@ -273,32 +273,32 @@ Template.searchPage.events ( {
             });
 
             Scheduler.qTipHelper.hideTips();
-            Session.set("slots", slots);
+            Session.set("Scheduler.slots", slots);
         },
 
         "click .slotDisplay": function() {
             if (this.index !== undefined) {
-                Session.set("slotSelected", this.index);
+                Session.set("Scheduler.slotSelected", this.index);
             }
             else {
-                var slots = Session.get("slots") || [];
-                Session.set("slotSelected", slots.length);
+                var slots = Session.get("Scheduler.slots") || [];
+                Session.set("Scheduler.slotSelected", slots.length);
             }
         },
 
         "click .loadMoreResults": function() {
-          var renderOptions = Session.get("searchViewRenderOptions");
+          var renderOptions = Session.get("Scheduler.searchRenderOptions");
           if( renderOptions ) {
             renderOptions.max += 10;
 
             Scheduler.qTipHelper.clearTips();
-            Session.set("searchViewRenderOptions", renderOptions );
+            Session.set("Scheduler.searchRenderOptions", renderOptions );
           }
         },
 
         "click .loadMoreClasses": function(e, template) {
           var courseId = $(e.target).attr("course"),
-              renderOptions = Session.get("searchViewRenderOptions");
+              renderOptions = Session.get("Scheduler.searchRenderOptions");
 
           if( renderOptions && courseId ) {
             if( renderOptions.courses[courseId] === undefined ) {
@@ -308,12 +308,12 @@ Template.searchPage.events ( {
             renderOptions.courses[courseId].max += 4;
 
             Scheduler.qTipHelper.clearTips();
-            Session.set("searchViewRenderOptions", renderOptions );
+            Session.set("Scheduler.searchRenderOptions", renderOptions );
           }
         },
 
         "click .logoutButton": function() {
-          Session.set( "current_page", "ssuGatePage" );
+          Session.set( "Scheduler.currentPage", "ssuGatePage" );
         },
 
         "click .viewFavorites": function() {
@@ -321,19 +321,19 @@ Template.searchPage.events ( {
 
           if( haveFavorites ) {
             Scheduler.qTipHelper.hideTips();
-            Session.set( "current_page", "favoritePage" );
+            Session.set( "Scheduler.currentPage", "favoritePage" );
           }
         },
 
         "click .generateButton": function() {
-            var slots = Session.get("slots") || [];
+            var slots = Session.get("Scheduler.slots") || [];
             var classesArray = _.map(slots, function(slot) {
                 return _.pluck(slot.classes, 'number');
             });
             
             Meteor.call("saveSchedule", { name : "generated-"+new Date(), classes : classesArray }, function(err, result) {
               if( result ) {
-                Session.set( "currentSchedule", result );
+                Session.set( "Scheduler.currentScheduleId", result );
 
                 if( classesArray.length ) {
                   // Setup the available schedules
@@ -341,7 +341,7 @@ Template.searchPage.events ( {
                   // Transition to the schedule view
                   Scheduler.qTipHelper.clearTips();
                   Scheduler.Schedules.generateSchedules( classesArray );
-                  Session.set( "current_page", "schedulePage" );
+                  Session.set( "Scheduler.currentPage", "schedulePage" );
                 }
               }
             });
@@ -353,12 +353,14 @@ Template.searchPage.rendered = function() {
   var containerHeight = $(window).height();
   $( "#searchPageContainer" ).css( "height", containerHeight );
   $( ".searchLayout, .planLayout" ).css( "height", containerHeight-110 );
+
   // Setup the default view render options
-  var searchViewRenderOptions = {
+  var searchRenderOptions = {
     max : 10,
     courses: { }
   };
-  Session.set( "searchViewRenderOptions", searchViewRenderOptions );
+
+  Session.set( "Scheduler.searchRenderOptions", searchRenderOptions );
 }
 
 Template.classButton.rendered = function() {

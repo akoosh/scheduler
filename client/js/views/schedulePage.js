@@ -4,7 +4,7 @@
 Template.schedulePageControls.helpers( {
   // Returns the number of schedules that have been generated
   "scheduleCount" : function() {
-    var result = Session.get( "scheduleCount" );
+    var result = Session.get( "Scheduler.scheduleCount" );
 
     if( Scheduler.Schedules.bucketIterator == null ) {
       result = 0;
@@ -15,7 +15,7 @@ Template.schedulePageControls.helpers( {
 
   // Returns the index of the current schedule
   "currentSchedule" : function() {
-    var result = Session.get( "currentScheduleIndex" );
+    var result = Session.get( "Scheduler.currentScheduleIndex" );
 
     if( Scheduler.Schedules.bucketIterator == null ) {
       result = 0;
@@ -37,12 +37,12 @@ Template.schedulePage.events( {
 
   "click #save_schedule" : function(e,template) {
     var name = prompt( "Please enter favorite schedule name", "Favorite Schedule " + new Date() );
-    Meteor.call( "saveFavorite", { name : name, classes: Session.get( "currentSchedule" ), slots : Session.get("slots") } );
+    Meteor.call( "saveFavorite", { name : name, classes: Session.get( "Scheduler.currentScheduleId" ), slots : Session.get("Scheduler.slots") } );
   },
 
   "click #back_to_search" : function(e,template) {
     Scheduler.qTipHelper.clearTips();
-    Session.set( "current_page", "searchPage" );
+    Session.set( "Scheduler.currentPage", "searchPage" );
   },
 });
 
@@ -50,7 +50,7 @@ Template.schedulePageTable.helpers( {
 
   // Returns an array with the currently displayed courses in raw form
   "formattedRow" : function() {
-    var courses = Session.get( "scheduleCourses" );
+    var courses = Session.get( "Scheduler.scheduleCourses" );
 
     // Get the rows for the current courses
     var rows = Scheduler.Converter.coursesToRows( courses );
