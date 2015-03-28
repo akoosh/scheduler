@@ -1,4 +1,6 @@
 Template.loginPage.rendered = function() {
-  Accounts._loginButtonsSession.set('dropdownVisible', true);
-  $("#login-sign-in-link").hide();
+  if( !Meteor.userId() ) {
+    Accounts._loginButtonsSession.set('dropdownVisible', true);
+    $("#login-sign-in-link").hide();
+  }
 };

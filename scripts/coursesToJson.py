@@ -29,7 +29,7 @@ def getValue( row, values, default='' ):
   return result
     
 
-def main( arg1, arg2 ):
+def main( arg1=None, arg2=None ):
     course_model = CourseModel()
 
     if arg1 == None:
@@ -148,8 +148,8 @@ class Course(object):
           sup[supId] = {}
           print "Attempted to find supplementary data for %s but was not available" % supId
 
-        course['description'] = getValue( sup[supId], ['description'] )
-        course['title'] = getValue( sup[supId], ['title'] )
+        course['description'] = getValue( sup[supId], ['description'], "No description available" )
+        course['title'] = getValue( sup[supId], ['title'], course['subject_with_number'] )
 
         course['classes'] = [] 
 

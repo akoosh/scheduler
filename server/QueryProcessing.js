@@ -113,8 +113,13 @@ QueryProcessing.QuerySearcher = {
 
     // Access point for the searcher and the Meteor mongo helper object
     resultsForQuery: function(query) {
-        if (_.isEmpty(query)) return [];
-        else return CoursesModel.find( query ).fetch();
+      var result = []
+
+      if (!_.isEmpty(query)) {
+        result = ClassesModel.find( query, {sort: { title: 1 } } ).fetch();
+      }
+
+      return result;
     }
 
 

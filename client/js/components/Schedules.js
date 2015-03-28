@@ -15,49 +15,49 @@ Meteor.startup( function() {
           classes = classes.map( function(ele) { return [ ele ]; } );
         }
 
-        Scheduler.Schedules.bucketIterator = new BucketIterator( classes );
-        Session.set( "scheduleCount", Scheduler.Schedules.bucketIterator.size );
+        this.bucketIterator = new BucketIterator( classes );
+        Session.set( "scheduleCount", this.bucketIterator.size );
       }
     },
 
     // Goes to the next available schedule
     "nextSchedule" : function() {
-     var cPos = Scheduler.Schedules.bucketIterator.position;
+     var cPos = this.bucketIterator.position;
       do { 
-        Scheduler.Schedules.bucketIterator.inc();
-        if( Scheduler.Schedules.bucketIterator.position == cPos ) {
+        this.bucketIterator.inc();
+        if( this.bucketIterator.position == cPos ) {
           break;
         }
-      } while( !Scheduler.Schedules.bucketIterator.isValid() );
-      Scheduler.Schedules.renderSchedule();
+      } while( !this.bucketIterator.isValid() );
+      this.renderSchedule();
     },
 
     // Goes to the prev available schedule
     "prevSchedule" : function() {
-     var cPos = Scheduler.Schedules.bucketIterator.position;
+     var cPos = this.bucketIterator.position;
       do { 
-        Scheduler.Schedules.bucketIterator.dec();
-        if( Scheduler.Schedules.bucketIterator.position == cPos ) {
+        this.bucketIterator.dec();
+        if( this.bucketIterator.position == cPos ) {
           break;
         }
-      } while( !Scheduler.Schedules.bucketIterator.isValid() );
-      Scheduler.Schedules.renderSchedule();
+      } while( !this.bucketIterator.isValid() );
+      this.renderSchedule();
     },
 
     // Goes to the requsted schedule
     "gotoSchedule" : function(pos) {
-      Scheduler.Schedules.bucketIterator.setPosition( pos );
-      Scheduler.Schedules.renderSchedule();
+      this.bucketIterator.setPosition( pos );
+      this.renderSchedule();
     },
 
     "renderSchedule" : function() {
       var scheduleContainer = $("#calendar");
-      if( scheduleContainer.length ) {
-          Session.set( "currentScheduleIndex", Scheduler.Schedules.bucketIterator.position );
-          Session.set( "currentSchedule", Scheduler.Schedules.bucketIterator.getCourseArray() );
-          Session.set( "scheduleCourses", Scheduler.Schedules.bucketIterator.getSchedule() );
+      if( scheduleContainer.length && this.bucketIterator ) {
+          Session.set( "currentScheduleIndex", this.bucketIterator.position );
+          Session.set( "currentSchedule", this.bucketIterator.getCourseArray() );
+          Session.set( "scheduleCourses", this.bucketIterator.getSchedule() );
 
-          var schedule = Scheduler.Schedules.bucketIterator.getSchedule();
+          var schedule = this.bucketIterator.getSchedule();
           var events = Scheduler.Converter.generateEvents( schedule );
 
           $(scheduleContainer).fullCalendar( "destroy" );

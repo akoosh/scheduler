@@ -53,50 +53,7 @@ Template.planLayoutControls.helpers( {
 
 });
 
-Template.courseDisplay.helpers( {
-
-        // Adds the subject_with_number field to the classes objects
-        "augmentedClasses": function() {
-          var result = this.classes,
-              renderOptions = Session.get( "searchViewRenderOptions" ),
-              subjectWithNumber = this.subject_with_number,
-              title = this.title;
-          
-          result = _.map( result, 
-            function(cl) { 
-              return _.extend(cl, { subject_with_number: subjectWithNumber, title:title } ); 
-          });
-
-
-          if( renderOptions ) {
-            var max = 4;
-            if( renderOptions.courses[this.subject_with_number] !== undefined ) {
-              max = renderOptions.courses[this.subject_with_number].max;
-            }
-
-            result = result.slice( 0, max );
-          }
-
-          return result;
-        },
-
-        "moreResults" : function() {
-
-          var result = this.classes.length > 4,
-              renderOptions = Session.get( "searchViewRenderOptions" );
-
-          if( renderOptions ) {
-            var max = 4;
-            if( renderOptions.courses[this.subject_with_number] !== undefined ){
-              max = renderOptions.courses[this.subject_with_number].max;
-            }
-
-            result = this.classes.length > max;
-          }
-
-          return result;
-
-        },
+Template.classDisplay.helpers( {
 
         "geCodes": function() {
           var result = [];
@@ -313,11 +270,7 @@ Template.classButton.rendered = function() {
 }
 
 Template.classDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton' );
-}
-
-Template.courseDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.courseTitle, .info-icon.info-i, .ge-icon, .courseDisplay * .addButton, .generateButton, .loadMoreClasses, .loadMoreResults' );
+  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton, .class-icon' );
 }
 
 Template.planLayout.rendered = function() {
