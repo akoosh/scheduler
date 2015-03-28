@@ -63,19 +63,21 @@
 
 .slotDisplay {
     border: 1px solid @borderGrey;
-    padding: 0px;
+    padding: 1px;
     margin-bottom: 15px;
 }
 
 .slotDisplay.selected {
-    border: 3px solid @ssuBlue;
+    border: 2px solid @ssuBlue;
+    padding: 0px;
 }
 
 .slotDisplay h3 {
-    width: 100%;
-    text-align: left;
-    color: @ssuBlue;
-    font-size: 30px;
+  width: 100%;
+  text-align: left;
+  color: @ssuBlue;
+  font-size: 30px;
+  float : left;
 }
 
 .classButton {
@@ -155,8 +157,25 @@
 }
 
 .classButtonRowTable {
-  width: 100%;
+  margin-bottom : 0px;
+
+  thead {
+
+    th {
+      font-size: 20px;
+    }
+
+    th.classes {
+        text-align: left;
+        padding-left: 40px;
+    }
+
+    th.name {
+        width: 70px;
+    }
+  }
 }
+
 
 .courseUnits {
 }
@@ -211,6 +230,24 @@
   padding-right: 2px;
 }
 
-.logoutButton {
+.slot-collapse, .slot-expand {
   float: right;
+  font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+  padding: 10px;
+  font-size: 20px;
 }
+
+tr.moreClassButton {
+
+  text-align: center;
+
+  span {
+    font-size: 20px;
+  }
+}
+
+.moreClassButtonLabel {
+}
+
+
+

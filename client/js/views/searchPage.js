@@ -96,9 +96,80 @@ Template.slotDisplay.helpers( {
             }
 
             return result;
+        },
+
+        "modifiedClasses" : function() {
+          
+          var result = this.classes || [];
+
+          if( this.isCollapsed ) {
+            result = result.slice( 0, 0 );
+          }
+
+          return result
+        },
+
+        "truncated" : function() {
+          var result = this.isCollapsed;
+
+          return result;
+        },
+
+        "hasMoreClasses" : function() {
+          var result = false;
+
+          if( this.isCollapsed ) {
+            result = this.classes.length > 0 && false;
+          }
+
+          return result;
+        },
+
+        "numberOfClasses" : function() {
+          var result = 0;
+
+          if( this.classes ) {
+            result = this.classes.length;
+          }
+
+          return result;
         }
     }
 );
+
+Template.slotCollapse.events( {
+  "click .slot-collapse, click .slot-expand" : function(e, t) {
+    var slots = Session.get( "slots" );
+    if( slots ) {
+      if( slots[t.data.index] ) {
+        slots[t.data.index].isCollapsed = !slots[t.data.index].isCollapsed;
+        Session.set( "slots", slots );
+      }
+    }
+  },
+});
+
+Template.slotCollapse.helpers( {
+  isCollapsedClass : function() {
+    var result = "slot-collapse";
+
+    if( this.isCollapsed ) {
+      result = "slot-expand";
+    }
+
+    return result;
+  },
+
+  collapsedGlyph : function() {
+    var result = "glyphicon glyphicon-chevron-down";
+
+    if( this.isCollapsed && this.classes.length > 3 ) {
+      result = "glyphicon glyphicon-chevron-right";
+    }
+
+    return result;
+  }
+});
 
 Template.searchPage.events ( {
         "keyup #query": function() {
@@ -140,7 +211,7 @@ Template.searchPage.events ( {
 
             var slots = Session.get("slots") || [];
 
-            var curSlot = slots[slotSelected] || { index: slotSelected, classes: [], selectedClasses: {} };
+            var curSlot = slots[slotSelected] || { index: slotSelected, classes: [], selectedClasses: {}, isCollapsed : false };
 
             var classesToAdd = this.classes !== undefined ? this.classes : [this];
             _.each(classesToAdd, function (cl) {
