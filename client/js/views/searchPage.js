@@ -26,6 +26,17 @@ Template.queryDisplay.helpers( {
           return result;
         },
 
+        hasResults : function() {
+          var result = false,
+              queryResults = Session.get("queryResults");
+
+          if( queryResults && queryResults.length ) {
+            result = true;
+          }
+
+          return result;
+        }
+
     }
 );
 
@@ -146,7 +157,20 @@ Template.slotCollapse.events( {
         Session.set( "slots", slots );
       }
     }
-  },
+  }
+});
+
+Template.slotRemove.events( {
+  "click .slot-remove" : function( e, t) {
+   var slots = Session.get( "slots" );
+    if( slots ) {
+      if( slots[t.data.index] ) {
+        slots[t.data.index].classes = [];
+        slots[t.data.index].selectedClasses = {};
+        Session.set( "slots", slots );
+      }
+    }   
+  }
 });
 
 Template.slotCollapse.helpers( {
@@ -163,7 +187,7 @@ Template.slotCollapse.helpers( {
   collapsedGlyph : function() {
     var result = "glyphicon glyphicon-chevron-down";
 
-    if( this.isCollapsed && this.classes.length > 3 ) {
+    if( this.isCollapsed && this.classes.length > 0 ) {
       result = "glyphicon glyphicon-chevron-right";
     }
 
@@ -213,7 +237,8 @@ Template.searchPage.events ( {
 
             var curSlot = slots[slotSelected] || { index: slotSelected, classes: [], selectedClasses: {}, isCollapsed : false };
 
-            var classesToAdd = this.classes !== undefined ? this.classes : [this];
+
+            var classesToAdd = this.id !== undefined ? [this] : Session.get( "queryResults" );
             _.each(classesToAdd, function (cl) {
                 if (curSlot.selectedClasses[cl.number] === undefined) {
                     curSlot.selectedClasses[cl.number] = true;
@@ -346,6 +371,10 @@ Template.classDisplay.rendered = function() {
 
 Template.planLayout.rendered = function() {
   Scheduler.qTipHelper.updateTips( '#planLayout .info-icon.info-question' );
+}
+
+Template.slotDisplay.rendered = function() {
+  Scheduler.qTipHelper.updateTips( ".slot-remove" );
 }
 
 Template.planLayoutControls.rendered = function() {
