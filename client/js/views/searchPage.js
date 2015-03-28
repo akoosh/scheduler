@@ -99,7 +99,7 @@ Template.slotDisplay.helpers( {
 
         "selectedOrEmpty": function() {
             var result = "";
-            var slotSelected = Session.get("slotSelected");
+            var slotSelected = Session.get("Scheduler.slotSelected");
             var slots = Session.get("slots") || [];
 
             if (slotSelected === this.index || (this.index === undefined && slotSelected === slots.length)) {
@@ -226,11 +226,11 @@ Template.searchPage.events ( {
         },
 
         "click .addButton": function(e) {
-            var slotSelected = Session.get("slotSelected");
+            var slotSelected = Session.get("Scheduler.slotSelected");
             // first time adding class
             if (slotSelected === undefined) {
                 slotSelected = 0;
-                Session.set("slotSelected", slotSelected);
+                Session.set("Scheduler.slotSelected", slotSelected);
             }
 
             var slots = Session.get("slots") || [];
@@ -252,7 +252,7 @@ Template.searchPage.events ( {
         },
 
         "click .removeButton": function() {
-            var slotSelected = Session.get("slotSelected") || 0;
+            var slotSelected = Session.get("Scheduler.slotSelected") || 0;
             var slots = Session.get("slots") || [];
             var curSlot = slots[slotSelected] || { index: slotSelected, classes: [], selectedClasses: {} };
 
@@ -278,11 +278,11 @@ Template.searchPage.events ( {
 
         "click .slotDisplay": function() {
             if (this.index !== undefined) {
-                Session.set("slotSelected", this.index);
+                Session.set("Scheduler.slotSelected", this.index);
             }
             else {
                 var slots = Session.get("slots") || [];
-                Session.set("slotSelected", slots.length);
+                Session.set("Scheduler.slotSelected", slots.length);
             }
         },
 
