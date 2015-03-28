@@ -234,21 +234,21 @@ Template.searchPage.events ( {
             var classesArray = _.map(slots, function(slot) {
                 return _.pluck(slot.classes, 'number');
             });
-
             
-            var scheduleId = UserSchedules.insert( { name : "generated-"+new Date(), createdBy: Meteor.userId(), classes : classesArray } );
-            Session.set( "currentSchedule", scheduleId );
+            Meteor.call("saveSchedule", { name : "generated-"+new Date(), classes : classesArray }, function(err, result) {
+              if( result ) {
+                Session.set( "currentSchedule", result );
 
-              
+                if( classesArray.length ) {
+                  // Setup the available schedules
 
-            if( classesArray.length ) {
-              // Setup the available schedules
-
-              // Transition to the schedule view
-              Scheduler.qTipHelper.clearTips();
-              Scheduler.Schedules.generateSchedules( classesArray );
-              Session.set( "current_page", "schedulePage" );
-            }
+                  // Transition to the schedule view
+                  Scheduler.qTipHelper.clearTips();
+                  Scheduler.Schedules.generateSchedules( classesArray );
+                  Session.set( "current_page", "schedulePage" );
+                }
+              }
+            });
         }
     }
 );

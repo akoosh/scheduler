@@ -19,11 +19,11 @@ Template.favoritePage.events( {
 
     "click .renameFavoriteSchedule" : function(e,t) {
       var newName = prompt( "Please enter new name", this.name );
-      UserFavoriteSchedules.update( { _id : this._id }, { $set : { name : newName } } );
+      Meteor.call( "updateFavoriteName", this._id, newName );
     },
 
     "click .deleteFavoriteSchedule" : function(e,t) {
-      UserFavoriteSchedules.remove( { _id : this._id } );
+      Meteor.call( "deleteFavorite", this._id );
     },
 
     "click .returnToSearch" : function(e,t) {
