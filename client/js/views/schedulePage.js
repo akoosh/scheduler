@@ -42,7 +42,7 @@ Template.schedulePage.events( {
 
   "click #back_to_search" : function(e,template) {
     Scheduler.qTipHelper.clearTips();
-    Session.set( "current_page", "searchPage" );
+    Session.set( "Scheduler.currentPage", "searchPage" );
   },
 });
 

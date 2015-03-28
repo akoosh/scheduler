@@ -12,7 +12,7 @@ Accounts.ui.config({
 Meteor.startup( function() {
 
   var entryPage = "searchPage";
-  Session.set( "current_page", entryPage );
+  Session.set( "Scheduler.currentPage", entryPage );
 
 });
 

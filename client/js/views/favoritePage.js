@@ -14,7 +14,7 @@ Template.favoritePage.events( {
       Scheduler.qTipHelper.clearTips();
       Session.set( "slotSelected", 0 );
       Session.set( "slots", this.slots );
-      Session.set( "current_page", "searchPage" );
+      Session.set( "Scheduler.currentPage", "searchPage" );
     },
 
     "click .renameFavoriteSchedule" : function(e,t) {
@@ -29,7 +29,7 @@ Template.favoritePage.events( {
     "click .returnToSearch" : function(e,t) {
       Scheduler.qTipHelper.clearTips();
       Session.set( "currentFavoriteSchedule", undefined );
-      Session.set( "current_page", "searchPage" );
+      Session.set( "Scheduler.currentPage", "searchPage" );
     },
 
 });

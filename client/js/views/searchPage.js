@@ -313,7 +313,7 @@ Template.searchPage.events ( {
         },
 
         "click .logoutButton": function() {
-          Session.set( "current_page", "ssuGatePage" );
+          Session.set( "Scheduler.currentPage", "ssuGatePage" );
         },
 
         "click .viewFavorites": function() {
@@ -321,7 +321,7 @@ Template.searchPage.events ( {
 
           if( haveFavorites ) {
             Scheduler.qTipHelper.hideTips();
-            Session.set( "current_page", "favoritePage" );
+            Session.set( "Scheduler.currentPage", "favoritePage" );
           }
         },
 
@@ -341,7 +341,7 @@ Template.searchPage.events ( {
                   // Transition to the schedule view
                   Scheduler.qTipHelper.clearTips();
                   Scheduler.Schedules.generateSchedules( classesArray );
-                  Session.set( "current_page", "schedulePage" );
+                  Session.set( "Scheduler.currentPage", "schedulePage" );
                 }
               }
             });
