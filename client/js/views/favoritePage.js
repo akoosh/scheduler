@@ -7,6 +7,7 @@ Template.favoritePage.events( {
     "click .loadFavoriteSchedule" : function(e,t) {
       Session.set( "currentFavoriteSchedule", this._id );
       Scheduler.Schedules.generateSchedules( this.classes );
+      Scheduler.Schedules.renderSchedule();
     },
 
     "click .editFavoriteSchedule" : function(e,t) {

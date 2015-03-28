@@ -52,7 +52,7 @@ Meteor.startup( function() {
 
     "renderSchedule" : function() {
       var scheduleContainer = $("#calendar");
-      if( scheduleContainer.length ) {
+      if( scheduleContainer.length && this.bucketIterator ) {
           Session.set( "currentScheduleIndex", Scheduler.Schedules.bucketIterator.position );
           Session.set( "currentSchedule", Scheduler.Schedules.bucketIterator.getCourseArray() );
           Session.set( "scheduleCourses", Scheduler.Schedules.bucketIterator.getSchedule() );
