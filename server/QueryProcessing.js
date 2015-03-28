@@ -116,6 +116,7 @@ QueryProcessing.QuerySearcher = {
       var result = []
 
       if (!_.isEmpty(query)) {
+        console.log( query  );
         result = ClassesModel.find( query, {sort: { subject_number: 1 } } ).fetch();
       }
 
@@ -224,13 +225,13 @@ QueryProcessing.QueryToken = {
         queryKeyForType: function(type) {
             switch (Number(type)) {
                 case QueryProcessing.QueryToken.Type.PROFESSOR:
-                    return "classes.sections.professors";
+                    return "sections.professors";
                 case QueryProcessing.QueryToken.Type.TITLE:
                     return "title";
                 case QueryProcessing.QueryToken.Type.TIME:
-                    return "classes.sections.times.start_time";
+                    return "sections.times.start_time";
                 case QueryProcessing.QueryToken.Type.DAY:
-                    return "classes.sections.times.days";
+                    return "sections.times.days";
                 case QueryProcessing.QueryToken.Type.GE:
                     return "ge_code";
                 case QueryProcessing.QueryToken.Type.SUBJECT:
