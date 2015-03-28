@@ -41,7 +41,7 @@ Template.planLayoutControls.helpers( {
   }, 
 
   "favoritesButtonEnabled" : function() {
-    var condition = Session.get( "numberOfFavoriteSchedules" ) != 0, 
+    var condition = UserFavoriteSchedules.findOne(), 
         result = "disabled";
   
     if( condition ) {
@@ -260,9 +260,6 @@ Template.searchPage.events ( {
         },
 
         "click .logoutButton": function() {
-          Scheduler.storageObject.clear();
-          Scheduler.userStorage.saveToCollection();
-          Scheduler.userStorage.clear();
           Session.set( "current_page", "ssuGatePage" );
         },
 
@@ -281,16 +278,18 @@ Template.searchPage.events ( {
                 return _.pluck(slot.classes, 'number');
             });
 
-            Scheduler.ScheduleManager.set( classesArray, "plan");
+            
+            var scheduleId = UserSchedules.insert( { name : "generated-"+new Date(), createdBy: Meteor.userId(), classes : classesArray } );
+            Session.set( "currentSchedule", scheduleId );
+
               
 
             if( classesArray.length ) {
               // Setup the available schedules
-              Session.set( "availableSchedules", Scheduler.ScheduleManager.list() );
 
               // Transition to the schedule view
               Scheduler.qTipHelper.clearTips();
-              Session.set( "currentScheduleId", "plan" );
+              Scheduler.Schedules.generateSchedules( classesArray );
               Session.set( "current_page", "schedulePage" );
             }
         }

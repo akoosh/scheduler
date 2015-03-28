@@ -5,7 +5,7 @@
 Template.favoritePage.events( {
 
     "click .loadFavoriteSchedule" : function(e,t) {
-      Session.set( "currentFavoriteSchedule", this );
+      Session.set( "currentFavoriteSchedule", this._id );
       Scheduler.Schedules.generateSchedules( this.classes );
     },
 
@@ -17,21 +17,17 @@ Template.favoritePage.events( {
     },
 
     "click .renameFavoriteSchedule" : function(e,t) {
-      
       var newName = prompt( "Please enter new name", this.name );
-      Scheduler.ScheduleManager.removeFavorite( this.name );
-      Scheduler.ScheduleManager.setFavorite( newName, this.classes, this.slots );
-      Session.set("favoriteSchedules", Scheduler.ScheduleManager.getAllFavorites() );
+      UserFavoriteSchedules.update( { _id : this._id }, { $set : { name : newName } } );
     },
 
     "click .deleteFavoriteSchedule" : function(e,t) {
-      
-      Scheduler.ScheduleManager.removeFavorite( this.name );
-      Session.set("favoriteSchedules", Scheduler.ScheduleManager.getAllFavorites() );
+      UserFavoriteSchedules.remove( { _id : this._id } );
     },
 
     "click .returnToSearch" : function(e,t) {
       Scheduler.qTipHelper.clearTips();
+      Session.set( "currentFavoriteSchedule", undefined );
       Session.set( "current_page", "searchPage" );
     },
 
@@ -39,28 +35,18 @@ Template.favoritePage.events( {
 
 Template.favoritePage.helpers({
   "hasSchedule" : function() {
-    var result = Session.get("currentFavoriteSchedule") != undefined;
+    var result = Session.get( "currentFavoriteSchedule" );
+
     return result;
   }
 });
 
 Template.favoriteLoader.helpers( {
   favoriteSchedules : function() {
-    return Session.get("favoriteSchedules");
+    var results = UserFavoriteSchedules.find({}).fetch();
+    return results;
   }
 });
-
-Template.favoritePage.rendered = function() {
-  Session.set("favoriteSchedules", Scheduler.ScheduleManager.getAllFavorites() );
-}
-
-Template.favoriteScheduleView.rendered = function() {
-  var favoriteSchedule = Session.get( "currentFavoriteSchedule" );
-
-  if( favoriteSchedule ) {
-    Scheduler.Schedules.generateSchedules( favoriteSchedule.classes );
-  }
-}
 
 Template.favoritePageControls.rendered = function() {
   Scheduler.qTipHelper.updateTips( "#favoritePageControls button" );

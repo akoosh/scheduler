@@ -5,18 +5,22 @@ Template.schedulePageControls.helpers( {
   // Returns the number of schedules that have been generated
   "scheduleCount" : function() {
     var result = Session.get( "scheduleCount" );
+
     if( Scheduler.Schedules.bucketIterator == null ) {
       result = 0;
     }
+
     return result;
   },
 
   // Returns the index of the current schedule
   "currentSchedule" : function() {
     var result = Session.get( "currentScheduleIndex" );
+
     if( Scheduler.Schedules.bucketIterator == null ) {
       result = 0;
     }
+
     return result;
   }
 
@@ -33,11 +37,7 @@ Template.schedulePage.events( {
 
   "click #save_schedule" : function(e,template) {
     var name = prompt( "Please enter favorite schedule name", "Favorite Schedule " + new Date() );
-    Scheduler.ScheduleManager.setFavorite( name, Session.get( "currentSchedule" ), Session.get("slots") );
-    Session.set( "favoriteSchedules", Scheduler.ScheduleManager.listFavorites() );
-
-    var numberOfFavoriteSchedules = Scheduler.ScheduleManager.listFavorites().length;
-    Session.set( "numberOfFavoriteSchedules", numberOfFavoriteSchedules );
+    UserFavoriteSchedules.insert( { createdBy : Meteor.userId(), name : name, classes: Session.get( "currentSchedule" ), slots : Session.get("slots") } );
   },
 
   "click #back_to_search" : function(e,template) {
@@ -61,12 +61,7 @@ Template.schedulePageTable.helpers( {
 });
 
 Template.schedulePage.rendered = function() {
-  var scheduleId = Session.get( "currentScheduleId" );
-  if( scheduleId ) {
-    Scheduler.Schedules.generateSchedules( scheduleId );
-  } else {
-    Session.set( "current_page", "searchPage" );
-  }
+  Scheduler.Schedules.generateSchedules();
 }
 
 Template.schedulePageControls.rendered = function() {

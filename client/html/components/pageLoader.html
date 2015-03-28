@@ -2,36 +2,20 @@
 <template name="pageLoader">
   <div id="page_loader">
     <!-- DEV CONTROLS -->
-    {{#if debug}}
-    <div id="page_controls">
-      <table>
-        <tr>
-          <td>
-            <h3>Goto Page</h3>
-            <input id="course_transition" class="btn btn-default" type="button" value="Courses" />
-          </td>
-          <td>
-            <div>
-              <h3>Load Schedule</h3>
-              {{#each schedules}}
-                <input class="setSchedule btn btn-default" type="button" key="{{this.key}}" value="{{this.name}}" />
-              {{/each}}
-            </div>
-          </td>
-          <td>
-            <div>
-              <h3>Favorite Schedules({{numberOfFavorites}} saved)</h3>
-                <input id="favorite_transition" class="btn btn-default" type="button" value="View Favorites" />
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
-    {{/if}}
     <!-- /DEV CONTROLS -->
     <!-- Core page loader -->
-    {{#with loadPage name }}
-      {{> template }}
-    {{/with}}
+
+    {{#if currentUser}}
+      {{#if hasCourseData}}
+        {{#with loadPage name }}
+          {{> template }}
+        {{/with}}
+      {{else}}
+        {{> loginPage}}
+      {{/if}}
+    {{else}}
+      {{> loginPage}}
+    {{/if}}
+
   </div>
 </template>

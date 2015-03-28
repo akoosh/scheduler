@@ -8,15 +8,16 @@ Meteor.startup( function() {
     "bucketIterator"  : null,
 
     // renders a schedule using render packets
-    "generateSchedules" : function( key ) {
-      if( typeof key === "object" && key.length > 0 ) {
-        Scheduler.Schedules.bucketIterator = new BucketIterator( key );
-      } else {
-        Scheduler.Schedules.bucketIterator = new BucketIterator( Scheduler.ScheduleManager.get( key ) );
-      }
+    "generateSchedules" : function(classes) {
+      if( classes !== undefined ) {
+        // Wrap the objects if needed
+        if( typeof classes[0] !== "object" ) {
+          classes = classes.map( function(ele) { return [ ele ]; } );
+        }
 
-      Session.set( "scheduleCount", Scheduler.Schedules.bucketIterator.size );
-      Scheduler.Schedules.renderSchedule();
+        Scheduler.Schedules.bucketIterator = new BucketIterator( classes );
+        Session.set( "scheduleCount", Scheduler.Schedules.bucketIterator.size );
+      }
     },
 
     // Goes to the next available schedule
@@ -49,24 +50,6 @@ Meteor.startup( function() {
       Scheduler.Schedules.renderSchedule();
     },
 
-  /* 
-    // Take the current schedule and save it into the storage object
-    "saveCurrentScheduleToFavorites" : function() {
-      if( Scheduler.Schedules.bucketIterator ) {
-        Scheduler.ScheduleManager.saveFavorite( Session.get( "currentSchedule" ) );
-        Session.set( "favoriteSchedules", Scheduler.ScheduleManager.listFavorites() );
-      }
-    },
-
-    // Take the current schedule and remove it from the storage object
-    "removeCurrentScheduleToFavorites" : function() {
-      if( Scheduler.Schedules.bucketIterator ) {
-        Scheduler.ScheduleManager.removeFavorite( Session.get( "currentSchedule"  ) );
-        Session.set( "favoriteSchedules", Scheduler.ScheduleManager.listFavorites() );
-      }
-    },
-
-  */
     "renderSchedule" : function() {
       var scheduleContainer = $("#calendar");
       if( scheduleContainer.length ) {
