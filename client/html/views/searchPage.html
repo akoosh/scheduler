@@ -21,7 +21,6 @@
 </template>
 
 <template name="planLayout">
-  <!-- <div class="info-icon info-question plan-info" title="Slots allow you to build a schedule by requiring a class from each slot. For example if you have 3 slots this will generate schedules with 3 classes where 1 class from each slot is selected." >?</div> -->
   {{#each slots}}
       {{> slotDisplay }}
   {{/each}}
@@ -36,15 +35,36 @@
 
 <template name="slotDisplay">
   <div class="slotDisplay {{selectedOrEmpty}}">
-      <h3 class="slotInfo" >Slot {{slotNumber}}</h3>
       <table class="table table-striped classButtonRowTable">
+        <thead>
+          <th class="name"> Slot {{slotNumber}} </th>
+          <th class="classes"> {{numberOfClasses}} classes</th>
+          <th> {{> slotCollapse}} </th>
+        </thead>
         <tbody>
-          {{#each classes}}
-              {{> classButton }}
+          {{#each modifiedClasses}}
+              {{> classButton}}
           {{/each}}
+          {{#if truncated}}
+            {{#if hasMoreClasses}}
+              {{> moreClassButton}}
+            {{/if}}
+          {{/if}}
         </tbody>
       </table>
   </div>
+</template>
+
+<template name="slotCollapse">
+  <div class="slotcollapse">
+    <span class="{{isCollapsedClass}} {{collapsedGlyph}}"></span>
+  </div>
+</template>
+
+<template name="moreClassButton">
+  <tr class="moreClassButton">
+    <td colspan=3><span>...</span></td>
+  </tr>
 </template>
 
 <template name="classButton">
