@@ -4,7 +4,7 @@
 Template.queryDisplay.helpers( {
         "queryResults": function() {
             var queryResults = Session.get("queryResults") || [],
-                renderOptions = Session.get("searchViewRenderOptions");
+                renderOptions = Session.get("Scheduler.searchRenderOptions");
 
             if( renderOptions ) {
               queryResults = queryResults.slice(0,renderOptions.max);
@@ -16,7 +16,7 @@ Template.queryDisplay.helpers( {
         // Returns true if the current searchMinValue is lower than the total number of results
         moreResults : function() {
           var queryResults = Session.get("queryResults"),
-              renderOptions = Session.get("searchViewRenderOptions"),
+              renderOptions = Session.get("Scheduler.searchRenderOptions"),
               result = false;
 
           if( renderOptions && queryResults ) {
@@ -210,13 +210,13 @@ Template.searchPage.events ( {
                       $(".searchLayout").animate({ scrollTop: 0 }, "fast");
                       Session.set( "queryResults", results );
 
-                      var renderOptions = Session.get( "searchViewRenderOptions" );
+                      var renderOptions = Session.get( "Scheduler.searchRenderOptions" );
 
                       // Reset the search view render options
                       if( renderOptions ) {
                         renderOptions.max = 10;
                         renderOptions.courses = {};
-                        Session.set( "searchViewRenderOptions", renderOptions );
+                        Session.set( "Scheduler.searchRenderOptions", renderOptions );
                       }
                     }
                 });
@@ -287,18 +287,18 @@ Template.searchPage.events ( {
         },
 
         "click .loadMoreResults": function() {
-          var renderOptions = Session.get("searchViewRenderOptions");
+          var renderOptions = Session.get("Scheduler.searchRenderOptions");
           if( renderOptions ) {
             renderOptions.max += 10;
 
             Scheduler.qTipHelper.clearTips();
-            Session.set("searchViewRenderOptions", renderOptions );
+            Session.set("Scheduler.searchRenderOptions", renderOptions );
           }
         },
 
         "click .loadMoreClasses": function(e, template) {
           var courseId = $(e.target).attr("course"),
-              renderOptions = Session.get("searchViewRenderOptions");
+              renderOptions = Session.get("Scheduler.searchRenderOptions");
 
           if( renderOptions && courseId ) {
             if( renderOptions.courses[courseId] === undefined ) {
@@ -308,7 +308,7 @@ Template.searchPage.events ( {
             renderOptions.courses[courseId].max += 4;
 
             Scheduler.qTipHelper.clearTips();
-            Session.set("searchViewRenderOptions", renderOptions );
+            Session.set("Scheduler.searchRenderOptions", renderOptions );
           }
         },
 
@@ -354,11 +354,11 @@ Template.searchPage.rendered = function() {
   $( "#searchPageContainer" ).css( "height", containerHeight );
   $( ".searchLayout, .planLayout" ).css( "height", containerHeight-110 );
   // Setup the default view render options
-  var searchViewRenderOptions = {
+  var Scheduler.searchRenderOptions = {
     max : 10,
     courses: { }
   };
-  Session.set( "searchViewRenderOptions", searchViewRenderOptions );
+  Session.set( "Scheduler.searchRenderOptions", searchViewRenderOptions );
 }
 
 Template.classButton.rendered = function() {
