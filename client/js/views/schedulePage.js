@@ -50,7 +50,7 @@ Template.schedulePageTable.helpers( {
 
   // Returns an array with the currently displayed courses in raw form
   "formattedRow" : function() {
-    var courses = Session.get( "scheduleCourses" );
+    var courses = Session.get( "Scheduler.scheduleCourses" );
 
     // Get the rows for the current courses
     var rows = Scheduler.Converter.coursesToRows( courses );

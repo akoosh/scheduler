@@ -55,7 +55,7 @@ Meteor.startup( function() {
       if( scheduleContainer.length && this.bucketIterator ) {
           Session.set( "Scheduler.currentScheduleIndex", this.bucketIterator.position );
           Session.set( "Scheduler.currentScheduleId", this.bucketIterator.getCourseArray() );
-          Session.set( "scheduleCourses", this.bucketIterator.getSchedule() );
+          Session.set( "Scheduler.scheduleCourses", this.bucketIterator.getSchedule() );
 
           var schedule = this.bucketIterator.getSchedule();
           var events = Scheduler.Converter.generateEvents( schedule );
