@@ -35,9 +35,6 @@ Template.schedulePage.events( {
     Scheduler.Schedules.prevSchedule(); 
   },
 
-  "click .exportSchedule" : function(e,template) {
-  },
-
   "click .getAddCodes" : function(e,template) {
   },
 
@@ -52,7 +49,11 @@ Template.schedulePage.events( {
 
   "click .gotoFavoriteView" : function(e,template) {
     Scheduler.PageLoader.loadPage( "favoritePage" );
-  }
+  },
+
+  "click .exportSchedule" : function(e,template) {
+    alert( Scheduler.Schedules.getAddCodes() );
+  },
 });
 
 Template.schedulePageTable.helpers( {
