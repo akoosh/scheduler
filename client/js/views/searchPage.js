@@ -341,16 +341,11 @@ Template.searchPage.events ( {
           }
         },
 
-        "click .logoutButton": function() {
-          Session.set( "Scheduler.currentPage", "ssuGatePage" );
-        },
-
         "click .viewFavorites": function() {
           var haveFavorites = true;
 
           if( haveFavorites ) {
-            Scheduler.qTipHelper.hideTips();
-            Session.set( "Scheduler.currentPage", "favoritePage" );
+            Scheduler.PageLoader.loadPage( "favoritePage" );
           }
         },
 
@@ -373,9 +368,8 @@ Template.searchPage.events ( {
                   // Setup the available schedules
 
                   // Transition to the schedule view
-                  Scheduler.qTipHelper.clearTips();
                   Scheduler.Schedules.generateSchedules( classesArray );
-                  Session.set( "Scheduler.currentPage", "schedulePage" );
+                  Scheduler.PageLoader.loadPage( "schedulePage" );
                 }
               }
             });

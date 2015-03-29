@@ -41,11 +41,11 @@ Template.schedulePage.events( {
   },
 
   "click .scheduleButton" : function(e,template) {
-    Scheduler.PageLoader.gotoPage( "searchPage" );
+    Scheduler.PageLoader.loadPage( "searchPage" );
   },
 
   "click .gotoFavoriteView" : function(e,template) {
-    Scheduler.PageLoader.gotoPage( "favoritePage" );
+    Scheduler.PageLoader.loadPage( "favoritePage" );
   }
 });
 

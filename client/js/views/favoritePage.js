@@ -11,10 +11,9 @@ Template.favoritePage.events( {
     },
 
     "click .editFavoriteSchedule" : function(e,t) {
-      Scheduler.qTipHelper.clearTips();
       Session.set( "Scheduler.slotSelected", 0 );
       Session.set( "Scheduler.slots", this.slots );
-      Session.set( "Scheduler.currentPage", "searchPage" );
+      Scheduler.PageLoader.loadPage( "searchPage" );
     },
 
     "click .renameFavoriteSchedule" : function(e,t) {
@@ -27,9 +26,8 @@ Template.favoritePage.events( {
     },
 
     "click .returnToSearch" : function(e,t) {
-      Scheduler.qTipHelper.clearTips();
       Session.set( "Scheduler.currentFavoriteScheduleId", undefined );
-      Session.set( "Scheduler.currentPage", "searchPage" );
+      Scheduler.PageLoader.loadPage( "searchPage" );
     },
 
 });
