@@ -296,6 +296,13 @@ QueryProcessing.QueryToken = {
 
             var mappedValues = _.map(values, valueMapFunction);
 
+            // TODO
+            // Hack for now to let the DIVISION type be processed correctly. The query processing is not setup
+            // to allow dynamic searches and needs to be expanded.
+            if( type == QueryProcessing.QueryToken.Type.DIVISION && mappedValues.length > 1 ) {
+              return _.first(mappedValues);
+            }
+
             return mappedValues.length == 1 ? _.first(mappedValues) : { $in: mappedValues };
         },
 
