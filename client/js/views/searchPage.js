@@ -98,8 +98,8 @@ Template.slotDisplay.helpers( {
             result = this.name;
           }
 
-          if( result.length > 10 ) {
-            result = result.substr(0,10) + "...";
+          if( result.length > 8 ) {
+            result = result.substr(0,8) + "...";
           }
 
           return result;
@@ -385,7 +385,7 @@ Template.classButton.rendered = function() {
 }
 
 Template.classDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton, .class-icon' );
+  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton, .class-icon, .addButton, .loadMoreResults' );
 }
 
 Template.planLayout.rendered = function() {
@@ -393,15 +393,11 @@ Template.planLayout.rendered = function() {
 }
 
 Template.slotDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( ".slot-remove, .slot-add" );
+  Scheduler.qTipHelper.updateTips( ".slot-remove, .slot-add, th.name" );
 }
 
 Template.planLayoutControls.rendered = function() {
   Scheduler.qTipHelper.updateTips( '.generateButton, .viewFavorites' );
-}
-
-Template.queryDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.addButton' );
 }
 
 
