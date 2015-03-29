@@ -1,10 +1,11 @@
 {
-  "CourseData"    : "campus_2015_spring.csv",
-  "SupCourseData" : "campus_2015_spring_sup.csv",
-  "StudentData"   : "students.csv",
+  "CourseData"      : "campus_2015_spring.csv",
+  "SupCourseData"   : "campus_2015_spring_sup.csv",
+  "StudentData"     : "students.csv",
 
-  "MeteorAddress" : "localhost",
-  "MeteorPort"    : "3001",
-  "MeteorDB"      : "meteor"
+  "MeteorAddress"   : "localhost",
+  "MeteorPort"      : "3000",
+  "MeteorMongoPort" : "3001",
+  "MeteorDB"        : "meteor"
 
 }
