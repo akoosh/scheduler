@@ -6,10 +6,8 @@
 standard-app-packages
 jquery
 less
-d3
 underscore
 iron:router
-sanjo:jasmine
 
 mizzao:bootstrap-3
 jparker:crypto-md5
