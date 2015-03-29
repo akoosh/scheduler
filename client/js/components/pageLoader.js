@@ -3,6 +3,11 @@
 // Arthur Wuterich
 
 Meteor.startup( function() {
+
+  // Entry point for application
+  Session.set( "Scheduler.currentPage", entryPage );
+
+
   Scheduler.PageLoader = {
     loadPage : function( page ) {
       Scheduler.qTipHelper.clearTips();

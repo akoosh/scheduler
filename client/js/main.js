@@ -11,8 +11,6 @@ Accounts.ui.config({
 // Main application startup
 Meteor.startup( function() {
 
-  var entryPage = "searchPage";
-  Session.set( "Scheduler.currentPage", entryPage );
 
 });
 
