@@ -4,10 +4,6 @@
 
 Meteor.startup( function() {
 
-  // Entry point for application
-  Session.set( "Scheduler.currentPage", entryPage );
-
-
   Scheduler.PageLoader = {
     loadPage : function( page ) {
       Scheduler.qTipHelper.clearTips();
@@ -18,8 +14,10 @@ Meteor.startup( function() {
 
 Template.pageLoader.helpers( {
   // Attempts to load the template provided by its name
-  "loadPage" : function(name) {
+  loadPage : function() {
     var page = Session.get("Scheduler.currentPage");
+
+    console.log( page );
 
     return { template: Template[page] };
   },
