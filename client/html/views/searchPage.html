@@ -1,27 +1,22 @@
 <!-- Course search page -->
 <template name="searchPage">
   <div id="searchPageContainer">
-    <div class="searchTopBar">
-      {{> ssuLogo }}
-      {{> loginButtons}}
-    </div>
-    <div class="row header">
-      <div class="col-md-8 searchResultsHeader"> {{> searchBar }} </div>
-      <div class="col-md-4 planLayoutHeader visible-md visible-lg"> {{> planLayoutControls}} </div>
-    </div>
-    <div class="row">
-      <div class="col-md-8 searchResults"> {{> searchResults }} </div>
-      <div class="col-md-4 planLayout visible-md visible-lg"> {{> planLayout }} </div>
-    </div>
+    {{> topBar}}
+    {{> searchPageHeader}}
+    {{> searchPageBody}}
   </div>
 </template>
 
-<template name="ssuLogo">
-    <img id="logo" src="/image/ssu_logo.jpg">
+<template name="searchPageHeader">
+  <div class="row header">
+    <div class="col-md-8 searchResultsHeader"> {{> searchBar }} </div>
+    <div class="col-md-4 planLayoutHeader visible-md visible-lg"> {{> planLayoutControls}} </div>
+  </div>
 </template>
 
-<template name="searchTopBarControls">
-  <button class="btn btn-default btn-xs logoutButton">Logout</button>
+<template name="searchPageBody">
+  <div class="row">
+    <div class="col-md-8 searchResults"> {{> searchResults }} </div>
+    <div class="col-md-4 planLayout visible-md visible-lg"> {{> planLayout }} </div>
+  </div>
 </template>
-
-

@@ -1,0 +1,88 @@
+@lightGrey: #f4f4f4;
+@borderGrey: darken(@lightGrey, 20%);
+@ssuBlue: #0069AA;
+@ssuBlueBorder: lighten(@ssuBlue, 10%);
+
+#planLayout {
+    margin-top: 30px;
+}
+
+.plan-info {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.generateButton, .viewFavorites {
+  display: inline-block;
+}
+
+.planLayout, .planLayoutHeader {
+  position:relative;
+  right:10px;
+}
+
+.ge-icon {
+  padding: 1px;
+  border-radius: 5px;
+  margin-left: 6px;
+  font-weight: bold;
+  top: 4px;
+}
+
+.slotDisplay {
+    border: 1px solid @borderGrey;
+    padding: 1px;
+    margin-bottom: 15px;
+}
+
+.slotDisplay.selected {
+    border: 2px solid @ssuBlue;
+    padding: 0px;
+}
+
+.slotDisplay h3 {
+  width: 100%;
+  text-align: left;
+  color: @ssuBlue;
+  font-size: 30px;
+  float : left;
+}
+
+.classButton {
+  display: inline-block;
+  width: 100%;
+  padding: 4px 0px;
+
+  span {
+    margin-left: 3px;
+  }
+}
+
+.removeButton {
+  font-size: 20px;
+  vertical-align: bottom;
+  float: right;
+  position: relative;
+  right: 4px;
+}
+
+.class-icon {
+  border: 2px solid;
+  position: relative;
+  top: 5px;
+  font-size: 12px;
+  float: right;
+  margin-left: 5px;
+}
+
+.slot-collapse, .slot-expand, .slot-remove, .slot-add  {
+  float: right;
+  font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+  padding: 10px;
+  font-size: 20px;
+}
+
+.slot-controls {
+  width: 100px;
+}

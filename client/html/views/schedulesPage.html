@@ -1,12 +1,10 @@
 <!-- Template for displaying schedules -->
 <template name="schedulePage">
-  <div id="schedule-wrapper">
-    {{> schedulePageTable}}
-    <hr />
-    {{> schedulePageControls}}
-    {{> schedule}}
-    {{> schedulePageInteractionControls}}
-  </div>
+  {{> topBar}}
+  {{> schedulePageTable}}
+  {{> schedulePageControls}}
+  {{> schedule}}
+  {{> schedulePageInteractionControls}}
 </template>
 
 <template name="schedulePageTable">
