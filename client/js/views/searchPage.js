@@ -95,7 +95,11 @@ Template.slotDisplay.helpers( {
           var result = "New Slot";
           
           if( this.name && this.index != undefined ) {
-            result = this.name ;
+            result = this.name;
+          }
+
+          if( result.length > 10 ) {
+            result = result.substr(0,10) + "...";
           }
 
           return result;
@@ -394,6 +398,10 @@ Template.slotDisplay.rendered = function() {
 
 Template.planLayoutControls.rendered = function() {
   Scheduler.qTipHelper.updateTips( '.generateButton, .viewFavorites' );
+}
+
+Template.queryDisplay.rendered = function() {
+  Scheduler.qTipHelper.updateTips( '.addButton' );
 }
 
 
