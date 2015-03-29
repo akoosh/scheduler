@@ -6,7 +6,7 @@ QueryProcessing = {
 
     // Main interface for accessing the query processing. This is used withing the application
     // through Meteor's call() syntax.
-    coursesForString: function(str) {
+    classesForString: function(str) {
         var tokens = this.QueryTokenizer.tokensForString(str);
         var query = this.QueryBuilder.queryForTokens(tokens);
         var result = this.QuerySearcher.resultsForQuery(query);
@@ -116,7 +116,7 @@ QueryProcessing.QuerySearcher = {
       var result = []
 
       if (!_.isEmpty(query)) {
-        result = ClassesModel.find( query, {sort: { subject_number: 1 } } ).fetch();
+        result = ClassesModel.find( query, { sort: { subject_number: 1 , subject: 1 } } ).fetch();
       }
 
       return result;
@@ -136,7 +136,8 @@ QueryProcessing.QueryToken = {
         DAY:        5,
         GE:         6,
         NUMBER:     7,
-        UNITS:      8
+        UNITS:      8,
+        DIVISION:   9
     },
 
 
@@ -198,7 +199,7 @@ QueryProcessing.QueryToken = {
         },
 
         isDivision: function(str) {
-          return /^[L|U]D$/i.test( str )
+          return /^[L|U]D$/i.test( str ) || /^lower$/i.test( str ) || /^upper$/i.test( str );
         },
 
         isSubject: function(str) {
@@ -346,7 +347,7 @@ QueryProcessing.QueryToken = {
         divisionValueMap: function(str) {
             // If the string is lower division then search for classes less than 300
             // else search for classes 300 or greater
-            return /LD/i.test(str) ? { "$lt" : 300 } : { "$gte" : 300 };
+            return ( /LD/i.test(str) || /lower/i.test(str) ) ? { "$lt" : 300 } : { "$gte" : 300 };
         },
     }
 

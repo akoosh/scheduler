@@ -2,7 +2,7 @@
 Meteor.startup( function() {
   Meteor.methods({
       coursesForQuery: function(query) {
-          return QueryProcessing.coursesForString(query);
+          return QueryProcessing.classesForString(query);
       },
 
       saveFavorite : function( favorite ) {
