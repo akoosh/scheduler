@@ -389,6 +389,7 @@ Template.searchPage.rendered = function() {
   };
 
   Session.set( "Scheduler.searchRenderOptions", searchRenderOptions );
+  Session.set( "Scheduler.searchResults", [] );
 }
 
 Template.classButton.rendered = function() {

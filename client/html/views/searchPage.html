@@ -119,43 +119,44 @@
 </template>
 
 <template name="classDisplay">
-  <table class="table">
-    <thead class="classTableHeader">
-      <th class="courseTitle">{{title}}</th>
-      <th>{{subject_with_number}}</th>
-      <th class="courseUnits">{{units}} units</th>
-      <th>    
-        <div class="courseInfo">
-          <span title="{{title}}" description="{{description}}" class="class-icon info-icon info-i">i</span>
-          {{#each geCodes}}
-            <span class="class-icon ge-icon" title="This class fulfills the general education category {{this}}">GE {{this}}</span>
-          {{/each}}
-        </div>
-      </th>
-    </thead>
-    <tbody>
-      <td> Section {{number}} </td>
-      <td colspan=2>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Times</th>
-              <th>Location</th>
-              <th>Professor</th>
-              <th><span class="capacity-header">Capacity</span></th>
-            </tr>
-          </thead>
-          <tbody>
-          {{#each sections}}
-            {{> sectionDisplay }}
-          {{/each}}
-          </tbody>
-        </table>
-      </td>
-      <td> <button class="addButton btn btn-primary visible-md visible-lg" title="Add this class to the current slot">Add</button> </td>
-    </tbody>
-  </table>
-
+  <div class="classRow">
+    <table class="table">
+      <thead class="classTableHeader">
+        <th class="courseTitle">{{title}}</th>
+        <th>{{subject_with_number}}</th>
+        <th class="courseUnits">{{units}} units</th>
+        <th>    
+          <div class="courseInfo">
+            <span title="{{title}}" description="{{description}}" class="class-icon info-icon info-i">i</span>
+            {{#each geCodes}}
+              <span class="class-icon ge-icon" title="This class fulfills the general education category {{this}}">GE {{this}}</span>
+            {{/each}}
+          </div>
+        </th>
+      </thead>
+      <tbody>
+        <td> Section {{number}} </td>
+        <td colspan=2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Times</th>
+                <th>Location</th>
+                <th>Professor</th>
+                <th><span class="capacity-header">Capacity</span></th>
+              </tr>
+            </thead>
+            <tbody>
+            {{#each sections}}
+              {{> sectionDisplay }}
+            {{/each}}
+            </tbody>
+          </table>
+        </td>
+        <td> <button class="addButton btn btn-primary visible-md visible-lg" title="Add this class to the current slot">Add</button> </td>
+      </tbody>
+    </table>
+ </div> 
 </template>
 
 <template name="sectionDisplay">
