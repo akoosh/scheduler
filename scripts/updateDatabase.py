@@ -8,6 +8,7 @@ from coursesToClassesJson import main as cTCJ
 def main():
   with open( "config.json", "r" ) as config:
     cfg = json.load( config )
+    writeTime = str( int(time.time()) )
 
     if "CourseData" in cfg and "SupCourseData" in cfg:
       if os.path.isfile( cfg["CourseData"] ) and os.path.isfile( cfg["SupCourseData"] ):
@@ -20,11 +21,11 @@ def main():
         print "Done."
 
         print "Importing course data into mongo..."
-        os.system( "mongoimport -h %s:%s --drop --db %s --collection Courses --type json --jsonArray --file courses.json && mv courses.json bkup/courses.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorPort"], cfg["MeteorDB"], str(time.time()) ) )
+        os.system( "mongoimport -h %s:%s --drop --db %s --collection Courses --type json --jsonArray --file courses.json && mv courses.json bkup/courses.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorPort"], cfg["MeteorDB"], writeTime ) )
         print "Done."
 
         print "Importing class data into mongo..."
-        os.system( "mongoimport -h %s:%s --drop --db %s --collection Classes --type json --jsonArray --file classes.json && mv classes.json bkup/classes.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorPort"], cfg["MeteorDB"], str(time.time()) ) )
+        os.system( "mongoimport -h %s:%s --drop --db %s --collection Classes --type json --jsonArray --file classes.json && mv classes.json bkup/classes.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorPort"], cfg["MeteorDB"], writeTime ) )
         print "Done."
 
 
@@ -35,7 +36,7 @@ def main():
         print "Done."
 
         print "Importing student data into mongo..."
-        os.system( "mongoimport -h %s:%s --drop --db %s --collection Students --type json --jsonArray --file students.json && mv students.json bkup/students.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorPort"], cfg["MeteorDB"], int(time.time()) ) )
+        os.system( "mongoimport -h %s:%s --drop --db %s --collection Students --type json --jsonArray --file students.json && mv students.json bkup/students.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorPort"], cfg["MeteorDB"], writeTime ) )
         print "Done."
     
 
