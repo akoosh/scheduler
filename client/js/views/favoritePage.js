@@ -47,9 +47,9 @@ Template.favoriteLoader.helpers( {
 });
 
 Template.favoritePageControls.rendered = function() {
-  Scheduler.qTipHelper.updateTips( "#favoritePageControls button" );
+  Scheduler.qTip.updateTips( "#favoritePageControls button" );
 }
 
 Template.favoriteSchedule.rendered = function() {
-  Scheduler.qTipHelper.updateTips( ".favoriteScheduleEntry button" );
+  Scheduler.qTip.updateTips( ".favoriteScheduleEntry button" );
 }

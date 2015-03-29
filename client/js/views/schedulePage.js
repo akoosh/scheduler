@@ -85,19 +85,19 @@ Template.schedulePage.rendered = function() {
 }
 
 Template.schedulePageTable.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.addCodes' );
+  Scheduler.qTip.updateTips( '.addCodes' );
 }
 
 Template.schedulePageControls.rendered = function() {
-  Scheduler.qTipHelper.updateTips( 'button' );
+  Scheduler.qTip.updateTips( 'button' );
 }
 
 Template.schedulePageInteractionControls.rendered = function() {
-  Scheduler.qTipHelper.updateTips( 'button' );
+  Scheduler.qTip.updateTips( 'button' );
 }
 
 Template.sectionRow.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.sectionRow' );
+  Scheduler.qTip.updateTips( '.sectionRow' );
 }
 
 

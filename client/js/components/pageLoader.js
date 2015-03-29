@@ -7,7 +7,7 @@ Meteor.startup( function() {
   Scheduler.PageLoader = {
     loadPage : function( page ) {
 
-      Scheduler.qTipHelper.clearTips();
+      Scheduler.qTip.clearTips();
       Session.set( "Scheduler.currentPage", page );
 
     }

@@ -1,8 +1,8 @@
-// qTipHelper: Helper methods for interacting with the qtip plugin
+// qTip: Helper methods for interacting with the qtip plugin
 
 Meteor.startup( function() {
 
-  Scheduler.qTipHelper = {
+  Scheduler.qTip = {
     // qTip styles for application
     styles: {
       defaultStyle : {
@@ -20,7 +20,7 @@ Meteor.startup( function() {
       this.updateHandles[selector] = setTimeout( function() {
 
       if( style === undefined ) {
-        style = Scheduler.qTipHelper.styles.defaultStyle;
+        style = Scheduler.qTip.styles.defaultStyle;
       }
 
       $(selector).each( function(index, obj) {

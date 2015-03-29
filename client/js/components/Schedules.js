@@ -79,7 +79,7 @@ Meteor.startup( function() {
                     text: event.description,
                     title: event.title + " " + event.code
                   },
-                  style : Scheduler.qTipHelper.styles.defaultStyle,
+                  style : Scheduler.qTip.styles.defaultStyle,
                   show : {
                     solo : true
                   },

@@ -309,7 +309,7 @@ Template.searchPage.events ( {
                 slot.index = index;
             });
 
-            Scheduler.qTipHelper.hideTips();
+            Scheduler.qTip.hideTips();
             Session.set("Scheduler.slots", slots);
         },
 
@@ -328,7 +328,7 @@ Template.searchPage.events ( {
           if( renderOptions ) {
             renderOptions.max += 10;
 
-            Scheduler.qTipHelper.clearTips();
+            Scheduler.qTip.clearTips();
             Session.set("Scheduler.searchRenderOptions", renderOptions );
           }
         },
@@ -344,7 +344,7 @@ Template.searchPage.events ( {
 
             renderOptions.courses[courseId].max += 4;
 
-            Scheduler.qTipHelper.clearTips();
+            Scheduler.qTip.clearTips();
             Session.set("Scheduler.searchRenderOptions", renderOptions );
           }
         },
@@ -402,23 +402,23 @@ Template.searchPage.rendered = function() {
 }
 
 Template.classButton.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.removeButton' );
+  Scheduler.qTip.updateTips( '.removeButton' );
 }
 
 Template.classDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton, .class-icon, .addButton, .loadMoreResults' );
+  Scheduler.qTip.updateTips( '.classDisplay * .addButton, .class-icon, .addButton, .loadMoreResults' );
 }
 
 Template.planLayout.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '#planLayout .info-icon.info-question' );
+  Scheduler.qTip.updateTips( '#planLayout .info-icon.info-question' );
 }
 
 Template.slotDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( ".slot-remove, .slot-add, th.name" );
+  Scheduler.qTip.updateTips( ".slot-remove, .slot-add, th.name" );
 }
 
 Template.planLayoutControls.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.generateButton, .viewFavorites' );
+  Scheduler.qTip.updateTips( '.generateButton, .viewFavorites' );
 }
 
 
