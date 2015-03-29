@@ -2,6 +2,15 @@
 // PageLoader template allows us to change and template without a page refresh
 // Arthur Wuterich
 
+Meteor.startup( function() {
+  Scheduler.PageLoader = {
+    gotoPage : function( page ) {
+      Scheduler.qTipHelper.clearTips();
+      Session.set( "Scheduler.currentPage", page );
+    }
+  }
+});
+
 Template.pageLoader.helpers( {
   // Attempts to load the template provided by its name
   "loadPage" : function(name) {

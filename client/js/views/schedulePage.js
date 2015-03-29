@@ -35,15 +35,18 @@ Template.schedulePage.events( {
     Scheduler.Schedules.prevSchedule(); 
   },
 
-  "click #save_schedule" : function(e,template) {
+  "click .saveFavorite" : function(e,template) {
     var name = prompt( "Please enter favorite schedule name", "Favorite Schedule " + new Date() );
     Meteor.call( "saveFavorite", { name : name, classes: Session.get( "Scheduler.currentScheduleId" ), slots : Session.get("Scheduler.slots") } );
   },
 
-  "click #back_to_search" : function(e,template) {
-    Scheduler.qTipHelper.clearTips();
-    Session.set( "Scheduler.currentPage", "searchPage" );
+  "click .scheduleButton" : function(e,template) {
+    Scheduler.PageLoader.gotoPage( "searchPage" );
   },
+
+  "click .gotoFavoriteView" : function(e,template) {
+    Scheduler.PageLoader.gotoPage( "favoritePage" );
+  }
 });
 
 Template.schedulePageTable.helpers( {
