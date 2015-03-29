@@ -1,6 +1,11 @@
 ssu_scheduler
 =============
 
+App URL:
+
+http://ssuscheduler.meteor.com/
+
+
 Installation(ubuntu)
 ============
 
