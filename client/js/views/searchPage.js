@@ -251,16 +251,19 @@ Template.searchPage.events ( {
  
         },
 
-        "click .addButton": function(e) {
+        "click .addButton": function(e, t) {
             var slotSelected = Session.get("Scheduler.slotSelected");
+
             // first time adding class
             if (slotSelected === undefined) {
                 slotSelected = 0;
-                Session.set("Scheduler.slotSelected", slotSelected);
+                Session.set("Scheduler.slotSelected", slotSelected );
             }
 
             var slots = Session.get("Scheduler.slots") || [],
                 query = $("#query").val();
+
+            var next = slotSelected == slots.length;
 
             var curSlot = slots[slotSelected] || { index: slotSelected, name: query, classes: [], selectedClasses: {}, isCollapsed : false };
 
@@ -276,6 +279,11 @@ Template.searchPage.events ( {
             slots[slotSelected] = curSlot;
 
             Session.set("Scheduler.slots", slots);
+
+            if( next ) {
+              Session.set("Scheduler.slotSelected", slotSelected+1 );
+            }
+
         },
 
         "click .removeButton": function() {
@@ -305,11 +313,11 @@ Template.searchPage.events ( {
             Session.set("Scheduler.slots", slots);
         },
 
-        "click .slotDisplay": function() {
+        "click .slotDisplay": function( e, t ) {
             if (this.index !== undefined) {
                 Session.set("Scheduler.slotSelected", this.index);
-            }
-            else {
+                Session.set("Scheduler.slotClicked", this.index);
+            } else {
                 var slots = Session.get("Scheduler.slots") || [];
                 Session.set("Scheduler.slotSelected", slots.length);
             }
@@ -351,6 +359,7 @@ Template.searchPage.events ( {
 
         "click .clearAllSlots": function() {
           Session.set( "Scheduler.slotSelected", 0 );
+          Session.set("Scheduler.slotClicked", -1 );
           Session.set( "Scheduler.slots", [] );
         },
 

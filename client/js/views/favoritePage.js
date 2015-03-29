@@ -26,7 +26,6 @@ Template.favoritePage.events( {
     },
 
     "click .returnToSearch" : function(e,t) {
-      Session.set( "Scheduler.currentFavoriteScheduleId", undefined );
       Scheduler.PageLoader.loadPage( "searchPage" );
     },
 
