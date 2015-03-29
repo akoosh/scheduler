@@ -66,7 +66,7 @@ Meteor.startup( function() {
             titleFormat   : "",
             header        : false,
             allDaySlot    : false,
-            height        : 400,
+            height        : 600,
             columnFormat  : "dddd",
             events : events,
             eventRender: function(event, element) {
