@@ -64,32 +64,11 @@ Meteor.startup( function() {
           var schedule = this.bucketIterator.getSchedule();
           var events = Scheduler.Converter.generateEvents( schedule );
 
-          $(scheduleContainer).fullCalendar( "destroy" );
-          $(scheduleContainer).fullCalendar({
-            defaultView   : "agendaWeek",
-            titleFormat   : "",
-            header        : false,
-            allDaySlot    : false,
-            height        : 600,
-            columnFormat  : "dddd",
-            events : events,
-            eventRender: function(event, element) {
-                element.qtip({
-                  content: {
-                    text: event.description,
-                    title: event.title + " " + event.code
-                  },
-                  style : Scheduler.qTip.styles.defaultStyle,
-                  show : {
-                    solo : true
-                  },
-                  position: {
-                    target: 'mouse', // Track the mouse as the positioning target
-                    adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
-                  }
-                });
-            }
+          Scheduler.fullCalendar.render( "#calendar", {
+            events : events
           });
+
+
       }
     },
   };
