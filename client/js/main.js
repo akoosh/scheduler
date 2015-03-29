@@ -15,12 +15,19 @@ Meteor.startup( function() {
 // Entry point for application
 Session.set( "Scheduler.currentPage", "searchPage" );
 
-// Resets session variables when the user changes
+// User login code
 Tracker.autorun(function() {
   if ( Meteor.userId() ) {
     Session.set( "Scheduler.slots", undefined );
     Session.set( "Scheduler.searchResults", undefined );
   }
+});
+
+// User logout code and landing page code
+Deps.autorun(function () {
+    if(!Meteor.userId()) {
+      // Logout code
+    }
 });
 
 // Recursive merge of two objects. objA will be modified to contain all of the attributes of objB

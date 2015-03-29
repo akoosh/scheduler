@@ -30,3 +30,6 @@ Template.pageLoader.helpers( {
 
 Template.pageLoader.events( {
 });
+
+Template.pageLoader.rendered = function() {
+}

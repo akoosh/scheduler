@@ -383,6 +383,7 @@ Template.searchPage.events ( {
               }
             });
         }
+
     }
 );
 
