@@ -50,6 +50,10 @@ Meteor.startup( function() {
       this.renderSchedule();
     },
 
+    "getAddCodes" : function() {
+      return this.bucketIterator.getCourseArray();
+    },
+
     "renderSchedule" : function() {
       var scheduleContainer = $("#calendar");
       if( scheduleContainer.length && this.bucketIterator ) {
