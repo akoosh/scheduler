@@ -29,8 +29,9 @@
 </template>
 
 <template name="planLayoutControls">
-  <button class="generateButton btn btn-default" {{generateButtonEnabled}} title="Generate the schedules for the current slots and view the results">Generate and View Schedules</button>
-  <button class="viewFavorites btn btn-default" {{favoritesButtonEnabled}} title="View and modify your favorite schedules.">View Favorites</button>
+  <button class="btn btn-default generateButton" {{generateButtonEnabled}} title="Generate the schedules for the current slots and view the results">Generate and View Schedules</button>
+  <button class="btn btn-default viewFavorites" {{favoritesButtonEnabled}} title="View and modify your favorite schedules.">View Favorites</button>
+  <button class="btn btn-default clearAllSlots" {{clearAllSlotsEnabled}}>Clear</button>
 </template>
 
 <template name="slotDisplay">
@@ -49,8 +50,6 @@
               {{#if numberOfClasses}}
                 {{> slotRemove}}
               {{/if}}
-            {{else}}
-              <span class="glyphicon glyphicon-plus slot-add" title="Add classes to this slot if you want another class for your schedule"></span>
             {{/if}}
           </th>
         </thead>

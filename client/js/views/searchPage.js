@@ -42,7 +42,8 @@ Template.queryDisplay.helpers( {
 
 Template.planLayoutControls.helpers( {
   "generateButtonEnabled" : function() {
-    var slots = Session.get("Scheduler.slots") || [], result = "disabled";
+    var slots = Session.get("Scheduler.slots") || [], 
+        result = "disabled";
   
     if( slots.length ) {
       result = "";
@@ -56,6 +57,17 @@ Template.planLayoutControls.helpers( {
         result = "disabled";
   
     if( condition ) {
+      result = "";
+    }
+
+    return result;
+  },
+
+  "clearAllSlotsEnabled" : function() {
+    var slots = Session.get("Scheduler.slots") || [], 
+        result = "disabled";
+
+    if( slots.length && slots[0].classes.length ) {
       result = "";
     }
 
@@ -340,6 +352,11 @@ Template.searchPage.events ( {
             Scheduler.qTipHelper.hideTips();
             Session.set( "Scheduler.currentPage", "favoritePage" );
           }
+        },
+
+        "click .clearAllSlots": function() {
+          Session.set( "Scheduler.slotSelected", 0 );
+          Session.set( "Scheduler.slots", [] );
         },
 
         "click .generateButton": function() {
