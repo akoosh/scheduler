@@ -50,6 +50,10 @@ Meteor.startup( function() {
       this.renderSchedule();
     },
 
+    "getAddCodes" : function() {
+      return this.bucketIterator.getCourseArray();
+    },
+
     "renderSchedule" : function() {
       var scheduleContainer = $("#calendar");
       if( scheduleContainer.length && this.bucketIterator ) {
@@ -66,7 +70,7 @@ Meteor.startup( function() {
             titleFormat   : "",
             header        : false,
             allDaySlot    : false,
-            height        : 400,
+            height        : 600,
             columnFormat  : "dddd",
             events : events,
             eventRender: function(event, element) {
@@ -75,7 +79,7 @@ Meteor.startup( function() {
                     text: event.description,
                     title: event.title + " " + event.code
                   },
-                  style : Scheduler.qTipHelper.styles.defaultStyle,
+                  style : Scheduler.qTip.styles.defaultStyle,
                   show : {
                     solo : true
                   },

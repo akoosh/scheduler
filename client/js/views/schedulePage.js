@@ -27,23 +27,32 @@ Template.schedulePageControls.helpers( {
 });
 
 Template.schedulePage.events( {
-  "click #next_schedule" : function( e, template ) {
+  "click .nextSchedule" : function( e, template ) {
     Scheduler.Schedules.nextSchedule(); 
   },
 
-  "click #prev_schedule" : function( e, template ) {
+  "click .prevSchedule" : function( e, template ) {
     Scheduler.Schedules.prevSchedule(); 
   },
 
-  "click #save_schedule" : function(e,template) {
+  "click .exportSchedule" : function(e,template) {
+  },
+
+  "click .getAddCodes" : function(e,template) {
+  },
+
+  "click .saveFavorite" : function(e,template) {
     var name = prompt( "Please enter favorite schedule name", "Favorite Schedule " + new Date() );
     Meteor.call( "saveFavorite", { name : name, classes: Session.get( "Scheduler.currentScheduleId" ), slots : Session.get("Scheduler.slots") } );
   },
 
-  "click #back_to_search" : function(e,template) {
-    Scheduler.qTipHelper.clearTips();
-    Session.set( "Scheduler.currentPage", "searchPage" );
+  "click .gotoScheduleButton" : function(e,template) {
+    Scheduler.PageLoader.loadPage( "searchPage" );
   },
+
+  "click .gotoFavoriteView" : function(e,template) {
+    Scheduler.PageLoader.loadPage( "favoritePage" );
+  }
 });
 
 Template.schedulePageTable.helpers( {
@@ -56,6 +65,17 @@ Template.schedulePageTable.helpers( {
     var rows = Scheduler.Converter.coursesToRows( courses );
 
     return rows;
+  },
+
+  "addCodes" : function () {
+    var result = "",
+        codes = Scheduler.Schedules.getAddCodes();
+
+    if( codes.length ) {
+      result = codes.join( " " );
+    }
+
+    return result; 
   }
 
 });
@@ -64,16 +84,20 @@ Template.schedulePage.rendered = function() {
   Scheduler.Schedules.generateSchedules();
 }
 
+Template.schedulePageTable.rendered = function() {
+  Scheduler.qTip.updateTips( '.addCodes' );
+}
+
 Template.schedulePageControls.rendered = function() {
-  Scheduler.qTipHelper.updateTips( 'button' );
+  Scheduler.qTip.updateTips( 'button' );
 }
 
 Template.schedulePageInteractionControls.rendered = function() {
-  Scheduler.qTipHelper.updateTips( 'button' );
+  Scheduler.qTip.updateTips( 'button' );
 }
 
 Template.sectionRow.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.sectionRow' );
+  Scheduler.qTip.updateTips( '.sectionRow' );
 }
 
 

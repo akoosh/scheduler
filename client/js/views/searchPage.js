@@ -42,7 +42,8 @@ Template.queryDisplay.helpers( {
 
 Template.planLayoutControls.helpers( {
   "generateButtonEnabled" : function() {
-    var slots = Session.get("Scheduler.slots") || [], result = "disabled";
+    var slots = Session.get("Scheduler.slots") || [], 
+        result = "disabled";
   
     if( slots.length ) {
       result = "";
@@ -56,6 +57,17 @@ Template.planLayoutControls.helpers( {
         result = "disabled";
   
     if( condition ) {
+      result = "";
+    }
+
+    return result;
+  },
+
+  "clearAllSlotsEnabled" : function() {
+    var slots = Session.get("Scheduler.slots") || [], 
+        result = "disabled";
+
+    if( slots.length && slots[0].classes.length ) {
       result = "";
     }
 
@@ -239,16 +251,19 @@ Template.searchPage.events ( {
  
         },
 
-        "click .addButton": function(e) {
+        "click .addButton": function(e, t) {
             var slotSelected = Session.get("Scheduler.slotSelected");
+
             // first time adding class
             if (slotSelected === undefined) {
                 slotSelected = 0;
-                Session.set("Scheduler.slotSelected", slotSelected);
+                Session.set("Scheduler.slotSelected", slotSelected );
             }
 
             var slots = Session.get("Scheduler.slots") || [],
                 query = $("#query").val();
+
+            var next = slotSelected == slots.length;
 
             var curSlot = slots[slotSelected] || { index: slotSelected, name: query, classes: [], selectedClasses: {}, isCollapsed : false };
 
@@ -264,6 +279,11 @@ Template.searchPage.events ( {
             slots[slotSelected] = curSlot;
 
             Session.set("Scheduler.slots", slots);
+
+            if( next ) {
+              Session.set("Scheduler.slotSelected", slotSelected+1 );
+            }
+
         },
 
         "click .removeButton": function() {
@@ -289,15 +309,15 @@ Template.searchPage.events ( {
                 slot.index = index;
             });
 
-            Scheduler.qTipHelper.hideTips();
+            Scheduler.qTip.hideTips();
             Session.set("Scheduler.slots", slots);
         },
 
-        "click .slotDisplay": function() {
+        "click .slotDisplay": function( e, t ) {
             if (this.index !== undefined) {
                 Session.set("Scheduler.slotSelected", this.index);
-            }
-            else {
+                Session.set("Scheduler.slotClicked", this.index);
+            } else {
                 var slots = Session.get("Scheduler.slots") || [];
                 Session.set("Scheduler.slotSelected", slots.length);
             }
@@ -308,7 +328,7 @@ Template.searchPage.events ( {
           if( renderOptions ) {
             renderOptions.max += 10;
 
-            Scheduler.qTipHelper.clearTips();
+            Scheduler.qTip.clearTips();
             Session.set("Scheduler.searchRenderOptions", renderOptions );
           }
         },
@@ -324,22 +344,23 @@ Template.searchPage.events ( {
 
             renderOptions.courses[courseId].max += 4;
 
-            Scheduler.qTipHelper.clearTips();
+            Scheduler.qTip.clearTips();
             Session.set("Scheduler.searchRenderOptions", renderOptions );
           }
-        },
-
-        "click .logoutButton": function() {
-          Session.set( "Scheduler.currentPage", "ssuGatePage" );
         },
 
         "click .viewFavorites": function() {
           var haveFavorites = true;
 
           if( haveFavorites ) {
-            Scheduler.qTipHelper.hideTips();
-            Session.set( "Scheduler.currentPage", "favoritePage" );
+            Scheduler.PageLoader.loadPage( "favoritePage" );
           }
+        },
+
+        "click .clearAllSlots": function() {
+          Session.set( "Scheduler.slotSelected", 0 );
+          Session.set("Scheduler.slotClicked", -1 );
+          Session.set( "Scheduler.slots", [] );
         },
 
         "click .generateButton": function() {
@@ -356,9 +377,8 @@ Template.searchPage.events ( {
                   // Setup the available schedules
 
                   // Transition to the schedule view
-                  Scheduler.qTipHelper.clearTips();
                   Scheduler.Schedules.generateSchedules( classesArray );
-                  Session.set( "Scheduler.currentPage", "schedulePage" );
+                  Scheduler.PageLoader.loadPage( "schedulePage" );
                 }
               }
             });
@@ -368,7 +388,7 @@ Template.searchPage.events ( {
 
 Template.searchPage.rendered = function() {
   var containerHeight = $(window).height();
-  $( "#searchPageContainer" ).css( "height", containerHeight );
+  $( "#searchPageContainer, #pageLoader" ).css( "height", containerHeight );
   $( ".searchLayout, .planLayout" ).css( "height", containerHeight-110 );
 
   // Setup the default view render options
@@ -378,26 +398,46 @@ Template.searchPage.rendered = function() {
   };
 
   Session.set( "Scheduler.searchRenderOptions", searchRenderOptions );
+  Session.set( "Scheduler.searchResults", [] );
 }
 
 Template.classButton.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.removeButton' );
+  Scheduler.qTip.updateTips( ".removeButton", {     
+    position: {
+      my: 'top right',  
+      at: 'bottom right',
+      target: "mouse",
+    }  
+  });
 }
 
 Template.classDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton, .class-icon, .addButton, .loadMoreResults' );
+  Scheduler.qTip.updateTips( '.classDisplay * .addButton, .class-icon, .addButton, .loadMoreResults' );
 }
 
 Template.planLayout.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '#planLayout .info-icon.info-question' );
+  Scheduler.qTip.updateTips( '#planLayout .info-icon.info-question' );
 }
 
 Template.slotDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( ".slot-remove, .slot-add, th.name" );
+  Scheduler.qTip.updateTips( ".slot-remove, .slot-add, th.name", {     
+    position: {
+      my: 'top right',  
+      at: 'bottom right',
+      target: "mouse",
+    }  
+  });
+
 }
 
 Template.planLayoutControls.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.generateButton, .viewFavorites' );
+  Scheduler.qTip.updateTips( '.generateButton, .viewFavorites', {     
+    position: {
+      my: 'top right',  
+      at: 'bottom right',
+      target: "mouse",
+    }  
+  });
 }
 
 

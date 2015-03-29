@@ -20,7 +20,7 @@
         <th>Location</th>
         <th>Time</th>
         <th>Units</th>
-        <th>Add Code</th>
+        <th class="addCodes" title="{{addCodes}}">Add Codes</th>
       </tr>
     </thead>
     <tbody>
@@ -34,21 +34,23 @@
 <template name="schedulePageControls">
   <div class="row">
     <div class="col-md-4">
-      <button id="prev_schedule" class="btn btn-default scheduleButton" title="Goto the previous valid schedule">Prev Schedule</button>
+      <button class="btn btn-default scheduleButton prevSchedule" title="Goto the previous valid schedule">Prev Schedule</button>
     </div>
     <div class="col-md-4">
       <span class="scheduleCount">{{currentSchedule}} of {{scheduleCount}}</span>
     </div>
     <div class="col-md-4">
-      <button id="next_schedule" class="btn btn-default scheduleButton right" title="Goto the next valid schedule">Next Schedule</button>
+      <button class="btn btn-default scheduleButton nextSchedule right" title="Goto the next valid schedule">Next Schedule</button>
     </div>
   </div>
 </template>
 
 
 <template name="schedulePageInteractionControls">
-  <button id="back_to_search" class="btn btn-default scheduleButton" title="Return to the search page to refine your slots">Search for more classes</button>
-  <button id="save_schedule" class="btn btn-default scheduleButton" title="Save the current schedule as a favorite schedule">Set Schedule as Favorite</button>
+  <button class="btn btn-default gotoScheduleButton" title="Return to the search page to refine your slots">Search for more classes</button>
+  <button class="btn btn-default saveFavorite" title="Save the current schedule as a favorite schedule">Set Schedule as Favorite</button>
+  <button class="btn btn-default exportSchedule">Export</button>
+  <button class="btn btn-default gotoFavoriteView">View Favorite Schedules</button>
 </template>
 
 <template name="sectionRow">

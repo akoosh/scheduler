@@ -1,13 +1,9 @@
-<!-- Page loader template -->
-<template name="pageLoader">
-  <div id="page_loader">
-    <!-- DEV CONTROLS -->
-    <!-- /DEV CONTROLS -->
-    <!-- Core page loader -->
 
+<template name="pageLoader">
+  <div id="pageLoader">
     {{#if currentUser}}
       {{#if hasCourseData}}
-        {{#with loadPage name }}
+        {{#with loadPage }}
           {{> template }}
         {{/with}}
       {{else}}
@@ -19,3 +15,4 @@
 
   </div>
 </template>
+

@@ -10,11 +10,10 @@ Accounts.ui.config({
 
 // Main application startup
 Meteor.startup( function() {
-
-  var entryPage = "searchPage";
-  Session.set( "Scheduler.currentPage", entryPage );
-
 });
+
+// Entry point for application
+Session.set( "Scheduler.currentPage", "searchPage" );
 
 // Resets session variables when the user changes
 Tracker.autorun(function() {
@@ -24,3 +23,17 @@ Tracker.autorun(function() {
   }
 });
 
+// Recursive merge of two objects. objA will be modified to contain all of the attributes of objB
+// we are only considerate of sub objects and arrays will not be merged. Elements from objB will take
+// priority when doing the merge
+deepMerge = function( objA, objB ) {
+  for( var p in objB ) {
+    if( objB.hasOwnProperty(p) ) {
+      if( objA.hasOwnProperty(p) && typeof objA[p] === "object" && typeof objB[p] === "object" ) {
+        deepMerge( objA[p], objB[p] );
+      } else {
+        objA[p] = objB[p];
+      }
+    }
+  }
+}

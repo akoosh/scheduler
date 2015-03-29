@@ -3,7 +3,21 @@ Template.capacityMeter.helpers( {
     var result = "~/~";
 
     if( this.value && this.capacity && this.value <= this.capacity && this.capacity != 0 ) {
-      result = this.value + "/" + this.capacity;
+      if( this.value == this.capacity ) {
+        result = "full";
+      } else {
+        result = this.value + "/" + this.capacity;
+      }
+    } 
+
+    return result;
+  },
+
+  fullClass : function() {
+    var result = "";
+
+    if( this.value && this.capacity && this.value == this.capacity ) {
+      result = "full";
     }
 
     return result;

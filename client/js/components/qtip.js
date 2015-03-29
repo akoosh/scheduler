@@ -1,8 +1,8 @@
-// qTipHelper: Helper methods for interacting with the qtip plugin
+// qTip: Helper methods for interacting with the qtip plugin
 
 Meteor.startup( function() {
 
-  Scheduler.qTipHelper = {
+  Scheduler.qTip = {
     // qTip styles for application
     styles: {
       defaultStyle : {
@@ -14,42 +14,47 @@ Meteor.startup( function() {
     updateHandles : {},
 
     // Updates elements in the dom after a delay ( to allow batching multiple update calls ). 
-    updateTips : function( selector, style ) {
+    updateTips : function( selector, opt ) {
 
       clearTimeout( this.updateHandles[selector] );
       this.updateHandles[selector] = setTimeout( function() {
 
-      if( style === undefined ) {
-        style = Scheduler.qTipHelper.styles.defaultStyle;
-      }
+      var options = {
+        style : Scheduler.qTip.styles.defaultStyle,
+        content : {},
+        show : {
+          solo : true
+        },
+        position : {
+          target : "mouse",
+          adjust : {
+            x : 5,
+            y : 5
+          }
+        }
+      };
+
+      // Copy the options from the opt object into the qTip options object
+      deepMerge( options, opt );
 
       $(selector).each( function(index, obj) {
         obj = $(obj);
-        var content = {}, description = obj.attr("description"), title = obj.attr("title");
+        var description = obj.attr("description"), title = obj.attr("title");
+        options.content = {};
 
         // If both description and title are available for the element create a qTip with a title and description; else we only want the title
         if( description !== undefined && description != "" ) {
-          content.title = title;
-          content.text = description;
+          options.content.title = title;
+          options.content.text = description;
         } else if ( title !== undefined && title != "" ) {
-          content.text = title;
+          options.content.text = title;
         } else {
           //console.log( "Attempted to create qTip for element with inproper tags or null length fields" );
         }
 
         // Only setup a qTip if we have content
-        if( Object.keys(content).length !== 0 ) {  
-          obj.qtip({
-            content : content,
-            style : style,
-            show : {
-              solo : true
-            },
-            position: {
-              target: 'mouse', // Track the mouse as the positioning target
-              adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
-            }
-          });
+        if( Object.keys(options.content).length !== 0 ) {  
+          obj.qtip( options );
         }
       });
     }, 50 );
