@@ -385,7 +385,7 @@ Template.classButton.rendered = function() {
 }
 
 Template.classDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton, .class-icon' );
+  Scheduler.qTipHelper.updateTips( '.classDisplay * .addButton, .class-icon, .addButton, .loadMoreResults' );
 }
 
 Template.planLayout.rendered = function() {
@@ -398,10 +398,6 @@ Template.slotDisplay.rendered = function() {
 
 Template.planLayoutControls.rendered = function() {
   Scheduler.qTipHelper.updateTips( '.generateButton, .viewFavorites' );
-}
-
-Template.queryDisplay.rendered = function() {
-  Scheduler.qTipHelper.updateTips( '.addButton' );
 }
 
 
