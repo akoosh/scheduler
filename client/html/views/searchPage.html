@@ -37,12 +37,20 @@
   <div class="slotDisplay {{selectedOrEmpty}}">
       <table class="table table-striped classButtonRowTable">
         <thead>
-          <th class="name"> Slot {{slotNumber}} </th>
-          <th class="classes"> {{numberOfClasses}} classes</th>
+          <th class="name"> {{slotName}} </th>
+          <th class="classes"> 
+            {{#if numberOfClasses }}
+              {{numberOfClasses}} classes
+            {{/if}}
+          </th>
           <th class="slot-controls">
-            {{> slotCollapse}} 
-            {{#if numberOfClasses}}
-              {{> slotRemove}}
+            {{#if numberOfClasses }}
+              {{> slotCollapse}} 
+              {{#if numberOfClasses}}
+                {{> slotRemove}}
+              {{/if}}
+            {{else}}
+              <span class="glyphicon glyphicon-plus slot-add" title="Add classes to this slot if you want another class for your schedule"></span>
             {{/if}}
           </th>
         </thead>
@@ -106,28 +114,8 @@
           {{> classDisplay }}
       {{/each}}
       {{#if moreResults}}
-        <button class="btn btn-default loadMoreResults" title="There are additional courses for your search query"> &#9660; Load More Results </button>
+        <button class="btn btn-default loadMoreResults" title="There are additional class for your search query"> &#9660; Load More Results </button>
       {{/if}}
-    </div>
-</template>
-
-<template name="courseDisplay">
-    <div class="courseDisplay" >
-        <table class="description-table table">
-          <tbody>
-            <tr class="description">
-                <th class="courseTitle" title="{{title}}" description="{{description}}">{{title}}</th>
-                <th class="courseSubject">{{subject_with_number}}</th>
-                <th class="courseSubject">{{units}} units</th>
-                <th><button class="addButton btn btn-primary visible-md visible-lg" title="Add all classes for this course to the current slot">Add All</button></th>
-            </tr>
-            {{#each augmentedClasses}}
-            <tr> {{> classDisplay }} </tr>
-            {{/each}}
-          </tbody>
-        </table>
-
-
     </div>
 </template>
 
@@ -141,7 +129,7 @@
         <div class="courseInfo">
           <span title="{{title}}" description="{{description}}" class="class-icon info-icon info-i">i</span>
           {{#each geCodes}}
-            <span class="class-icon ge-icon" title="This course fulfills the general education category {{this}}">GE {{this}}</span>
+            <span class="class-icon ge-icon" title="This class fulfills the general education category {{this}}">GE {{this}}</span>
           {{/each}}
         </div>
       </th>
