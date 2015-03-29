@@ -402,7 +402,13 @@ Template.searchPage.rendered = function() {
 }
 
 Template.classButton.rendered = function() {
-  Scheduler.qTip.updateTips( '.removeButton' );
+  Scheduler.qTip.updateTips( ".removeButton", {     
+    position: {
+      my: 'top right',  
+      at: 'bottom right',
+      target: "mouse",
+    }  
+  });
 }
 
 Template.classDisplay.rendered = function() {
@@ -414,11 +420,24 @@ Template.planLayout.rendered = function() {
 }
 
 Template.slotDisplay.rendered = function() {
-  Scheduler.qTip.updateTips( ".slot-remove, .slot-add, th.name" );
+  Scheduler.qTip.updateTips( ".slot-remove, .slot-add, th.name", {     
+    position: {
+      my: 'top right',  
+      at: 'bottom right',
+      target: "mouse",
+    }  
+  });
+
 }
 
 Template.planLayoutControls.rendered = function() {
-  Scheduler.qTip.updateTips( '.generateButton, .viewFavorites' );
+  Scheduler.qTip.updateTips( '.generateButton, .viewFavorites', {     
+    position: {
+      my: 'top right',  
+      at: 'bottom right',
+      target: "mouse",
+    }  
+  });
 }
 
 
