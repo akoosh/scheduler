@@ -10,7 +10,7 @@ Template.searchBar.events({
 
           Meteor.call('coursesForQuery', input, function(err, results) {
               if (err === undefined) {
-                $(".searchLayout").animate({ scrollTop: 0 }, "fast");
+                $(".searchResults").animate({ scrollTop: 0 }, "fast");
                 Session.set( "Scheduler.searchResults", results );
 
                 var renderOptions = Session.get( "Scheduler.searchRenderOptions" );

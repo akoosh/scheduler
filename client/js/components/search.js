@@ -37,7 +37,7 @@ Template.queryDisplay.helpers( {
     }
 );
 
-Template.searchLayout.events( {
+Template.searchResults.events( {
   "click .addButton": function(e, t) {
       var slotSelected = Session.get("Scheduler.slotSelected");
 
@@ -119,10 +119,10 @@ Template.classDisplay.helpers( {
     }
 );
 
-Template.searchLayout.rendered = function() {
+Template.searchResults.rendered = function() {
   var containerHeight = $(window).height();
   $( "#searchPageContainer, #pageLoader" ).css( "height", containerHeight );
-  $( ".searchLayout, .planLayout" ).css( "height", containerHeight-110 );
+  $( ".searchResults, .planLayout" ).css( "height", containerHeight-110 );
 
   // Setup the default view render options
   var searchRenderOptions = {
