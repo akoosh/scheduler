@@ -388,7 +388,7 @@ Template.searchPage.events ( {
 
 Template.searchPage.rendered = function() {
   var containerHeight = $(window).height();
-  $( "#searchPageContainer" ).css( "height", containerHeight );
+  $( "#searchPageContainer, #pageLoader" ).css( "height", containerHeight );
   $( ".searchLayout, .planLayout" ).css( "height", containerHeight-110 );
 
   // Setup the default view render options
