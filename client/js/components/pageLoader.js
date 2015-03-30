@@ -7,19 +7,33 @@ Meteor.startup( function() {
   Scheduler.PageLoader = {
     loadPage : function( page ) {
 
+      location.hash = page;
       Scheduler.qTip.clearTips();
       Session.set( "Scheduler.currentPage", page );
 
     }
   }
+
+  // Setup hash navigation function
+  $(window).on( "popstate", function(){ 
+    var dest = location.hash.substr(1);
+    if( Template[dest] !== undefined ) {
+      Scheduler.PageLoader.loadPage( dest );
+    }
+  });
 });
 
 Template.pageLoader.helpers( {
   // Attempts to load the template provided by its name
   loadPage : function() {
-    var page = Session.get("Scheduler.currentPage");
+    var page = Session.get("Scheduler.currentPage"),
+        result = { template : Template["loginPage"] };
 
-    return { template: Template[page] };
+    if( Template[page] !== undefined ) {
+      result.template = Template[page];
+    }
+
+    return result;
   },
 
   hasCourseData : function() {
