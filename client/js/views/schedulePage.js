@@ -43,50 +43,13 @@ Template.schedulePage.events( {
     Meteor.call( "saveFavorite", { name : name, classes: Session.get( "Scheduler.currentScheduleId" ), slots : Session.get("Scheduler.slots") } );
   },
 
-  "click .gotoScheduleButton" : function(e,template) {
-    Scheduler.PageLoader.loadPage( "searchPage" );
-  },
-
-  "click .gotoFavoriteView" : function(e,template) {
-    Scheduler.PageLoader.loadPage( "favoritePage" );
-  },
-
   "click .exportSchedule" : function(e,template) {
     alert( Scheduler.Schedules.getAddCodes() );
-  },
-});
-
-Template.schedulePageTable.helpers( {
-
-  // Returns an array with the currently displayed courses in raw form
-  "formattedRow" : function() {
-    var courses = Session.get( "Scheduler.scheduleCourses" );
-
-    // Get the rows for the current courses
-    var rows = Scheduler.Converter.coursesToRows( courses );
-
-    return rows;
-  },
-
-  "addCodes" : function () {
-    var result = "",
-        codes = Scheduler.Schedules.getAddCodes();
-
-    if( codes.length ) {
-      result = codes.join( " " );
-    }
-
-    return result; 
   }
-
 });
 
 Template.schedulePage.rendered = function() {
   Scheduler.Schedules.generateSchedules();
-}
-
-Template.schedulePageTable.rendered = function() {
-  Scheduler.qTip.updateTips( '.addCodes' );
 }
 
 Template.schedulePageControls.rendered = function() {
@@ -97,9 +60,6 @@ Template.schedulePageInteractionControls.rendered = function() {
   Scheduler.qTip.updateTips( 'button' );
 }
 
-Template.sectionRow.rendered = function() {
-  Scheduler.qTip.updateTips( '.sectionRow' );
-}
 
 
 

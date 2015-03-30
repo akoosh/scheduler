@@ -1,33 +1,16 @@
-<!-- Template for displaying schedules -->
 <template name="schedulePage">
   {{> topBar}}
-  {{> schedulePageTable}}
+  {{> scheduleTable}}
   {{> schedulePageControls}}
   {{> schedule}}
   {{> schedulePageInteractionControls}}
 </template>
 
-<template name="schedulePageTable">
-  <table id="scheduleTable" class="table table-striped">
-    <thead>
-      <tr>
-        <th>Subject</th>
-        <th>Title</th>
-        <th>Type</th>
-        <th>Professor</th>
-        <th>Location</th>
-        <th>Time</th>
-        <th>Units</th>
-        <th class="addCodes" title="{{addCodes}}">Add Codes</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each formattedRow}}
-        {{> sectionRow}}
-      {{/each}}
-    </tbody>
-  </table>
+<template name="schedulePageInteractionControls">
+  <button class="btn btn-default saveFavorite" title="Save the current schedule as a favorite schedule">Set Schedule as Favorite</button>
+  <button class="btn btn-default exportSchedule">Export</button>
 </template>
+
 
 <template name="schedulePageControls">
   <div class="row">
@@ -44,25 +27,6 @@
 </template>
 
 
-<template name="schedulePageInteractionControls">
-  <button class="btn btn-default gotoScheduleButton" title="Return to the search page to refine your slots">Search for more classes</button>
-  <button class="btn btn-default saveFavorite" title="Save the current schedule as a favorite schedule">Set Schedule as Favorite</button>
-  <button class="btn btn-default exportSchedule">Export</button>
-  <button class="btn btn-default gotoFavoriteView">View Favorite Schedules</button>
-</template>
-
-<template name="sectionRow">
-  <tr title="{{description}}" class="sectionRow" >
-    <td>{{subject_with_number}}</td>
-    <td>{{title}}</td>
-    <td>{{type}}</td>
-    <td>{{professor}}</td>
-    <td>{{location}}</td>
-    <td>{{times}}</td>
-    <td>{{units}}</td>
-    <td>{{id}}</td>
-  </tr>
-</template>
 
 
 
