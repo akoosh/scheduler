@@ -1,10 +1,11 @@
 <!-- Template for displaying favorite schedules -->
 <template name="favoritePage">
+  {{> topBar}}
   {{> favoritePageControls}}
   {{#if hasSchedule}}
     {{> favoriteScheduleView}}
   {{/if}}
-  {{> favoriteLoader}}
+  {{> favoriteTable}}
 </template>
 
 <template name="favoriteScheduleView">
@@ -13,37 +14,7 @@
 </template>
 
 <template name="favoritePageControls">
-  <div id="favoritePageControls">
-    <button class="btn btn-default returnToSearch" title="Return to the search view.">Return to search</button>
-  </div>
+  <div id="favoritePageControls"></div>
 </template>
 
 
-<template name="favoriteSchedule">
-  <tr class="favoriteScheduleEntry">
-    <td> <span class="favoriteScheduleName"> {{this.name}} </span> </td>
-    <td> <button class="btn btn-default loadFavoriteSchedule" title="View this schedule">View</button> </td>
-    <td> <button class="btn btn-default editFavoriteSchedule" title="Edit the classes for this schedule">Edit</button> </td>
-    <td> <button class="btn btn-default renameFavoriteSchedule" >Rename</button> </td>
-    <td> <button class="btn btn-danger deleteFavoriteSchedule" >Delete</button> </td>
-  </tr>
-</template>
-
-<template name="favoriteLoader">
-  <table id="favoriteLoaderTable" class="table table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each favoriteSchedules}}
-        {{> favoriteSchedule}}
-      {{/each}}
-    </tbody>
-  </table>
-</template>

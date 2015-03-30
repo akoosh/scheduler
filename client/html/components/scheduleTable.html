@@ -1,0 +1,34 @@
+<template name="scheduleTable">
+  <table id="scheduleTable" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Professor</th>
+        <th>Location</th>
+        <th>Time</th>
+        <th>Units</th>
+        <th class="addCodes" title="{{addCodes}}">Add Codes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each formattedRow}}
+        {{> classRow}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="classRow">
+  <tr title="{{description}}" class="sectionRow" >
+    <td>{{subject_with_number}}</td>
+    <td>{{title}}</td>
+    <td>{{type}}</td>
+    <td>{{professor}}</td>
+    <td>{{location}}</td>
+    <td>{{times}}</td>
+    <td>{{units}}</td>
+    <td>{{id}}</td>
+  </tr>
+</template>

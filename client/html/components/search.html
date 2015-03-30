@@ -1,0 +1,84 @@
+
+<template name="moreClassButton">
+  <tr class="moreClassButton">
+    <td colspan=3><span>...</span></td>
+  </tr>
+</template>
+
+<template name="classButton">
+  <tr>
+    <td>{{subject_with_number}}</td>
+    <td>{{title}}</td>
+    <td><span class="glyphicon glyphicon-remove removeButton" title="Remove {{subject_with_number}} from this slot"></span></td>
+  </tr>
+</template>
+
+<template name="searchResults">
+  {{> queryDisplay }}
+</template>
+
+<template name="queryDisplay">
+    <div id="results">
+      {{#if hasResults}}
+        <button class="btn btn-primary visible-md visible-lg addButton" title="Add all classes for this query to the current slot">Add All</button>
+      {{/if}}
+      {{#each queryResults}}
+          {{> classDisplay }}
+      {{/each}}
+      {{#if moreResults}}
+        <button class="btn btn-default loadMoreResults" title="There are additional class for your search query"> &#9660; Load More Results </button>
+      {{/if}}
+    </div>
+</template>
+
+<template name="classDisplay">
+  <div class="classRow">
+    <table class="table">
+      <thead class="classTableHeader">
+        <th class="courseTitle">{{title}}</th>
+        <th>{{subject_with_number}}</th>
+        <th class="courseUnits">{{units}} units</th>
+        <th>    
+          <div class="courseInfo">
+            <span title="{{title}}" description="{{description}}" class="class-icon info-icon info-i">i</span>
+            {{#each geCodes}}
+              <span class="class-icon ge-icon" title="This class fulfills the general education category {{this}}">GE {{this}}</span>
+            {{/each}}
+          </div>
+        </th>
+      </thead>
+      <tbody>
+        <td> Section {{number}} </td>
+        <td colspan=2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Times</th>
+                <th>Location</th>
+                <th>Professor</th>
+                <th><span class="capacity-header">Capacity</span></th>
+              </tr>
+            </thead>
+            <tbody>
+            {{#each sections}}
+              {{> sectionDisplay }}
+            {{/each}}
+            </tbody>
+          </table>
+        </td>
+        <td> <button class="addButton btn btn-primary visible-md visible-lg" title="Add this class to the current slot">Add</button> </td>
+      </tbody>
+    </table>
+ </div> 
+</template>
+
+<template name="sectionDisplay">
+  <tr>
+    <td>{{#each times}} {{days}} {{start_time}}-{{end_time}} {{/each}}</td>
+    <td>{{#each locations}} {{this}} {{/each}}</td>
+    <td>{{#each professors}} {{this}} {{/each}}</td>
+    <td>{{> capacityMeter value=totalEnrolled.[0] capacity=capacity.[0] }}</td>
+  </tr>
+</template>
+
+

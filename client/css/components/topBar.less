@@ -1,0 +1,33 @@
+@lightGrey: #f4f4f4;
+@borderGrey: darken(@lightGrey, 20%);
+@ssuBlue: #0069AA;
+@ssuBlueBorder: lighten(@ssuBlue, 10%);
+
+.searchTopBar {
+  background-color: @ssuBlue;
+  margin-bottom:10px;
+  border-bottom: 2px solid @ssuBlueBorder;
+}
+
+.searchTopBar #login-buttons {
+  position: relative;
+  top: 40px;
+  left: 20px;
+
+  .login-link-text {
+    color: #FFF;
+  }
+}
+
+#logo {
+  height: 100px;
+}
+
+#login-buttons .login-button {
+  border-color: @ssuBlueBorder;  
+  background-color : @ssuBlue;
+}
+
+#login-buttons .login-button:hover {
+  background-color : @ssuBlueBorder;
+}
