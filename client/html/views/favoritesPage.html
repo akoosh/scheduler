@@ -4,8 +4,9 @@
   {{> favoritePageControls}}
   {{#if hasSchedule}}
     {{> favoriteScheduleView}}
+  {{else}}
+    {{> favoriteTable}}
   {{/if}}
-  {{> favoriteTable}}
 </template>
 
 <template name="favoriteScheduleView">

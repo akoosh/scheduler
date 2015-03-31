@@ -120,9 +120,6 @@ Template.classDisplay.helpers( {
 );
 
 Template.searchResults.rendered = function() {
-  var containerHeight = $(window).height();
-  $( "#searchPageContainer, #pageLoader" ).css( "height", containerHeight );
-  $( ".searchResults, .planLayout" ).css( "height", containerHeight-110 );
 
   // Setup the default view render options
   var searchRenderOptions = {

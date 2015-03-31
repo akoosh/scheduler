@@ -3,7 +3,6 @@
 // Arthur Wuterich
 
 Template.favoritePage.events( {
-
 });
 
 Template.favoritePage.helpers({
@@ -25,3 +24,6 @@ Template.favoritePageControls.rendered = function() {
   Scheduler.qTip.updateTips( "#favoritePageControls button" );
 }
 
+Template.favoritePage.rendered = function() {
+  Session.set( "Scheduler.currentFavoriteScheduleId", undefined );
+}
