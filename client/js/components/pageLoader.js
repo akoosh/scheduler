@@ -4,15 +4,20 @@
 
 Meteor.startup( function() {
 
+
   Scheduler.PageLoader = {
+    validPages : [],
     loadPage : function( page ) {
+      
+      if( _.contains( this.validPages, page ) ) {
 
-      location.hash = page;
-      Scheduler.qTip.clearTips();
-      Session.set( "Scheduler.currentPage", page );
-
+        location.hash = page;
+        Scheduler.qTip.clearTips();
+        Session.set( "Scheduler.currentPage", page );
+      }
     }
   }
+
 
   // Setup hash navigation function
   $(window).on( "popstate", function(){ 
