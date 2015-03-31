@@ -24,6 +24,7 @@ Template.topBar.events({
 
   "click .navLink.favorites" : function(e,t) {
     e.preventDefault();
+    Session.set( "Scheduler.currentFavoriteScheduleId", undefined );
     Scheduler.PageLoader.loadPage( "favoritePage" );
   }
 });
