@@ -47,10 +47,12 @@ deepMerge = function( objA, objB ) {
 
 // Window resize code
 window.onresize = function() {
-  clearTimeout( window.onresize.timeoutHandle );
-  window.onresize.timeoutHandle = setTimeout( function() {
-    var containerHeight = $(window).height();
-    $( "#searchPageContainer, #pageLoader" ).css( "height", containerHeight );
-    $( ".searchResults, .planLayout" ).css( "height", containerHeight-110 );
-  }, 50 );
+  if( Meteor.userId() ) {
+    clearTimeout( window.onresize.timeoutHandle );
+    window.onresize.timeoutHandle = setTimeout( function() {
+      var containerHeight = $(window).height();
+      $( "#searchPageContainer, #pageLoader" ).css( "height", containerHeight );
+      $( ".searchResults, .planLayout" ).css( "height", containerHeight-110 );
+    }, 50 );
+  }
 }
