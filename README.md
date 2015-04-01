@@ -1,82 +1,79 @@
 ssu_scheduler
 =============
 
+App URL:
+
+http://ssuscheduler.meteor.com/
+
+
 Installation(ubuntu)
 ============
 
 Installation is pretty simple
 
-  1. Get nodejs:
+  - Get nodejs:
   ```
     sudo apt-get update
     sudo apt-get install nodejs
   ```
 
-  2. Get meteor:
+  - Get meteor:
   ```
     curl https://install.meteor.com/ | sh
   ```
     This will install meteor and the meteor package manager on your machine.
 
-  3. Get Mongodb
+  - Get Mongodb
   ```
     sudo apt-get install mongodb
   ```
 
-  4. Download the scheduler app
+  - Download the scheduler app
     ```
     git clone https://github.com/Alfwich/ssu_scheduler.git
     ```
 
-  5. Insert classes into the mongodb database
+  - Import the data
   First you need to have the meteor application to access the mongo database. So from the root of the project repo run the following command
   ```
     meteor
   ```
 
   This will run the meteor package manager ( similar to doing a apt-get update ) then spin up the scheduler application.
-  The app should build and start without any problem; however, there will be no course data yet. Run the following commands to insert the data
+  The app should build and start without any problem; however, there will be no course data yet. Run the following commands to insert the data from the scripts folder. Make sure you have meteor running to allow access to the mongo database.
   ```
-  cd scripts
-  mongoimport -h localhost:3001 --db meteor --collection Courses --type json --jsonArray --file courses.json
+  python updateDatabase.py
   ```
 Installation(osx)
 ============
   Installation is similar to ubuntu
 
-  0. Get Brew:
+  - Get Brew:
     https://github.com/Homebrew/homebrew
     Package manager for osx.
 
-  1. Get nodejs:
+  - Get nodejs:
   ```
     brew install node
   ```
 
-  2. Get meteor:
+  - Get meteor:
   ```
     curl https://install.meteor.com/ | sh
   ```
     This will install meteor and the meteor package manager on your machine.
 
-  3. Get Mongodb
+  - Get Mongodb
   ```
     brew install mongodb
   ```
 
-  4. Same as Ubuntu
-  5. Same as Ubuntu
+  - Importing the data
+    This is the same for osx and ubuntu. Use the script updateDatabase.py within the scripts folder.
 
-Update Database
-===============
 
-To update DB with new data:
+Installation(windows)
+============
+Seems like the windows version of Meteor is getting off its feet:
 
-Get rid of old data:
-  0. meteor
-  1. meteor mongo
-  2. db.Courses.remove()
-
-Import new data from json:
-  4. mongoimport -h localhost:3002 --db meteor --collection Courses --type json --jsonArray --file courses.json
-
+https://github.com/meteor/meteor/wiki/Preview-of-Meteor-on-Windows

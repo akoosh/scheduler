@@ -1,0 +1,22 @@
+<template name="topBar">
+  <div class="searchTopBar">
+    {{> ssuLogo }}
+    {{> loginButtons}}
+    {{> navigationControls}}
+  </div>
+</template>
+
+<template name="ssuLogo">
+    <img id="logo" src="/image/ssu_logo.jpg">
+</template>
+
+<template name="searchTopBarControls">
+  <button class="btn btn-default btn-xs logoutButton">Logout</button>
+</template>
+
+<template name="navigationControls">
+  <div class="navigationControls">
+    <a href="#" class="navLink search">Search</a>
+    <a href="#" class="navLink favorites">Favorites{{numFavorites}}</a>
+  </div>
+</template>

@@ -1,0 +1,21 @@
+<!-- Template for displaying favorite schedules -->
+<template name="favoritePage">
+  {{> topBar}}
+  {{> favoritePageControls}}
+  {{#if hasSchedule}}
+    {{> favoriteScheduleView}}
+  {{else}}
+    {{> favoriteTable}}
+  {{/if}}
+</template>
+
+<template name="favoriteScheduleView">
+  {{> scheduleTable}}
+  {{> schedule}}
+</template>
+
+<template name="favoritePageControls">
+  <div id="favoritePageControls"></div>
+</template>
+
+

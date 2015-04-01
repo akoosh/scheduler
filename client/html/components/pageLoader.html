@@ -1,0 +1,18 @@
+
+<template name="pageLoader">
+  <div id="pageLoader">
+    {{#if currentUser}}
+      {{#if hasCourseData}}
+        {{#with loadPage }}
+          {{> template }}
+        {{/with}}
+      {{else}}
+        {{> loginPage}}
+      {{/if}}
+    {{else}}
+      {{> loginPage}}
+    {{/if}}
+
+  </div>
+</template>
+

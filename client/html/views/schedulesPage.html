@@ -1,0 +1,28 @@
+<template name="schedulePage">
+  {{> topBar}}
+  {{> schedulePageInteractionControls}}
+  {{> scheduleTable}}
+  {{> schedulePageControls}}
+  {{> schedule}}
+</template>
+
+<template name="schedulePageInteractionControls">
+  <button class="btn btn-default saveFavorite" title="Save the current schedule as a favorite schedule">Set Schedule as Favorite</button>
+  <button class="btn btn-default exportSchedule">Export</button>
+</template>
+
+
+<template name="schedulePageControls">
+  <div class="row">
+    <div class="col-md-4">
+      <button class="btn btn-default scheduleButton prevSchedule" title="Goto the previous valid schedule">Prev Schedule</button>
+    </div>
+    <div class="col-md-4">
+      <span class="scheduleCount">{{currentSchedule}} of {{scheduleCount}}</span>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-default scheduleButton nextSchedule right" title="Goto the next valid schedule">Next Schedule</button>
+    </div>
+  </div>
+</template>
+

@@ -1,2 +1,5 @@
 *.swp
+*.pyc
 .meteor/local
+.meteor/versions
+scripts/bkup/*.json
