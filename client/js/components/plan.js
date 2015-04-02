@@ -189,7 +189,7 @@ Template.planLayoutControls.events( {
           var haveFavorites = true;
 
           if( haveFavorites ) {
-            Scheduler.PageLoader.loadPage( "favoritePage" );
+            Scheduler.PageLoader.loadPage( "favorite" );
           }
         },
 
@@ -210,7 +210,7 @@ Template.planLayoutControls.events( {
 
             // Transition to the schedule view
             Scheduler.Schedules.generateSchedules( classesArray );
-            Scheduler.PageLoader.loadPage( "schedulePage" );
+            Scheduler.PageLoader.loadPage( "schedule" );
           }
         }
 });

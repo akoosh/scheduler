@@ -19,18 +19,18 @@ Template.navigationControls.helpers({
 Template.topBar.events({
   "click .navLink.search" : function(e,t) {
     e.preventDefault();
-    Scheduler.PageLoader.loadPage( "searchPage" );
+    Scheduler.PageLoader.loadPage( "search" );
   },
 
   "click .navLink.favorites" : function(e,t) {
     e.preventDefault();
     Session.set( "Scheduler.currentFavoriteScheduleId", undefined );
-    Scheduler.PageLoader.loadPage( "favoritePage" );
+    Scheduler.PageLoader.loadPage( "favorite" );
   },
 
   "click .navLink.info" : function(e,t) {
     e.preventDefault();
-    Scheduler.PageLoader.loadPage( "infoPage" );
+    Scheduler.PageLoader.loadPage( "about" );
   },
 });
 
