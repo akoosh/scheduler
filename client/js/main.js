@@ -10,7 +10,7 @@ Accounts.ui.config({
 
 // Main application startup
 Meteor.startup( function() {
-  Scheduler.PageLoader.validPages = [ "searchPage", "schedulePage", "favoritePage" ];
+  Scheduler.PageLoader.validPages = [ "searchPage", "schedulePage", "favoritePage", "infoPage" ];
 });
 
 // Entry point for application

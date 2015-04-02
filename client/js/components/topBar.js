@@ -26,7 +26,12 @@ Template.topBar.events({
     e.preventDefault();
     Session.set( "Scheduler.currentFavoriteScheduleId", undefined );
     Scheduler.PageLoader.loadPage( "favoritePage" );
-  }
+  },
+
+  "click .navLink.info" : function(e,t) {
+    e.preventDefault();
+    Scheduler.PageLoader.loadPage( "infoPage" );
+  },
 });
 
 Template.topBar.rendered = function(){
