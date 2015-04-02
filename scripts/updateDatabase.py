@@ -33,10 +33,6 @@ def main():
           cTCJ()
           print "Done."
 
-          print "Importing course data into mongo..."
-          os.system( "mongoimport -h %s:%s --drop --db %s --collection Courses --type json --jsonArray --file courses.json && mv courses.json bkup/courses.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorMongoPort"], cfg["MeteorDB"], writeTime ) )
-          print "Done."
-
           print "Importing class data into mongo..."
           os.system( "mongoimport -h %s:%s --drop --db %s --collection Classes --type json --jsonArray --file classes.json && mv classes.json bkup/classes.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorMongoPort"], cfg["MeteorDB"], writeTime ) )
           print "Done."
