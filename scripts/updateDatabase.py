@@ -2,9 +2,8 @@
 
 import csv, sys, json, string, hashlib, os, subprocess, time, urllib2
 
-from coursesToJson import main as cTJ
+from classesToJson import main as cTJ
 from studentsToJson import main as sTJ
-from coursesToClassesJson import main as cTCJ
 
 def meteorOn( url, port):
   result = False
@@ -27,10 +26,6 @@ def main():
         if os.path.isfile( cfg["CourseData"] ) and os.path.isfile( cfg["SupCourseData"] ):
           print "Generating course data..."
           cTJ( cfg["CourseData"], cfg["SupCourseData"] )
-          print "Done."
-
-          print "Generating class data..."
-          cTCJ()
           print "Done."
 
           print "Importing class data into mongo..."

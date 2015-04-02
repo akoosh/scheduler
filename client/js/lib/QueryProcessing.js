@@ -117,6 +117,7 @@ Meteor.startup( function() {
         var result = []
 
         if (!_.isEmpty(query)) {
+          query.searchable = true;
           result = ClassesModel.find( query, { sort: { subject_number: 1 , subject: 1 } } ).fetch();
         }
 

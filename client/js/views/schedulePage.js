@@ -40,7 +40,9 @@ Template.schedulePage.events( {
 
   "click .saveFavorite" : function(e,template) {
     var name = prompt( "Please enter favorite schedule name", "Favorite Schedule " + new Date() );
-    Meteor.call( "saveFavorite", { name : name, classes: Session.get( "Scheduler.currentScheduleId" ), slots : Session.get("Scheduler.slots") } );
+    if( name ) {
+      Meteor.call( "saveFavorite", { name : name, classes: Session.get( "Scheduler.currentSchedule" ), slots : Session.get("Scheduler.slots") } );
+    }
   },
 
   "click .exportSchedule" : function(e,template) {
@@ -49,7 +51,7 @@ Template.schedulePage.events( {
 });
 
 Template.schedulePage.rendered = function() {
-  Scheduler.Schedules.generateSchedules();
+//  Scheduler.Schedules.generateSchedules();
 }
 
 Template.schedulePageControls.rendered = function() {
