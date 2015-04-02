@@ -1,27 +1,13 @@
 
 
+
 // Only return course data if the user is logged into the system
-Meteor.publish( "courseData", function() {
+Meteor.publish( "classData", function() {
   var result = undefined;
 
   // Make sure the user is authorized to view the scheduler course data by checking the
   // username against the Students collection. We take the MD5 of the username
   // which should match an entry in the collection.
-  if( this.userId ) {
-    var user = Meteor.users.findOne( this.userId );
-    if( user ) {
-      if( Students.findOne( { "id" : CryptoJS.MD5(user.username).toString() } ) ) {
-        result = CoursesModel.find();
-      }
-    }
-  }
-
-  return result;
-});
-
-Meteor.publish( "classData", function() {
-  var result = undefined;
-
   if( this.userId ) {
     var user = Meteor.users.findOne( this.userId );
     if( user ) {
@@ -53,3 +39,7 @@ Meteor.publish( "userFavoriteSchedules", function() {
 
   return result;
 });
+
+
+
+

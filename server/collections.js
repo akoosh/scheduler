@@ -2,7 +2,6 @@
 // 02/21/2014
 // ZT & AW
 
-CoursesModel = new Mongo.Collection( "Courses" );
 ClassesModel = new Mongo.Collection( "Classes" );
 Students = new Mongo.Collection( "Students" );
 ScheduleModel = new Mongo.Collection( "Schedules" );
