@@ -8,20 +8,17 @@ Meteor.startup( function() {
     // Converts an array of classes into units of renderable data
     "generateRenderPackage" : function( classes ) {
       var result = [];
-      for( c in classes ) {
+      for( var c in classes ) {
         c = classes[c];
-        for( section in c.sections ) {
-          section = c.sections[section];
-          for( time in section.times ) {
-            time = section.times[time];
-            var valid = time.start_time != "" && time.end_time != "";
-            result.push( {
-              "info" : c,
-              "time" : time,
-              "valid" : valid,
-              "time_blocks": Scheduler.Converter.generateTimeBlocks( time ),
-            });
-          }
+        for( var meeting in c.meetings ) {
+          meeting = c.meetings[meeting];
+          var valid = meeting.start_time != "" && meeting.end_time != "";
+          result.push( {
+            "info" : c,
+            "time" : meeting,
+            "valid" : valid,
+            "time_blocks": Scheduler.Converter.generateTimeBlocks( meeting ),
+          });
         }
       }
       return result;
@@ -198,18 +195,18 @@ Meteor.startup( function() {
     },
 
     // Generate a row for display on the scheduler page
-    "generateRow": function(course,section,dict) {
+    "generateRow": function(c,meeting,dict) {
 
       var row = {
-        "subject_with_number":course.subject_with_number,
-        "title":course.title,
-        "type":section.type,
-        "professor":section.professors[0],
-        "location":section.locations[0],
-        "times":Scheduler.Converter.formatTimes(section.times),
-        "units":course.units,
-        "id":course.id,
-        "description": course.description
+        "subject_with_number":c.subject_with_number,
+        "title":c.title,
+        "type":meeting.type,
+        "professor":meeting.professor,
+        "location":meeting.location,
+        "times":Scheduler.Converter.formatTimes( meeting ),
+        "units":c.units,
+        "id":c.number,
+        "description": c.description
       };
 
       // Removes duplicate row information
@@ -225,12 +222,8 @@ Meteor.startup( function() {
     },
 
     // Flatten the times array into a single line per time entry for the sectionRow
-    "formatTimes" : function( times ) {
-      var result = "";
-      for( time in times ) {
-        time = times[time];
-        result += time.days + " " + time.start_time + " - " + time.end_time + " ";
-      }
+    "formatTimes" : function( meeting ) {
+      var result = meeting.days + " " + meeting.start_time + " - " + meeting.end_time + " ";
 
       return result;
     },
@@ -238,21 +231,15 @@ Meteor.startup( function() {
     // Will return a collection of row elements for display in the schedule template
     // returns an array of objects => [ { }, ..., { } ] which holds data for each row
     // also will remove duplicate row data
-    "coursesToRows" : function(courses) {
+    "classesToRows" : function(classes) {
       var result = [], dict = {};
 
-      // For section per course generate a row
-      for( var course in courses ) {
-        course = courses[course];
-        for( var section in course.sections ) {
-          section = course.sections[section];
-
-          // dict will be modified to contain the last experianced
-          // rows values. This is used to remove the cell text that
-          // is duplicated
-          result.push(Scheduler.Converter.generateRow( course, section, dict ) );
+      for( var c in classes ) {
+        c = classes[c];
+        for( var meeting in c.meetings ) {
+          meeting = c.meetings[meeting];
+          result.push(Scheduler.Converter.generateRow( c, meeting, dict ) );
         }
-
       }
 
       return result;

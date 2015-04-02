@@ -199,12 +199,12 @@ BucketIterator.prototype.getSchedule = function() {
   var result = [];
   var classes = this.getCourseArray();
 
-  for( number in classes) {
+  for( number in classes ) {
     number = classes[number];
-    var c = ClassesModel.findOne( { id : number } );
+    var c = ClassesModel.findOne( { number : number } );
 
     // Make sure that the sections has some data for display
-    if( c && c.sections ) {
+    if( c && c.meetings ) {
       result.push( c );
     }
   }

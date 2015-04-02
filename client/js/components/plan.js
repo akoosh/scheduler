@@ -73,8 +73,11 @@ Template.slotDisplay.helpers( {
         },
 
         "modifiedClasses" : function() {
-          
-          var result = this.classes || [];
+          var result = [];
+ 
+          if( this.classes ) {
+            result = ClassesModel.find( { number : { $in : this.classes } } ).fetch();
+          }
 
           if( this.isCollapsed ) {
             result = result.slice( 0, 0 );
@@ -197,24 +200,18 @@ Template.planLayoutControls.events( {
         },
 
         "click .generateButton": function() {
-            var slots = Session.get("Scheduler.slots") || [];
-            var classesArray = _.map(slots, function(slot) {
-                return _.pluck(slot.classes, 'number');
-            });
-            
-            Meteor.call("saveSchedule", { name : "generated-"+new Date(), classes : classesArray }, function(err, result) {
-              if( result ) {
-                Session.set( "Scheduler.currentScheduleId", result );
+          var slots = Session.get("Scheduler.slots") || [];
+          var classesArray = _.map(slots, function(slot) {
+              return slot.classes;
+          });
 
-                if( classesArray.length ) {
-                  // Setup the available schedules
+          if( classesArray.length ) {
+            // Setup the available schedules
 
-                  // Transition to the schedule view
-                  Scheduler.Schedules.generateSchedules( classesArray );
-                  Scheduler.PageLoader.loadPage( "schedulePage" );
-                }
-              }
-            });
+            // Transition to the schedule view
+            Scheduler.Schedules.generateSchedules( classesArray );
+            Scheduler.PageLoader.loadPage( "schedulePage" );
+          }
         }
 });
 

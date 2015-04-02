@@ -54,14 +54,26 @@ Template.searchResults.events( {
 
       var curSlot = slots[slotSelected] || { index: slotSelected, name: query, classes: [], selectedClasses: {}, isCollapsed : false };
 
+      var classesToAdd = this.meetings !== undefined ? [ this ] : Session.get( "Scheduler.searchResults" );
 
-      var classesToAdd = this.id !== undefined ? [this] : Session.get( "Scheduler.searchResults" );
+      for( var c in classesToAdd ) {
+        c = classesToAdd[c];
+          if (curSlot.selectedClasses[c.number] === undefined) {
+              curSlot.selectedClasses[c.number] = true;
+              curSlot.classes.push( c.number );
+          }
+      }
+      /*
+
+      var classesToAdd = this.meetings !== undefined ? this.meetings : Session.get( "Scheduler.searchResults" );
       _.each(classesToAdd, function (cl) {
           if (curSlot.selectedClasses[cl.number] === undefined) {
               curSlot.selectedClasses[cl.number] = true;
               curSlot.classes.push(cl);
           }
       });
+
+      */
 
       slots[slotSelected] = curSlot;
 
