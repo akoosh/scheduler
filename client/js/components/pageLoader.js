@@ -41,8 +41,8 @@ Template.pageLoader.helpers( {
     return result;
   },
 
-  hasCourseData : function() {
-    return CoursesModel.findOne();
+  hasData: function() {
+    return ClassesModel.findOne();
   }
 
 });

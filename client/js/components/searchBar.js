@@ -8,21 +8,20 @@ Template.searchBar.events({
 
           var input = $("#query").val();
 
-          Meteor.call('coursesForQuery', input, function(err, results) {
-              if (err === undefined) {
-                $(".searchResults").animate({ scrollTop: 0 }, "fast");
-                Session.set( "Scheduler.searchResults", results );
+          var results = Scheduler.QueryProcessing.classesForString( input );
+          if( results ) {
+            $(".searchResults").animate({ scrollTop: 0 }, "fast");
+            Session.set( "Scheduler.searchResults", results );
 
-                var renderOptions = Session.get( "Scheduler.searchRenderOptions" );
+            var renderOptions = Session.get( "Scheduler.searchRenderOptions" );
 
-                // Reset the search view render options
-                if( renderOptions ) {
-                  renderOptions.max = 10;
-                  renderOptions.courses = {};
-                  Session.set( "Scheduler.searchRenderOptions", renderOptions );
-                }
-              }
-          });
+            // Reset the search view render options
+            if( renderOptions ) {
+              renderOptions.max = 10;
+              renderOptions.courses = {};
+              Session.set( "Scheduler.searchRenderOptions", renderOptions );
+            }
+          }
 
       }, 200 );
 
