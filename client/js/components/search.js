@@ -39,50 +39,33 @@ Template.queryDisplay.helpers( {
 
 Template.searchResults.events( {
   "click .addButton": function(e, t) {
-      var slotSelected = Session.get("Scheduler.slotSelected");
+    var plan = Session.get("Scheduler.plan") || Scheduler.Plan.newPlan(),
+        query = $("#query").val();
+        classes = this.meetings ? [ this ] : Session.get( "Scheduler.searchResults" ),
+        hasAddedClasses = false,
+        hasAddedSlotOffset = 0,
+        self = this;
 
-      // first time adding class
-      if (slotSelected === undefined) {
-          slotSelected = 0;
-          Session.set("Scheduler.slotSelected", slotSelected );
+    // Add the slot if needed
+    if( plan.slots[plan.selectedSlot] === undefined ) {
+      hasAddedSlotOffset = 1;
+      plan.slots.push( Scheduler.Plan.newSlot() );
+    }
+
+    // Add each class to the current slot
+    _.each( classes, function(ele) {
+      if( plan.selectedClasses[ele.number] === undefined ) {
+        plan.selectedClasses[ele.number] = hasAddedClasses = true;
+        plan.slots[plan.selectedSlot].classes.push( ele.number );
       }
+    });
 
-      var slots = Session.get("Scheduler.slots") || [],
-          query = $("#query").val();
+    // If we added to the end of the list then auto-inc the slot
+    if( hasAddedClasses && plan.selectedSlot == plan.slots.length - hasAddedSlotOffset ) {
+      plan.selectedSlot++;
+    }
 
-      var next = slotSelected == slots.length;
-
-      var curSlot = slots[slotSelected] || { index: slotSelected, name: query, classes: [], selectedClasses: {}, isCollapsed : false };
-
-      var classesToAdd = this.meetings !== undefined ? [ this ] : Session.get( "Scheduler.searchResults" );
-
-      for( var c in classesToAdd ) {
-        c = classesToAdd[c];
-          if (curSlot.selectedClasses[c.number] === undefined) {
-              curSlot.selectedClasses[c.number] = true;
-              curSlot.classes.push( c.number );
-          }
-      }
-      /*
-
-      var classesToAdd = this.meetings !== undefined ? this.meetings : Session.get( "Scheduler.searchResults" );
-      _.each(classesToAdd, function (cl) {
-          if (curSlot.selectedClasses[cl.number] === undefined) {
-              curSlot.selectedClasses[cl.number] = true;
-              curSlot.classes.push(cl);
-          }
-      });
-
-      */
-
-      slots[slotSelected] = curSlot;
-
-      Session.set("Scheduler.slots", slots);
-
-      if( next ) {
-        Session.set("Scheduler.slotSelected", slotSelected+1 );
-      }
-
+    Session.set("Scheduler.plan", plan);
   },
 
   "click .loadMoreResults": function() {
@@ -93,23 +76,7 @@ Template.searchResults.events( {
       Scheduler.qTip.clearTips();
       Session.set("Scheduler.searchRenderOptions", renderOptions );
     }
-  },
-
-  "click .loadMoreClasses": function(e, template) {
-    var courseId = $(e.target).attr("course"),
-        renderOptions = Session.get("Scheduler.searchRenderOptions");
-
-    if( renderOptions && courseId ) {
-      if( renderOptions.courses[courseId] === undefined ) {
-        renderOptions.courses[courseId] = { max : 4 };
-      }
-
-      renderOptions.courses[courseId].max += 4;
-
-      Scheduler.qTip.clearTips();
-      Session.set("Scheduler.searchRenderOptions", renderOptions );
-    }
-  },
+  }
 
 } );
 
@@ -140,7 +107,6 @@ Template.searchResults.rendered = function() {
   };
 
   Session.set( "Scheduler.searchRenderOptions", searchRenderOptions );
-
 }
 
 Template.classButton.rendered = function() {

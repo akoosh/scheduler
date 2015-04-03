@@ -41,7 +41,7 @@ Template.schedulePage.events( {
   "click .saveFavorite" : function(e,template) {
     var name = prompt( "Please enter favorite schedule name", "Favorite Schedule " + new Date() );
     if( name ) {
-      Meteor.call( "saveFavorite", { name : name, classes: Session.get( "Scheduler.currentSchedule" ), slots : Session.get("Scheduler.slots") } );
+      Meteor.call( "saveFavorite", { name : name, classes: Session.get( "Scheduler.currentSchedule" ), slots : Session.get("Scheduler.plan") } );
     }
   },
 

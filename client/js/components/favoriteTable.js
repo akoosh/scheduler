@@ -6,8 +6,7 @@ Template.favoriteTable.events({
     },
 
     "click .editFavoriteSchedule" : function(e,t) {
-      Session.set( "Scheduler.slotSelected", 0 );
-      Session.set( "Scheduler.slots", this.slots );
+      Session.set( "Scheduler.plan", this.slots );
       Scheduler.PageLoader.loadPage( "search" );
     },
 
