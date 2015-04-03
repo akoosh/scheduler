@@ -7,13 +7,16 @@ Meteor.startup( function() {
   Scheduler.Schedules = {
     "bucketIterator"  : null,
 
-    // renders a schedule using render packets
+    // renders a schedule using render packets returns if the generation has returned any valid schedules
     "generateSchedules" : function(classes) {
+      var result = false;
       if( classes !== undefined && classes.length ) {
 
         this.bucketIterator = new BucketIterator( classes );
+        result = this.bucketIterator.hasValidSchedules();
         Session.set( "Scheduler.scheduleCount", this.bucketIterator.size );
       }
+      return result;
     },
 
     // Goes to the next available schedule
