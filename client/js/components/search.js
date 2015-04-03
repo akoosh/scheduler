@@ -49,7 +49,7 @@ Template.searchResults.events( {
     // Add the slot if needed
     if( plan.slots[plan.selectedSlot] === undefined ) {
       hasAddedSlotOffset = 1;
-      plan.slots.push( Scheduler.Plan.newSlot() );
+      plan.slots.push( Scheduler.Plan.newSlot( query ) );
     }
 
     // Add each class to the current slot
