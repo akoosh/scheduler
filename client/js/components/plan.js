@@ -241,8 +241,9 @@ Template.planLayoutControls.events( {
               // Setup the available schedules
 
               // Transition to the schedule view
-              Scheduler.Schedules.generateSchedules( classesArray );
-              Scheduler.PageLoader.loadPage( "schedule" );
+              if( Scheduler.Schedules.generateSchedules( classesArray ) ) {
+                Scheduler.PageLoader.loadPage( "schedule" );
+              }
             }
           }
         }
