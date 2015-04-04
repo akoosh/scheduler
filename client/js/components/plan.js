@@ -173,6 +173,8 @@ Template.planLayout.events( {
         plan.selectedSlot = plan.slots.length-1;
       }
 
+      console.log( self, this, plan );
+
       delete plan.selectedClasses[self.number];
 
       Scheduler.qTip.hideTips();

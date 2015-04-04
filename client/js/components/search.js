@@ -1,3 +1,17 @@
+Template.classDisplay.helpers( {
+  "availableToAdd" : function(e,t) {
+    var result = "",
+        plan = Session.get( "Scheduler.plan" );
+
+    if( plan ) {
+      if( plan.selectedClasses[this.number] !== undefined ) {
+        result = "disabled";
+      }
+    }
+
+    return result;
+  }
+});
 Template.queryDisplay.helpers( {
         "queryResults": function() {
             var queryResults = Session.get("Scheduler.searchResults") || [],
