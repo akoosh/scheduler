@@ -112,10 +112,12 @@ Template.slotDisplay.helpers( {
         },
 
         "numberOfClasses" : function() {
-          var result = 0;
+          var result = "No Classes";
 
-          if( this.classes ) {
-            result = this.classes.length;
+          if( this.classes.length == 1 ) {
+            result = "1 Class";
+          } else if( this.classes.length ) {
+            result = this.classes.length + " Classes";
           }
 
           return result;
@@ -137,38 +139,41 @@ Template.slotCollapse.events( {
 
 Template.slotRemove.events( {
   "click .slot-remove" : function( e, t ) {
-    var plan = Session.get( "Scheduler.plan" );
+    setTimeout( function() {
+      var plan = Session.get( "Scheduler.plan" );
 
-    if( plan && t.data && t.data.index != undefined ) {
+      if( plan && t.data && t.data.index != undefined ) {
 
-      // Remove the slot
-      var slot = plan.slots.splice( t.data.index, 1 );
+        // Remove the slot
+        var slot = plan.slots.splice( t.data.index, 1 );
 
-      // Recalc indicies
-      _.each(plan.slots, function(slot, index) {
-        slot.index = index;
-      });
-
-
-      if( slot.length ) {
-        _.each( slot[0].classes, function(ele) {
-          if( plan.selectedClasses[ele] !== undefined ) {
-            delete plan.selectedClasses[ele];
-          }
+        // Recalc indicies
+        _.each(plan.slots, function(slot, index) {
+          slot.index = index;
         });
-      }
-      
 
-      Session.set( "Scheduler.plan", plan );
-    }   
+
+        if( slot.length ) {
+          _.each( slot[0].classes, function(ele) {
+            if( plan.selectedClasses[ele] !== undefined ) {
+              delete plan.selectedClasses[ele];
+            }
+          });
+        }
+        
+        Scheduler.qTip.hideTips();
+        Session.set( "Scheduler.plan", plan );
+      }   
+    }, 0 );
   }
 });
 
 Template.planLayout.events( {
   "click .removeButton": function() {
+    var self = this;
+    setTimeout( function() {
       var plan = Session.get("Scheduler.plan"),
           query = $("#query").val()
-          self = this;
 
       // Remove the class from the buckets
       _.each( plan.slots, function(ele) {
@@ -187,7 +192,7 @@ Template.planLayout.events( {
 
       Scheduler.qTip.hideTips();
       Session.set("Scheduler.plan", plan);
-
+    }, 0 );
   },
 
   "click .slotDisplay": function( e, t ) {

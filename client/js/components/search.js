@@ -79,6 +79,7 @@ Template.searchResults.events( {
       plan.selectedSlot++;
     }
 
+    Scheduler.qTip.hideTips();
     Session.set("Scheduler.plan", plan);
   },
 
