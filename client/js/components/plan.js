@@ -111,7 +111,7 @@ Template.slotDisplay.helpers( {
           return result;
         },
 
-        "numberOfClasses" : function() {
+        "numberOfClassesLabel" : function() {
           var result = "No Classes";
 
           if( this.classes.length == 1 ) {
