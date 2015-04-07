@@ -9,16 +9,14 @@
         <thead>
           <th class="name" title="{{name}}" colspan=2> {{slotName}} </th>
           <th class="classes"> 
-            {{#if numberOfClasses }}
+            {{#if hasClasses }}
               {{numberOfClassesLabel}}
             {{/if}}
           </th>
           <th class="slot-controls">
-            {{#if numberOfClasses }}
+            {{#if hasClasses}}
               {{> slotCollapse}} 
-              {{#if numberOfClasses}}
-                {{> slotRemove}}
-              {{/if}}
+              {{> slotRemove}}
             {{/if}}
           </th>
         </thead>
