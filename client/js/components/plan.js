@@ -142,12 +142,22 @@ Template.slotRemove.events( {
     if( plan && t.data && t.data.index != undefined ) {
 
       // Remove the slot
-      plan.slots.splice( t.data.index, 1 );
+      var slot = plan.slots.splice( t.data.index, 1 );
 
       // Recalc indicies
       _.each(plan.slots, function(slot, index) {
         slot.index = index;
       });
+
+
+      if( slot.length ) {
+        _.each( slot[0].classes, function(ele) {
+          if( plan.selectedClasses[ele] !== undefined ) {
+            delete plan.selectedClasses[ele];
+          }
+        });
+      }
+      
 
       Session.set( "Scheduler.plan", plan );
     }   
@@ -173,33 +183,10 @@ Template.planLayout.events( {
         plan.selectedSlot = plan.slots.length-1;
       }
 
-      console.log( self, this, plan );
-
       delete plan.selectedClasses[self.number];
 
       Scheduler.qTip.hideTips();
       Session.set("Scheduler.plan", plan);
-
-      /*
-      console.log( this );
-      var curSlot = plan.slots[plan.selectedSlot];
-
-      // find and remove the appropriate class
-      var outerThis = this;
-      curSlot.classes = _.reject(curSlot.classes, function(ele) { return ele.number === outerThis.number; });
-      delete plan.selectedClasses[this.number];
-
-      // update slots with the new curSlot
-      plan.slots[plan.selectedSlot] = curSlot;
-
-      // remove all slots that contain no classes
-      plan.slots = _.reject(plan.slots, function(ele) { return ele.classes.length === 0; });
-
-      // recalculate slot number in case an upper slot was removed
-      _.each(plan.slots, function(slot, index) {
-          slot.index = index;
-      });
-      */
 
   },
 
