@@ -11,6 +11,7 @@ Accounts.ui.config({
 // Main application startup
 Meteor.startup( function() {
   Scheduler.PageLoader.validPages = [ "search", "schedule", "favorite", "about" ];
+  location.hash = "";
 });
 
 // Entry point for application

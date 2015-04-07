@@ -1,5 +1,5 @@
 Template.classDisplay.helpers( {
-  "availableToAdd" : function(e,t) {
+  "addDisabled" : function(e,t) {
     var result = "",
         plan = Session.get( "Scheduler.plan" );
 
@@ -13,7 +13,7 @@ Template.classDisplay.helpers( {
   }
 });
 Template.queryDisplay.helpers( {
-        "queryResults": function() {
+        queryResults: function() {
             var queryResults = Session.get("Scheduler.searchResults") || [],
                 renderOptions = Session.get("Scheduler.searchRenderOptions");
 
@@ -43,6 +43,24 @@ Template.queryDisplay.helpers( {
 
           if( queryResults && queryResults.length ) {
             result = true;
+          }
+
+          return result;
+        },
+
+        addAllDisabled : function() {
+          var result       = '',
+              queryResults = Session.get("Scheduler.searchResults"),
+              plan         = Session.get("Scheduler.plan");
+
+          if( plan && queryResults ) {
+            var classNumbers = _.pluck( queryResults, "number" );
+
+            // If size of the difference from class numbers and selected class numbers is 0 then there are no classes we can possibly add 
+            // so disable the add all button
+            if( _.difference( classNumbers, _.keys( plan.selectedClasses ) ).length == 0 ) {
+              result = "disabled";
+            }
           }
 
           return result;

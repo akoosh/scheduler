@@ -12,7 +12,7 @@
 <template name="queryDisplay">
     <div id="results">
       {{#if hasResults}}
-        <button class="btn btn-primary visible-md visible-lg addButton" title="Add all classes for this query to the current slot">Add All</button>
+        <button class="btn btn-primary visible-md visible-lg addButton" title="Add all classes for this query to the current slot" {{addAllDisabled}}>Add All</button>
       {{/if}}
       {{#each queryResults}}
           {{> classDisplay }}
@@ -62,7 +62,7 @@
           </table>
         </td>
         <td> 
-          <button class="addButton btn btn-primary visible-md visible-lg {{availableToAdd}}" title="Add this class to the current slot" {{availableToAdd}} >Add</button> 
+          <button class="addButton btn btn-primary visible-md visible-lg" title="Add this class to the current slot" {{addDisabled}} >Add</button> 
         </td>
       </tbody>
     </table>

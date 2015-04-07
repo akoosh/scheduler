@@ -8,7 +8,7 @@ Template.navigationControls.helpers({
         numberFavoriteSchedules = UserFavoriteSchedules.find({}).count();
     
     if( numberFavoriteSchedules ) {
-      result = "("+numberFavoriteSchedules+")";
+      result = " ("+numberFavoriteSchedules+")";
     }
 
     return result;
