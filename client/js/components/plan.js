@@ -114,7 +114,7 @@ Template.slotDisplay.helpers( {
         "hasClasses" : function() {
           var result = false;
 
-          if( this.classes.length ) {
+          if( this.classes && this.classes.length ) {
             result = true;
           }
 
@@ -124,10 +124,12 @@ Template.slotDisplay.helpers( {
         "numberOfClassesLabel" : function() {
           var result = "No Classes";
 
-          if( this.classes.length == 1 ) {
-            result = "1 Class";
-          } else if( this.classes.length ) {
-            result = this.classes.length + " Classes";
+          if( this.classes ) {
+            if( this.classes.length == 1 ) {
+              result = "1 Class";
+            } else if( this.classes.length ) {
+              result = this.classes.length + " Classes";
+            }
           }
 
           return result;

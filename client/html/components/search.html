@@ -30,17 +30,20 @@
         <th class="courseTitle">{{title}}</th>
         <th>{{subject_with_number}}</th>
         <th class="courseUnits">{{units}} units</th>
-        <th>    
+        <th></th>
+      </thead>
+      <tbody>
+        <td> 
+          <div>
+            Section {{number}} 
+          </div>
           <div class="courseInfo">
             <span title="{{title}}" description="{{description}}" class="class-icon info-icon info-i">i</span>
             {{#each geCodes}}
-              <span class="class-icon ge-icon" title="This class fulfills the general education category {{this}}">GE {{this}}</span>
+            <span class="class-icon ge-icon" title="This class fulfills the general education category {{this}}">GE {{this}}</span>
             {{/each}}
           </div>
-        </th>
-      </thead>
-      <tbody>
-        <td> Section {{number}} </td>
+        </td>
         <td colspan=2>
           <table class="table table-striped">
             <thead>
@@ -58,9 +61,13 @@
             </tbody>
           </table>
         </td>
-        <td> <button class="addButton btn btn-primary visible-md visible-lg {{availableToAdd}}" title="Add this class to the current slot" {{availableToAdd}} >Add</button> </td>
+        <td> 
+          <button class="addButton btn btn-primary visible-md visible-lg {{availableToAdd}}" title="Add this class to the current slot" {{availableToAdd}} >Add</button> 
+        </td>
       </tbody>
     </table>
+
+
  </div> 
 </template>
 
