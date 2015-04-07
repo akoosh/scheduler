@@ -19,7 +19,10 @@ BucketIterator = function( buckets ) {
 
 // Returns if the iterator has any valid schedules
 BucketIterator.prototype.hasValidSchedules = function() {
-  return Object.keys( this.valid ) != this.size;
+  var keys = _.keys( this.valid ),
+      self = this;
+  keys = _.reject( keys, function(ele){ return self.valid[ele]; } );
+  return keys.length != this.size;
 }
 
 // Sets the buckets for iteration
