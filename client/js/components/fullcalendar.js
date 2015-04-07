@@ -11,7 +11,7 @@ Meteor.startup( function() {
           titleFormat   : "",
           header        : false,
           allDaySlot    : false,
-          height        : "auto",
+          height        : 720,
           columnFormat  : "dddd",
           eventRender: function(event, element) {
               element.qtip({

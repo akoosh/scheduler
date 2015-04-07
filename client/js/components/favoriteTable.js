@@ -1,6 +1,7 @@
 Template.favoriteTable.events({
     "click .loadFavoriteSchedule" : function(e,t) {
       Session.set( "Scheduler.currentFavoriteScheduleId", this._id );
+      Scheduler.qTip.hideTips();
       Scheduler.Schedules.generateSchedules( this.classes );
       Scheduler.Schedules.renderSchedule();
     },
