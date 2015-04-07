@@ -181,13 +181,14 @@ Meteor.startup( function() {
          }
 
         for( var block in packet.time_blocks ) {
+          console.log( packet );
           block = packet.time_blocks[block];
           result.push( {
             title : packet.info.subject_with_number + " " + packet.info.title,
             start : block.mStart,
             end   : block.mEnd,
             description: packet.info.description,
-            code: "("+packet.info.id+")"
+            code: "("+packet.info.number+")"
           });
         }
       }
