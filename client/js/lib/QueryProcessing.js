@@ -191,7 +191,7 @@ Meteor.startup( function() {
 
           isProfessor: function(str) {
               var regx = RegExp('^' + str, 'i');
-              return (str.length > 2) && (ClassesModel.find( { "sections.professors": regx }, { "_id": 1 } ).fetch().length > 0);
+              return (str.length > 2) && (ClassesModel.find( { "meetings.professor": regx }, { "_id": 1 } ).fetch().length > 0);
           },
 
 
@@ -227,13 +227,13 @@ Meteor.startup( function() {
           queryKeyForType: function(type) {
               switch (Number(type)) {
                   case Scheduler.QueryProcessing.QueryToken.Type.PROFESSOR:
-                      return "sections.professors";
+                      return "meetings.professor";
                   case Scheduler.QueryProcessing.QueryToken.Type.TITLE:
                       return "title";
                   case Scheduler.QueryProcessing.QueryToken.Type.TIME:
-                      return "sections.times.start_time";
+                      return "meetings.start_time";
                   case Scheduler.QueryProcessing.QueryToken.Type.DAY:
-                      return "sections.times.days";
+                      return "meetings.days";
                   case Scheduler.QueryProcessing.QueryToken.Type.GE:
                       return "ge_code";
                   case Scheduler.QueryProcessing.QueryToken.Type.SUBJECT:
