@@ -4,8 +4,8 @@
 /* Prototype methods */
 
 ScheduleValidator = function(scheduleFilters) {
-    this.scheduleFilters = scheduleFilters;
-    this.scheduleFilters.push(new ScheduleFilter()); // testing filter
+    this.scheduleFilters = scheduleFilters || [];
+//    this.scheduleFilters.push(new ScheduleFilter()); // testing filter
 }
 
 ScheduleValidator.prototype.scheduleIsValid = function(schedule) {

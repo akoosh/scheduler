@@ -2,9 +2,13 @@
 // Cameron Hall
 
 ScheduleFilter = function(days, startTime, endTime) {
+/*
+    console.log( days, startTime, endTime );
     this.setStartTime(startTime);
     this.setEndTime(endTime);
     this.includedDays = days;
+
+*/
 }
 
 ScheduleFilter.prototype.setStartTime = function(startTime) {

@@ -78,9 +78,6 @@ BucketIterator.prototype.setPosition = function(pos) {
 // Returns true if the provided courses has overlap
 BucketIterator.prototype.coursesAreValid = function(courses) {
     var result = this.scheduleValidator.scheduleIsValid(courses); 
-    console.log("BucketIterator: scheduleIsValid: ", result);
-    
-    console.log("\n\n\n\n");
     return result;
 }
 
