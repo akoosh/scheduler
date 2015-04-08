@@ -38,6 +38,8 @@ Meteor.startup( function() {
     "timeStringToInt" : function(timeString) {
       var val = 0;
 
+      console.log( timeString );
+
       // Clean the input
       timeString = timeString.trim();
       timeString = timeString.replace( /\D/gi, "" );

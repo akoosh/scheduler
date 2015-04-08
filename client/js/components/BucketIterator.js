@@ -6,7 +6,7 @@
 BucketIterator = function( buckets ) {
   this.setBuckets( buckets );
   this.reset();
-
+  this.scheduleValidator = new ScheduleValidator([]);
   // Get the position to the first valid position
   while( !this.isValid() ) {
     this.inc();
@@ -76,52 +76,9 @@ BucketIterator.prototype.setPosition = function(pos) {
 }
 
 // Returns true if the provided courses has overlap
-BucketIterator.prototype.courseOverlap = function(courses) {
-  var days = {};
-  var renderPackets = Scheduler.Converter.generateRenderPackage( courses );
-
-  // Load the corses into a temporary associative array for comparision
-  //  This is to allow us to reduce the number of comparisons between courses where
-  //  we only need to check between courses on the same day
-  for( packet in renderPackets ) {
-    packet = renderPackets[packet];
-    for( block in packet.time_blocks ) {
-      block = packet.time_blocks[block];
-
-      // If the day has not been generated make it
-      if( typeof days[block.day] === "undefined" ) {
-        days[block.day] = [];
-      }
-
-      // Add the block to the day
-      days[block.day].push( block );
-    }
-  }
-
-  // Check for overlap between the courses on the same days
-  for( day in days ) {
-    day = days[day];
-    if( day.length == 1 ) {
-      continue;
-    }
-    for( a in day ) {
-      var dayA = day[a];
-      for( b in day ) {
-        var dayB = day[b];
-        // Don't compare the same course with itself
-        if( a==b ){ continue; }
-
-        // 1D Rect collision
-        if( 
-          ( dayA.start < dayB.end && dayA.end     > dayB.start ) || 
-          ( dayA.end   > dayB.start && dayA.start < dayB.end ) ) {
-          return true;
-        }
-      }
-    }
-  }
-
-  return false;
+BucketIterator.prototype.coursesAreValid = function(courses) {
+    var result = this.scheduleValidator.scheduleIsValid(courses); 
+    return result;
 }
 
 // Returns the result of a position in the iterator being a valid schedule or not
@@ -134,9 +91,8 @@ BucketIterator.prototype.isValid = function(pos) {
   // Generate the valid check if not available in the valid array
   if( typeof this.valid[pos] === "undefined" ) {
 
-    // Check for overlap
-    //  this will set the valid[pos] to TRUE is there is no overlap
-    this.valid[pos] = !this.courseOverlap( this.getSchedule() );
+    // Check schedule for overlap && against user-selected filters
+    this.valid[pos] = this.coursesAreValid( this.getSchedule() );
   }
 
   return this.valid[pos];
