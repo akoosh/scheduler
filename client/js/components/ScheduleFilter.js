@@ -1,19 +1,10 @@
 // ScheduleFilter.js
 // Cameron Hall
 
-var dayMappings = {
-    "M" : "Monday",
-    "T" : "Tuesday",
-    "W" : "Wednesday",
-    "TH" : "Thursday",
-    "F" : "Friday",
-    "S" : "Saturday",
-}
-
 ScheduleFilter = function(days, startTime, endTime) {
-    this.startTime = 0;
-    this.setEndTime("6:00 PM");
-    this.includedDays = ["M", "W"]; // Monday and Wednesday
+    this.setStartTime(startTime);
+    this.setEndTime(endTime);
+    this.includedDays = days;
 }
 
 ScheduleFilter.prototype.setStartTime = function(startTime) {
