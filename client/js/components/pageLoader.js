@@ -8,12 +8,13 @@ Meteor.startup( function() {
   Scheduler.PageLoader = {
     validPages : [],
     loadPage : function( page ) {
+
       
       if( _.contains( this.validPages, page ) ) {
 
         location.hash = page;
         Scheduler.qTip.clearTips();
-        Session.set( "Scheduler.currentPage", page );
+        Session.set( "Scheduler.currentPage", page + "Page" );
       }
     }
   }
@@ -22,9 +23,7 @@ Meteor.startup( function() {
   // Setup hash navigation function
   $(window).on( "popstate", function(){ 
     var dest = location.hash.substr(1);
-    if( Template[dest] !== undefined ) {
-      Scheduler.PageLoader.loadPage( dest );
-    }
+    Scheduler.PageLoader.loadPage( dest );
   });
 });
 
@@ -41,8 +40,8 @@ Template.pageLoader.helpers( {
     return result;
   },
 
-  hasCourseData : function() {
-    return CoursesModel.findOne();
+  hasData: function() {
+    return ClassesModel.findOne();
   }
 
 });

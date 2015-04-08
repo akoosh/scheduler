@@ -7,18 +7,16 @@
   <div class="slotDisplay {{selectedOrEmpty}}">
       <table class="table table-striped classButtonRowTable">
         <thead>
-          <th class="name" title="{{name}}"> {{slotName}} </th>
+          <th class="name" title="{{name}}" colspan=2> {{slotName}} </th>
           <th class="classes"> 
-            {{#if numberOfClasses }}
-              {{numberOfClasses}} classes
+            {{#if hasClasses }}
+              {{numberOfClassesLabel}}
             {{/if}}
           </th>
           <th class="slot-controls">
-            {{#if numberOfClasses }}
+            {{#if hasClasses}}
               {{> slotCollapse}} 
-              {{#if numberOfClasses}}
-                {{> slotRemove}}
-              {{/if}}
+              {{> slotRemove}}
             {{/if}}
           </th>
         </thead>
@@ -51,3 +49,13 @@
   {{> slotDisplay}}
   
 </template>
+
+<template name="classButton">
+  <tr>
+    <td>{{number}}</td>
+    <td>{{subject_with_number}}</td>
+    <td>{{title}}</td>
+    <td><span class="glyphicon glyphicon-remove removeButton" title="Remove {{subject_with_number}} from this slot"></span></td>
+  </tr>
+</template>
+

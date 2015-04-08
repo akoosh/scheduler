@@ -9,12 +9,12 @@ def generateSupplementaryData( supFile ):
   reader = csv.DictReader( supFile, delimiter=',', quotechar='"')
   for row in reader:
     strip_whitespace( row )
-    result[row['Subject']+row['Catalog']] = { "title" : getValue( row, ['Long Title']), "description" : getValue( row, ['Course Descr'] ) }
+    result[row['Subject']+row['Catalog']] = { "title" : get( row, ['Long Title']), "description" : get( row, ['Course Descr'] ) }
     
   return result
 
 # Returns the first matched key from a dict based on the passed values array
-def getValue( row, values, default='' ):
+def get( row, values, default='' ):
 
   result = default
   if not isinstance( values, list ):
@@ -136,40 +136,40 @@ class Course(object):
 
 
         course = {}
-        course['department'] = getValue( row, ['Descr'] )
-        course['subject'] = getValue( row, ['Subject'] ) 
-        course['subject_number'] = int("".join( [ x for x in getValue( row, ['Catalog'] ) .lower() if x not in string.ascii_lowercase  ] ))
-        course['subject_with_number'] = getValue( row, ['Subject'] )  + getValue( row, ['Catalog'] ) 
-        course['units'] = getValue( row, ['Min Units'] ) 
-        course['ge_code'] = getValue( row, ['Designation'] ) 
+        course['department'] = get( row, ['Descr'] )
+        course['subject'] = get( row, ['Subject'] ) 
+        course['subject_number'] = int("".join( [ x for x in get( row, ['Catalog'] ) .lower() if x not in string.ascii_lowercase  ] ))
+        course['subject_with_number'] = get( row, ['Subject'] )  + get( row, ['Catalog'] ) 
+        course['units'] = get( row, ['Min Units'] ) 
+        course['ge_code'] = get( row, ['Designation'] ) 
 
-        supId = course['subject'] + getValue( row, ['Catalog'] ) 
+        supId = course['subject'] + get( row, ['Catalog'] ) 
         if not supId in sup:
           sup[supId] = {}
           print "Attempted to find supplementary data for %s but was not available" % supId
 
-        course['description'] = getValue( sup[supId], ['description'], "No description available" )
-        course['title'] = getValue( sup[supId], ['title'], course['subject_with_number'] )
+        course['description'] = get( sup[supId], ['description'], "No description available" )
+        course['title'] = get( sup[supId], ['title'], course['subject_with_number'] )
 
         course['classes'] = [] 
 
         this_class = {}
-        this_class['number'] = getValue( row, ['Class Nbr'] ) 
+        this_class['number'] = get( row, ['Class Nbr'] ) 
         this_class['sections'] = []
 
         this_section = {}
-        this_section['professors'] = [ getValue( row, ['Last'] )  ]
-        this_section['type'] = getValue( row, ['Component'] ) 
-        this_section['locations'] = [ getValue( row, ['Facil ID'] )  ]
-        this_section['capacity'] = [ getValue( row, ['Capacity'] )  ]
-        this_section['totalEnrolled'] = [ getValue( row, ['Tot Enrl'] )  ]
-        this_section['availableSeats'] = [ getValue( row, ['Avail Seats'] )  ]
+        this_section['professors'] = [ get( row, ['Last'] )  ]
+        this_section['type'] = get( row, ['Component'] ) 
+        this_section['locations'] = [ get( row, ['Facil ID'] )  ]
+        this_section['capacity'] = [ get( row, ['Capacity'] )  ]
+        this_section['totalEnrolled'] = [ get( row, ['Tot Enrl'] )  ]
+        this_section['availableSeats'] = [ get( row, ['Avail Seats'] )  ]
         this_section['times'] = []
 
         this_time = {}
-        this_time['start_time'] = getValue( row, ['START TIME'] ) 
-        this_time['end_time'] = getValue( row, ['END TIME'] ) 
-        this_time['days'] = getValue( row, ['Pat'] ) 
+        this_time['start_time'] = get( row, ['START TIME'] ) 
+        this_time['end_time'] = get( row, ['END TIME'] ) 
+        this_time['days'] = get( row, ['Pat'] ) 
 
         this_section['times'].append(this_time)
         this_class['sections'].append(this_section)

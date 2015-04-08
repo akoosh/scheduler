@@ -7,17 +7,16 @@ Meteor.startup( function() {
   Scheduler.Schedules = {
     "bucketIterator"  : null,
 
-    // renders a schedule using render packets
+    // renders a schedule using render packets returns if the generation has returned any valid schedules
     "generateSchedules" : function(classes) {
-      if( classes !== undefined ) {
-        // Wrap the objects if needed
-        if( typeof classes[0] !== "object" ) {
-          classes = classes.map( function(ele) { return [ ele ]; } );
-        }
+      var result = false;
+      if( classes !== undefined && classes.length ) {
 
         this.bucketIterator = new BucketIterator( classes );
+        result = this.bucketIterator.hasValidSchedules();
         Session.set( "Scheduler.scheduleCount", this.bucketIterator.size );
       }
+      return result;
     },
 
     // Goes to the next available schedule
@@ -57,18 +56,15 @@ Meteor.startup( function() {
     "renderSchedule" : function() {
       var scheduleContainer = $("#calendar");
       if( scheduleContainer.length && this.bucketIterator ) {
-          Session.set( "Scheduler.currentScheduleIndex", this.bucketIterator.position );
-          Session.set( "Scheduler.currentScheduleId", this.bucketIterator.getCourseArray() );
-          Session.set( "Scheduler.scheduleCourses", this.bucketIterator.getSchedule() );
+        Session.set( "Scheduler.currentScheduleIndex", this.bucketIterator.position );
+        Session.set( "Scheduler.currentSchedule", this.bucketIterator.getCourseArray() );
 
-          var schedule = this.bucketIterator.getSchedule();
-          var events = Scheduler.Converter.generateEvents( schedule );
+        var schedule = this.bucketIterator.getSchedule();
+        var events = Scheduler.Converter.generateEvents( schedule );
 
-          Scheduler.fullCalendar.render( "#calendar", {
-            events : events
-          });
-
-
+        Scheduler.fullCalendar.render( "#calendar", {
+          events : events
+        });
       }
     },
   };

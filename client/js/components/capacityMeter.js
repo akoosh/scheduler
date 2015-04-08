@@ -1,6 +1,6 @@
 Template.capacityMeter.helpers( {
   seats : function() {
-    var result = "~/~";
+    var result = "-";
 
     if( this.value && this.capacity && this.value <= this.capacity && this.capacity != 0 ) {
       if( this.value == this.capacity ) {

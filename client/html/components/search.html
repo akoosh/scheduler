@@ -5,14 +5,6 @@
   </tr>
 </template>
 
-<template name="classButton">
-  <tr>
-    <td>{{subject_with_number}}</td>
-    <td>{{title}}</td>
-    <td><span class="glyphicon glyphicon-remove removeButton" title="Remove {{subject_with_number}} from this slot"></span></td>
-  </tr>
-</template>
-
 <template name="searchResults">
   {{> queryDisplay }}
 </template>
@@ -20,7 +12,7 @@
 <template name="queryDisplay">
     <div id="results">
       {{#if hasResults}}
-        <button class="btn btn-primary visible-md visible-lg addButton" title="Add all classes for this query to the current slot">Add All</button>
+        <button class="btn btn-primary visible-md visible-lg addButton" title="Add all classes for this query to the current slot" {{addAllDisabled}}>Add All</button>
       {{/if}}
       {{#each queryResults}}
           {{> classDisplay }}
@@ -38,17 +30,20 @@
         <th class="courseTitle">{{title}}</th>
         <th>{{subject_with_number}}</th>
         <th class="courseUnits">{{units}} units</th>
-        <th>    
+        <th></th>
+      </thead>
+      <tbody>
+        <td> 
+          <div>
+            Section {{number}} 
+          </div>
           <div class="courseInfo">
             <span title="{{title}}" description="{{description}}" class="class-icon info-icon info-i">i</span>
             {{#each geCodes}}
-              <span class="class-icon ge-icon" title="This class fulfills the general education category {{this}}">GE {{this}}</span>
+            <span class="class-icon ge-icon" title="This class fulfills the general education category {{this}}">GE {{this}}</span>
             {{/each}}
           </div>
-        </th>
-      </thead>
-      <tbody>
-        <td> Section {{number}} </td>
+        </td>
         <td colspan=2>
           <table class="table table-striped">
             <thead>
@@ -60,24 +55,28 @@
               </tr>
             </thead>
             <tbody>
-            {{#each sections}}
-              {{> sectionDisplay }}
+            {{#each meetings}}
+              {{> meetingDisplay}}
             {{/each}}
             </tbody>
           </table>
         </td>
-        <td> <button class="addButton btn btn-primary visible-md visible-lg" title="Add this class to the current slot">Add</button> </td>
+        <td> 
+          <button class="addButton btn btn-primary visible-md visible-lg" title="Add this class to the current slot" {{addDisabled}} >Add</button> 
+        </td>
       </tbody>
     </table>
+
+
  </div> 
 </template>
 
-<template name="sectionDisplay">
+<template name="meetingDisplay">
   <tr>
-    <td>{{#each times}} {{days}} {{start_time}}-{{end_time}} {{/each}}</td>
-    <td>{{#each locations}} {{this}} {{/each}}</td>
-    <td>{{#each professors}} {{this}} {{/each}}</td>
-    <td>{{> capacityMeter value=totalEnrolled.[0] capacity=capacity.[0] }}</td>
+    <td>{{days}} {{start_time}}-{{end_time}}</td>
+    <td>{{location}}</td>
+    <td>{{professor}}</td>
+    <td>{{> capacityMeter value=totalEnrolled capacity=capacity }}</td>
   </tr>
 </template>
 

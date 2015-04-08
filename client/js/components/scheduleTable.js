@@ -2,10 +2,18 @@ Template.scheduleTable.helpers( {
 
   // Returns an array with the currently displayed courses in raw form
   "formattedRow" : function() {
-    var courses = Session.get( "Scheduler.scheduleCourses" );
+    var classes = Session.get( "Scheduler.currentSchedule" ),
+        rows = [];
 
-    // Get the rows for the current courses
-    var rows = Scheduler.Converter.coursesToRows( courses );
+    if( classes ) {
+      // Get the rows for the current courses
+      
+      classes = ClassesModel.find( { number : { $in : classes } } ).fetch();
+
+      if( classes.length ) {
+        rows = Scheduler.Converter.classesToRows( classes );
+      }
+    }
 
     return rows;
   },

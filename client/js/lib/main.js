@@ -10,7 +10,8 @@ Accounts.ui.config({
 
 // Main application startup
 Meteor.startup( function() {
-  Scheduler.PageLoader.validPages = [ "searchPage", "schedulePage", "favoritePage" ];
+  Scheduler.PageLoader.validPages = [ "search", "schedule", "favorite", "about" ];
+  location.hash = "";
 });
 
 // Entry point for application
@@ -19,7 +20,7 @@ Session.set( "Scheduler.currentPage", "searchPage" );
 // User login code
 Tracker.autorun(function() {
   if ( Meteor.userId() ) {
-    Session.set( "Scheduler.slots", undefined );
+    Session.set( "Scheduler.plan", undefined );
     Session.set( "Scheduler.searchResults", undefined );
   }
 });

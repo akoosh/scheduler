@@ -1,14 +1,14 @@
 Template.favoriteTable.events({
     "click .loadFavoriteSchedule" : function(e,t) {
       Session.set( "Scheduler.currentFavoriteScheduleId", this._id );
+      Scheduler.qTip.hideTips();
       Scheduler.Schedules.generateSchedules( this.classes );
       Scheduler.Schedules.renderSchedule();
     },
 
     "click .editFavoriteSchedule" : function(e,t) {
-      Session.set( "Scheduler.slotSelected", 0 );
-      Session.set( "Scheduler.slots", this.slots );
-      Scheduler.PageLoader.loadPage( "searchPage" );
+      Session.set( "Scheduler.plan", this.slots );
+      Scheduler.PageLoader.loadPage( "search" );
     },
 
     "click .renameFavoriteSchedule" : function(e,t) {

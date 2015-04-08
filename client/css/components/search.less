@@ -35,13 +35,13 @@
   font-size: 18px;
 }
 
-.addButton {
-  float: right;
-  min-width: 72px;
-}
 
 .courseInfo {
   height: 36px;
+  float: left;
+  position: relative;
+  top: 10px;
+  right: 5px;
 }
 
 .loadMoreClasses {
@@ -106,4 +106,14 @@
 .capacity-header {
   float: right;
   padding-right: 2px;
+}
+
+.addButton {
+  float: right;
+  min-width: 72px;
+}
+
+.addButton:disabled {
+ background-color: #8B9CA9;
+ border-color: #87B2D2;
 }

@@ -17,6 +17,14 @@ BucketIterator = function( buckets ) {
 
 }
 
+// Returns if the iterator has any valid schedules
+BucketIterator.prototype.hasValidSchedules = function() {
+  var keys = _.keys( this.valid ),
+      self = this;
+  keys = _.reject( keys, function(ele){ return self.valid[ele]; } );
+  return keys.length != this.size;
+}
+
 // Sets the buckets for iteration
 //  -more of an internal function
 BucketIterator.prototype.setBuckets = function( buckets ) {
@@ -158,12 +166,12 @@ BucketIterator.prototype.getSchedule = function() {
   var result = [];
   var classes = this.getCourseArray();
 
-  for( number in classes) {
+  for( number in classes ) {
     number = classes[number];
-    var c = ClassesModel.findOne( { id : number } );
+    var c = ClassesModel.findOne( { number : number } );
 
     // Make sure that the sections has some data for display
-    if( c && c.sections ) {
+    if( c && c.meetings ) {
       result.push( c );
     }
   }

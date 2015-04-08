@@ -1,32 +1,47 @@
 
+Meteor.startup( function() {
+  Scheduler.Plan = {
+     newPlan : function() {
+      return { selectedClasses: {}, slots : [], selectedSlot : 0 };
+    },
+
+    newSlot : function( name ) {
+      var plan = this.getPlan();
+      return { index: plan.slots.length, name: name, classes: [], isCollapsed : false };
+    },
+
+    getPlan : function() {
+      var plan = Session.get("Scheduler.plan");
+
+      if( !plan ) {
+        plan = this.newPlan(); 
+        Session.set("Scheduler.plan", plan);
+      }
+
+      return plan;
+    }
+
+  };
+});
+
+
 Template.planLayoutControls.helpers( {
   "generateButtonEnabled" : function() {
-    var slots = Session.get("Scheduler.slots") || [], 
+    var plan = Session.get("Scheduler.plan"), 
         result = "disabled";
   
-    if( slots.length ) {
+    if( plan && plan.slots.length ) {
       result = "";
     }
 
     return result;
   }, 
 
-  "favoritesButtonEnabled" : function() {
-    var condition = UserFavoriteSchedules.findOne(), 
-        result = "disabled";
-  
-    if( condition ) {
-      result = "";
-    }
-
-    return result;
-  },
-
   "clearAllSlotsEnabled" : function() {
-    var slots = Session.get("Scheduler.slots") || [], 
+    var plan = Session.get("Scheduler.plan"), 
         result = "disabled";
 
-    if( slots.length && slots[0].classes.length ) {
+    if( plan && plan.slots.length && plan.slots[0].classes.length ) {
       result = "";
     }
 
@@ -36,10 +51,15 @@ Template.planLayoutControls.helpers( {
 });
 
 Template.planLayout.helpers( {
-
         "slots": function() {
-            var plan = Session.get("Scheduler.slots");
-            return plan || [];
+          var result = [],
+              plan = Session.get("Scheduler.plan");
+
+          if( plan ) {
+            result = plan.slots;
+          }
+
+          return result;
         }
     }
 );
@@ -62,10 +82,9 @@ Template.slotDisplay.helpers( {
 
         "selectedOrEmpty": function() {
             var result = "";
-            var slotSelected = Session.get("Scheduler.slotSelected");
-            var slots = Session.get("Scheduler.slots") || [];
+            plan = Session.get("Scheduler.plan");
 
-            if (slotSelected === this.index || (this.index === undefined && slotSelected === slots.length)) {
+            if ( !plan || ( plan.selectedSlot === this.index || (this.index === undefined && plan.selectedSlot=== plan.slots.length))) {
                 result = "selected";
             }
 
@@ -73,8 +92,11 @@ Template.slotDisplay.helpers( {
         },
 
         "modifiedClasses" : function() {
-          
-          var result = this.classes || [];
+          var result = [];
+ 
+          if( this.classes ) {
+            result = ClassesModel.find( { number : { $in : this.classes } },{ sort : { subject_number : 1, subject : 1 } } ).fetch();
+          }
 
           if( this.isCollapsed ) {
             result = result.slice( 0, 0 );
@@ -84,26 +106,30 @@ Template.slotDisplay.helpers( {
         },
 
         "truncated" : function() {
-          var result = this.isCollapsed;
+          var result = false;
 
           return result;
         },
 
-        "hasMoreClasses" : function() {
+        "hasClasses" : function() {
           var result = false;
 
-          if( this.isCollapsed ) {
-            result = this.classes.length > 0 && false;
+          if( this.classes && this.classes.length ) {
+            result = true;
           }
 
           return result;
         },
 
-        "numberOfClasses" : function() {
-          var result = 0;
+        "numberOfClassesLabel" : function() {
+          var result = "No Classes";
 
           if( this.classes ) {
-            result = this.classes.length;
+            if( this.classes.length == 1 ) {
+              result = "1 Class";
+            } else if( this.classes.length ) {
+              result = this.classes.length + " Classes";
+            }
           }
 
           return result;
@@ -113,11 +139,11 @@ Template.slotDisplay.helpers( {
 
 Template.slotCollapse.events( {
   "click .slot-collapse, click .slot-expand" : function(e, t) {
-    var slots = Session.get( "Scheduler.slots" );
-    if( slots ) {
-      if( slots[t.data.index] ) {
-        slots[t.data.index].isCollapsed = !slots[t.data.index].isCollapsed;
-        Session.set( "Scheduler.slots", slots );
+    var plan = Session.get( "Scheduler.plan" );
+    if( plan ) {
+      if( plan.slots[t.data.index] ) {
+        plan.slots[t.data.index].isCollapsed = !plan.slots[t.data.index].isCollapsed;
+        Session.set( "Scheduler.plan", plan );
       }
     }
   }
@@ -125,59 +151,74 @@ Template.slotCollapse.events( {
 
 Template.slotRemove.events( {
   "click .slot-remove" : function( e, t ) {
-    var slots = Session.get( "Scheduler.slots" );
+    setTimeout( function() {
+      var plan = Session.get( "Scheduler.plan" );
 
-    if( slots && t.data && t.data.index != undefined ) {
+      if( plan && t.data && t.data.index != undefined ) {
 
-      // Remove the slot
-      slots.splice( t.data.index, 1 );
+        // Remove the slot
+        var slot = plan.slots.splice( t.data.index, 1 );
 
-      // Recalc indicies
-      _.each(slots, function(slot, index) {
-      slot.index = index;
-      });
+        // Recalc indicies
+        _.each(plan.slots, function(slot, index) {
+          slot.index = index;
+        });
 
-      Session.set( "Scheduler.slots", slots );
-    }   
+
+        if( slot.length ) {
+          _.each( slot[0].classes, function(ele) {
+            if( plan.selectedClasses[ele] !== undefined ) {
+              delete plan.selectedClasses[ele];
+            }
+          });
+        }
+        
+        Scheduler.qTip.hideTips();
+        Session.set( "Scheduler.plan", plan );
+      }   
+    }, 0 );
   }
 });
 
 Template.planLayout.events( {
   "click .removeButton": function() {
-      var slotSelected = Session.get("Scheduler.slotSelected") || 0,
-          slots = Session.get("Scheduler.slots") || [],
-          query = $("#query").val();
+    var self = this;
+    setTimeout( function() {
+      var plan = Session.get("Scheduler.plan"),
+          query = $("#query").val()
 
-      var curSlot = slots[slotSelected] || { index: slotSelected, name: "slot", classes: [], selectedClasses: {}, isCollapsed : false };
-
-      // find and remove the appropriate class
-      var outerThis = this;
-      curSlot.classes = _.reject(curSlot.classes, function(ele) { return ele.number === outerThis.number; });
-      delete curSlot.selectedClasses[this.number];
-
-      // update slots with the new curSlot
-      slots[slotSelected] = curSlot;
-
-      // remove all slots that contain no classes
-      slots = _.reject(slots, function(ele) { return ele.classes.length === 0; });
-
-      // recalculate slot number in case an upper slot was removed
-      _.each(slots, function(slot, index) {
-          slot.index = index;
+      // Remove the class from the buckets
+      _.each( plan.slots, function(ele) {
+        ele.classes = _.reject( ele.classes, function(c){ return c == self.number; } )
       });
 
+      // Remove any slots that have no classes
+      plan.slots = _.reject( plan.slots, function(ele){ return ele.classes.length == 0; } );
+
+      // Reset the selectedSlot if it is over the maximum
+      if( plan.selectedSlot >= plan.slots.length ) {
+        plan.selectedSlot = plan.slots.length-1;
+      }
+
+      delete plan.selectedClasses[self.number];
+
       Scheduler.qTip.hideTips();
-      Session.set("Scheduler.slots", slots);
+      Session.set("Scheduler.plan", plan);
+    }, 0 );
   },
 
   "click .slotDisplay": function( e, t ) {
+    var plan = Session.get("Scheduler.plan");
+
+    if( plan ) {
       if (this.index !== undefined) {
-          Session.set("Scheduler.slotSelected", this.index);
-          Session.set("Scheduler.slotClicked", this.index);
+        plan.selectedSlot = this.index;
       } else {
-          var slots = Session.get("Scheduler.slots") || [];
-          Session.set("Scheduler.slotSelected", slots.length);
+        plan.selectedSlot = plan.slots.length;
       }
+
+      Session.set("Scheduler.plan", plan);
+    }
   },
 } );
 
@@ -186,35 +227,31 @@ Template.planLayoutControls.events( {
           var haveFavorites = true;
 
           if( haveFavorites ) {
-            Scheduler.PageLoader.loadPage( "favoritePage" );
+            Scheduler.PageLoader.loadPage( "favorite" );
           }
         },
 
         "click .clearAllSlots": function() {
-          Session.set( "Scheduler.slotSelected", 0 );
-          Session.set("Scheduler.slotClicked", -1 );
-          Session.set( "Scheduler.slots", [] );
+          Session.set( "Scheduler.plan", Scheduler.Plan.newPlan() );
         },
 
         "click .generateButton": function() {
-            var slots = Session.get("Scheduler.slots") || [];
-            var classesArray = _.map(slots, function(slot) {
-                return _.pluck(slot.classes, 'number');
+          var plan = Session.get("Scheduler.plan");
+
+          if( plan ) {
+            var classesArray = _.map(plan.slots, function(slot) {
+                return slot.classes;
             });
-            
-            Meteor.call("saveSchedule", { name : "generated-"+new Date(), classes : classesArray }, function(err, result) {
-              if( result ) {
-                Session.set( "Scheduler.currentScheduleId", result );
 
-                if( classesArray.length ) {
-                  // Setup the available schedules
+            if( classesArray.length ) {
+              // Setup the available schedules
 
-                  // Transition to the schedule view
-                  Scheduler.Schedules.generateSchedules( classesArray );
-                  Scheduler.PageLoader.loadPage( "schedulePage" );
-                }
+              // Transition to the schedule view
+              if( Scheduler.Schedules.generateSchedules( classesArray ) ) {
+                Scheduler.PageLoader.loadPage( "schedule" );
               }
-            });
+            }
+          }
         }
 });
 
