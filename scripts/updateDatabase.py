@@ -48,6 +48,10 @@ def main():
         print "Importing student data into mongo..."
         os.system( "mongoimport -h %s:%s --drop --db %s --collection Students --type json --jsonArray --file students.json && mv students.json bkup/students.%s.json" % ( cfg["MeteorAddress"], cfg["MeteorMongoPort"], cfg["MeteorDB"], writeTime ) )
         print "Done."
+      else:
+        print "Student data csv file not found. Without this data there will be no valid users."
+    else:
+      print "Student data csv file not found. Without this data there will be no valid users."
 
   else:
     print "The Meteor server needs to be running to allow access to the database"
