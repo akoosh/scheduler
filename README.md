@@ -42,6 +42,7 @@ Installation is pretty simple
   This will run the meteor package manager ( similar to doing a apt-get update ) then spin up the scheduler application.
   The app should build and start without any problem; however, there will be no course data yet. Run the following commands to insert the data from the scripts folder. Make sure you have meteor running to allow access to the mongo database.
   ```
+  python genStudentsCSV.py
   python updateDatabase.py
   ```
 Installation(osx)
@@ -69,7 +70,7 @@ Installation(osx)
   ```
 
   - Importing the data
-    This is the same for osx and ubuntu. Use the script updateDatabase.py within the scripts folder.
+    This is the same for osx and ubuntu. Use the script and genStudentsCSV.py updateDatabase.py within the scripts folder.
 
 
 Installation(windows)
