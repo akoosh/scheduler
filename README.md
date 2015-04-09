@@ -23,7 +23,7 @@ Installation is pretty simple
   ```
     This will install meteor and the meteor package manager on your machine.
 
-  - Get Mongodb
+  - Get Mongodb: This will install command-line utilites that we will use for populating the database.
   ```
     sudo apt-get install mongodb
   ```
@@ -78,3 +78,4 @@ Installation(windows)
 Seems like the windows version of Meteor is getting off its feet:
 
 https://github.com/meteor/meteor/wiki/Preview-of-Meteor-on-Windows
+
