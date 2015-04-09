@@ -12,7 +12,7 @@ Meteor.startup( function() {
       var result = false;
       if( classes !== undefined && classes.length ) {
 
-        this.bucketIterator = new BucketIterator( classes );
+        this.bucketIterator = new Scheduler.BucketIterator( classes );
         result = this.bucketIterator.hasValidSchedules();
         Session.set( "Scheduler.scheduleCount", this.bucketIterator.size );
       }
