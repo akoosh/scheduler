@@ -30,7 +30,8 @@ Meteor.startup( function() {
           adjust : {
             x : 5,
             y : 5
-          }
+          },
+          viewport : $(window)
         }
       };
 
