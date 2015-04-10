@@ -7,6 +7,10 @@ Meteor.startup( function() {
     styles: {
       defaultStyle : {
         classes: "qtip-bootstrap qtip-shadow"
+      },
+      fullCalendar: {
+        classes: "qtip-bootstrap qtip-shadow",
+        width: 500
       }
     },
 

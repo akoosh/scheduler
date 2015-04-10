@@ -282,22 +282,10 @@ Template.planLayout.rendered = function() {
 }
 
 Template.slotDisplay.rendered = function() {
-  Scheduler.qTip.updateTips( ".slot-remove, .slot-add, th.name", {     
-    position: {
-      my: 'top right',  
-      at: 'bottom right',
-      target: "mouse",
-    }  
-  });
+  Scheduler.qTip.updateTips( ".slot-remove, .slot-add, th.name" );
 
 }
 
 Template.planLayoutControls.rendered = function() {
-  Scheduler.qTip.updateTips( '.generateButton, .viewFavorites', {     
-    position: {
-      my: 'top right',  
-      at: 'bottom right',
-      target: "mouse",
-    }  
-  });
+  Scheduler.qTip.updateTips( '.generateButton, .viewFavorites' );
 }

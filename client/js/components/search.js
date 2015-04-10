@@ -143,16 +143,15 @@ Template.searchResults.rendered = function() {
 }
 
 Template.classButton.rendered = function() {
-  Scheduler.qTip.updateTips( ".removeButton", {     
-    position: {
-      my: 'top right',  
-      at: 'bottom right',
-      target: "mouse",
-    }  
-  });
+  Scheduler.qTip.updateTips( ".removeButton" );
 }
 
 Template.classDisplay.rendered = function() {
-  Scheduler.qTip.updateTips( '.classDisplay * .addButton, .class-icon, .addButton, .loadMoreResults' );
+  Scheduler.qTip.updateTips( '.classDisplay * .addButton, .class-icon.ge-icon, .addButton, .loadMoreResults' );
+  Scheduler.qTip.updateTips( '.class-icon.info-icon', {
+    style : { 
+      width : "500px"
+    }
+  });
 }
 
