@@ -18,12 +18,12 @@ def meteorOn( url, port):
 
 def main():
   cfg = None
-  with open( "config.json", "r" ) as config:
-    cfg = json.load( config )
-
-  if not cfg:
-    with open( ".config.json", "r" ) as config:
+  try:
+    with open( "config.json", "r" ) as config:
       cfg = json.load( config )
+  except:
+    print "Could not find config.json file. Did you forget to copy .config.json to config.json?"
+    return
     
   if meteorOn( cfg["MeteorAddress"], cfg["MeteorPort"] ):
     writeTime = str( int(time.time()) )
