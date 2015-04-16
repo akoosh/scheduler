@@ -11,6 +11,7 @@ Meteor.startup( function() {
           var tokens = this.QueryTokenizer.tokensForString(str);
           var query = this.QueryBuilder.queryForTokens(tokens);
           var result = this.QuerySearcher.resultsForQuery(query);
+          console.log( tokens, query, result );
           return result;
       }
 
@@ -132,11 +133,11 @@ Meteor.startup( function() {
       Type: {
           SUBJECT:    0,
           PROFESSOR:  1,
-          TITLE:      2,
-          DEPARTMENT: 3,
-          TIME:       4,
-          DAY:        5,
-          GE:         6,
+          GE:         2,
+          TITLE:      3,
+          DEPARTMENT: 4,
+          TIME:       5,
+          DAY:        6,
           NUMBER:     7,
           UNITS:      8,
           DIVISION:   9
@@ -166,7 +167,8 @@ Meteor.startup( function() {
 
                   case Scheduler.QueryProcessing.QueryToken.Type.PROFESSOR:
                       return this.isProfessor(str);
-
+                  case Scheduler.QueryProcessing.QueryToken.Type.GE:
+                      return this.isGE(str);
                   case Scheduler.QueryProcessing.QueryToken.Type.TITLE:
                       return this.isTitle(str);
                   case Scheduler.QueryProcessing.QueryToken.Type.DEPARTMENT:
@@ -175,8 +177,6 @@ Meteor.startup( function() {
                       return false;
                   case Scheduler.QueryProcessing.QueryToken.Type.DAY:
                       return false;
-                  case Scheduler.QueryProcessing.QueryToken.Type.GE:
-                      return this.isGE(str);
                   case Scheduler.QueryProcessing.QueryToken.Type.NUMBER:
                       return this.isSubjectWithNumber(str);
                   case Scheduler.QueryProcessing.QueryToken.Type.SUBJECT:
