@@ -11,7 +11,6 @@ Meteor.startup( function() {
           var tokens = this.QueryTokenizer.tokensForString(str);
           var query = this.QueryBuilder.queryForTokens(tokens);
           var result = this.QuerySearcher.resultsForQuery(query);
-          console.log( tokens, query, result );
           return result;
       }
 
