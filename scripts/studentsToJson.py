@@ -31,7 +31,8 @@ def main( arg1 ):
     for row in reader:
       strip_whitespace( row )
       
-      hasher = hashlib.md5(getValue(row, ["StudentId"] ) )
+      studentId = getValue(row, ["StudentId"] ).zfill(9);
+      hasher = hashlib.md5(  )
       result.append( {
         "access" : True,
         "id"     : hasher.hexdigest()
