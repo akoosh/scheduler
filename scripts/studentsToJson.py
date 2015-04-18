@@ -42,4 +42,4 @@ def main( arg1 ):
       f.write( json.dumps(result) ) 
 
 if __name__ == "__main__":
-  main()
+  main(None)
