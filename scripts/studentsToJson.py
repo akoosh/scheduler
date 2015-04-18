@@ -32,7 +32,7 @@ def main( arg1 ):
       strip_whitespace( row )
       
       studentId = getValue(row, ["StudentId"] ).zfill(9);
-      hasher = hashlib.md5(  )
+      hasher = hashlib.md5( studentId )
       result.append( {
         "access" : True,
         "id"     : hasher.hexdigest()
