@@ -2,6 +2,7 @@ Template.capacityMeter.helpers( {
   seats : function() {
     var result = "-";
 
+    /*
     if( this.value && this.capacity && this.value <= this.capacity && this.capacity != 0 ) {
       if( this.value == this.capacity ) {
         result = "full";
@@ -9,6 +10,8 @@ Template.capacityMeter.helpers( {
         result = this.value + "/" + this.capacity;
       }
     } 
+    */
+    result = this.capacity + " seats";
 
     return result;
   },
