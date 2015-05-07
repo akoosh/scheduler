@@ -3,7 +3,7 @@ ssu_scheduler
 
 App URL:
 
-http://fullmoon.cs.sonoma.edu/
+http://scheduler.cs.sonoma.edu/
 
 
 Installation(ubuntu)
