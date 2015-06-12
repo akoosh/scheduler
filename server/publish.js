@@ -8,6 +8,7 @@ Meteor.publish( "classData", function() {
   // Make sure the user is authorized to view the scheduler course data by checking the
   // username against the Students collection. We take the MD5 of the username
   // which should match an entry in the collection.
+  /*
   if( this.userId ) {
     var user = Meteor.users.findOne( this.userId );
     if( user ) {
@@ -16,6 +17,8 @@ Meteor.publish( "classData", function() {
       }
     }
   }
+  */
+  result = ClassesModel.find();
 
   return result;
 });
